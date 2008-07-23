@@ -16,12 +16,13 @@ macro
   Char              ([^\n\t\"\'\\\]|{Esc_Sequence})
   Char_Literal      '({Char}|\")'
   String_Literal    "({Char}|')*"
-  Float_Literal1    {Digits}\.({Digits})?[eE][\+-]?{Digits}
-  Float_Literal2    {Digits}[eE][\+-]?{Digits}
-  Float_Literal3    {Digits}\.{Digits}
-  Float_Literal4    {Digits}\.
-  Float_Literal5    \.{Digits}[eE][\+-]?{Digits}
-  Float_Literal6    \.{Digits}
+  Float_Literal1    {Digits}\.{Digits}[eE][\+-]?{Digits}
+  Float_Literal2    {Digits}\.[eE][\+-]?{Digits}
+  Float_Literal3    {Digits}[eE][\+-]?{Digits}
+  Float_Literal4    {Digits}\.{Digits}
+  Float_Literal5    {Digits}\.
+  Float_Literal6    \.{Digits}[eE][\+-]?{Digits}
+  Float_Literal7    \.{Digits}
   Fixed_Literal1    {Digits}[dD]
   Fixed_Literal2    {Digits}\.[dD]
   Fixed_Literal3    \.{Digits}[dD]
@@ -113,11 +114,15 @@ rule
 
             {CORBA_Identifier}  { [:T_IDENTIFIER, text] }
             {Float_Literal1}    { [:T_FLOATING_PT_LITERAL, text] }
-            {Float_Literal2}    { [:T_FLOATING_PT_LITERAL, text] }
+            {Float_Literal2}    {
+                                  text = text.split('.').join('.0')
+                                  [:T_FLOATING_PT_LITERAL, text]
+                                }
             {Float_Literal3}    { [:T_FLOATING_PT_LITERAL, text] }
             {Float_Literal4}    { [:T_FLOATING_PT_LITERAL, text] }
-            {Float_Literal5}    { [:T_FLOATING_PT_LITERAL, text] }
-            {Float_Literal6}    { [:T_FLOATING_PT_LITERAL, text] }
+            {Float_Literal5}    { [:T_FLOATING_PT_LITERAL, "#{text}0"] }
+            {Float_Literal6}    { [:T_FLOATING_PT_LITERAL, "0#{text}"] }
+            {Float_Literal7}    { [:T_FLOATING_PT_LITERAL, "0#{text}"] }
             {Fixed_Literal1}    { [:T_FIXED_PT_LITERAL, text] }
             {Fixed_Literal2}    { [:T_FIXED_PT_LITERAL, text] }
             {Fixed_Literal3}    { [:T_FIXED_PT_LITERAL, text] }

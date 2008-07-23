@@ -110,22 +110,24 @@ class ScannerTest < Test::Unit::TestCase
     :principal    => [:T_PRINCIPAL, 'Principal'],
     :identifier   => [:T_IDENTIFIER, 'hello'],
     :float_lit_1  => [:T_FLOATING_PT_LITERAL, '123.2e10'],
-    :float_lit_11 => [:T_FLOATING_PT_LITERAL, '123.E-10'],
-    :float_lit_2  => [:T_FLOATING_PT_LITERAL, '123e10'],
-    :float_lit_21 => [:T_FLOATING_PT_LITERAL, '123E+10'],
-    :float_lit_3  => [:T_FLOATING_PT_LITERAL, '12.2'],
-    :float_lit_4  => [:T_FLOATING_PT_LITERAL, '12.'],
-    :float_lit_5  => [:T_FLOATING_PT_LITERAL, '.12e10'],
-    :float_lit_51 => [:T_FLOATING_PT_LITERAL, '.12e+10'],
-    :float_lit_6  => [:T_FLOATING_PT_LITERAL, '.12'],
+    :float_lit_11 => [:T_FLOATING_PT_LITERAL, '123.2E10'],
+    :float_lit_2  => [:T_FLOATING_PT_LITERAL, '123.0E-5', '123.E-5'],
+    :float_lit_3  => [:T_FLOATING_PT_LITERAL, '123e10'],
+    :float_lit_31 => [:T_FLOATING_PT_LITERAL, '123E+10'],
+    :float_lit_4  => [:T_FLOATING_PT_LITERAL, '12.2'],
+    :float_lit_5  => [:T_FLOATING_PT_LITERAL, '12.0', '12.'],
+    :float_lit_6  => [:T_FLOATING_PT_LITERAL, '0.12e10', '.12e10'],
+    :float_lit_61 => [:T_FLOATING_PT_LITERAL, '0.12e+10', '.12e+10'],
+    :float_lit_7  => [:T_FLOATING_PT_LITERAL, '0.12', '.12'],
   }.each do |type, token|
     define_method(:"test_#{type}") do
-      assert_tokens([token], token.last)
+      parse_text = token.length == 3 ? token.pop : token.last
+      assert_tokens([token], parse_text)
       assert_tokens([
         [:T_LEFT_SQUARE_BRACKET, "["],
         token,
         [:T_RIGHT_SQUARE_BRACKET, "]"]
-      ], " [\n#{token.last}] \n")
+      ], " [\n#{parse_text}] \n")
       end
   end
 
