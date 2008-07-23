@@ -41,51 +41,45 @@ class ScannerTest < Test::Unit::TestCase
     ], " ( ) \n")
   end
 
-  def test_colon
-    assert_tokens([[:T_COLON, ":"]], ":")
-    assert_tokens([
-      [:T_LEFT_PARANTHESIS, "("],
-      [:T_COLON, ":"],
-      [:T_RIGHT_PARANTHESIS, ")"]
-    ], " (:) \n")
+  {
+    :minus        => [:T_MINUS_SIGN, '-'],
+    :plus         => [:T_PLUS_SIGN, '+'],
+    :shift_left   => [:T_SHIFTLEFT, '<<'],
+    :shift_right  => [:T_SHIFTRIGHT, '>>'],
+    :equal        => [:T_EQUAL, '='],
+    :semicolon    => [:T_SEMICOLON, ';'],
+    :comma        => [:T_COMMA, ','],
+    :colon        => [:T_COLON, ':'],
+    :asterisk     => [:T_ASTERISK, '*'],
+    :solidus      => [:T_SOLIDUS, '/'],
+    :percent      => [:T_PERCENT_SIGN, '%'],
+    :tilde        => [:T_TILDE, '~'],
+    :pipe         => [:T_VERTICAL_LIN, '|'],
+    :caret        => [:T_CIRCUMFLEX, '^'],
+    :ampersand    => [:T_AMPERSAND, '&'],
+    :less_than    => [:T_LESS_THAN_SIGN, '<'],
+    :greater_than => [:T_GREATER_THAN_SIGN, '>'],
+    :const        => [:T_CONST, 'const'],
+    :typedef      => [:T_TYPEDEF, 'typedef'],
+    :float        => [:T_FLOAT, 'float'],
+    :double       => [:T_DOUBLE, 'double'],
+    :char         => [:T_CHAR, 'char'],
+    :wchar        => [:T_WCHAR, 'wchar'],
+    :fixed        => [:T_FIXED, 'fixed'],
+    :boolean      => [:T_BOOLEAN, 'boolean'],
+    :string       => [:T_STRING, 'string'],
+    :wstring      => [:T_WSTRING, 'wstring'],
+    :void         => [:T_VOID, 'void'],
+  }.each do |type, token|
+    define_method(:"test_#{type}") do
+      assert_tokens([token], token.last)
+      assert_tokens([
+        [:T_LEFT_SQUARE_BRACKET, "["],
+        token,
+        [:T_RIGHT_SQUARE_BRACKET, "]"]
+      ], " [\n#{token.last}] \n")
+      end
   end
-
-  def test_comma
-    assert_tokens([[:T_COMMA, ","]], ",")
-    assert_tokens([
-      [:T_LEFT_PARANTHESIS, "("],
-      [:T_COMMA, ","],
-      [:T_RIGHT_PARANTHESIS, ")"]
-    ], " (\n,) \n")
-  end
-
-  def test_semicolon
-    assert_tokens([[:T_SEMICOLON, ";"]], ";")
-    assert_tokens([
-      [:T_LEFT_PARANTHESIS, "("],
-      [:T_SEMICOLON, ";"],
-      [:T_RIGHT_PARANTHESIS, ")"]
-    ], " (\n;) \n")
-  end
-
-  def test_equal
-    assert_tokens([[:T_EQUAL, "="]], "=")
-    assert_tokens([
-      [:T_LEFT_PARANTHESIS, "("],
-      [:T_EQUAL, "="],
-      [:T_RIGHT_PARANTHESIS, ")"]
-    ], " (\n=) \n")
-  end
-
-  def test_shift_right
-    assert_tokens([[:T_SHIFTRIGHT, ">>"]], ">>")
-    assert_tokens([
-      [:T_LEFT_SQUARE_BRACKET, "["],
-      [:T_SHIFTRIGHT, ">>"],
-      [:T_RIGHT_SQUARE_BRACKET, "]"]
-    ], " [\n>>] \n")
-  end
-
 
   def assert_tokens(tokens, string)
     @scanner.scan_evaluate(string)
