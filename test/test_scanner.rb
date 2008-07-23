@@ -126,6 +126,13 @@ class ScannerTest < Test::Unit::TestCase
     :fixed_lit_31 => [:T_FIXED_PT_LITERAL, '0.123', '.123D'],
     :fixed_lit_4  => [:T_FIXED_PT_LITERAL, '0.123', '0.123d'],
     :fixed_lit_41 => [:T_FIXED_PT_LITERAL, '0.123', '0.123D'],
+    :hex_lit      => [:T_INTEGER_LITERAL, '0x23'],
+    :hex_lit_1    => [:T_INTEGER_LITERAL, '0X23'],
+    :oct_lit      => [:T_INTEGER_LITERAL, '023'],
+    :int_lit      => [:T_INTEGER_LITERAL, '23'],
+    :char_lit     => [:T_CHARACTER_LITERAL, "'a'"],
+    :string_lit   => [:T_STRING_LITERAL, '"abc"'],
+    :unknown      => [:T_UNKNOWN, '.'],
   }.each do |type, token|
     define_method(:"test_#{type}") do
       parse_text = token.length == 3 ? token.pop : token.last

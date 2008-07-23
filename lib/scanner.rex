@@ -32,7 +32,7 @@ macro
 rule
 
 # [:state]  pattern  [actions]
-            [\s\n]
+            [\s\n\r]
             \/\/[^\n]*
             \#pragma[^\n]*\n    { [:T_PRAGMA, text] }
             \#[^\n]*\n          { [:T_PREPROCESSOR, text] }
