@@ -80,9 +80,9 @@ rule
             case                { [:T_CASE, text] }
             default             { [:T_DEFAULT, text] }
             enum                { [:T_ENUM, text] }
+            interface           { [:T_INTERFACE, text] }
             in                  { [:T_IN, text] }
             out                 { [:T_OUT, text] }
-            interface           { [:T_INTERFACE, text] }
             abstract            { [:T_ABSTRACT, text] }
             valuetype           { [:T_VALUETYPE, text] }
             truncatable         { [:T_TRUNCATABLE, text] }
