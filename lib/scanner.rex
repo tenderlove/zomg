@@ -41,6 +41,7 @@ rule
             \]                  { [:T_RIGHT_SQUARE_BRACKET, text] }
             \(                  { [:T_LEFT_PARANTHESIS, text] }
             \)                  { [:T_RIGHT_PARANTHESIS, text] }
+            \:\:                { [:T_SCOPE, text] }
             :                   { [:T_COLON, text] }
             ,                   { [:T_COMMA, text] }
             ;                   { [:T_SEMICOLON, text] }
@@ -81,6 +82,7 @@ rule
             default             { [:T_DEFAULT, text] }
             enum                { [:T_ENUM, text] }
             interface           { [:T_INTERFACE, text] }
+            inout               { [:T_INOUT, text] }
             in                  { [:T_IN, text] }
             out                 { [:T_OUT, text] }
             abstract            { [:T_ABSTRACT, text] }
@@ -94,8 +96,6 @@ rule
             native              { [:T_NATIVE, text] }
             ValueBase           { [:T_VALUEBASE, text] }
 
-            \:\:                { [:T_SCOPE, text] }
-            
             module              { [:T_MODULE, text] }
             octet               { [:T_OCTET, text] }
             any                 { [:T_ANY, text] }
@@ -104,7 +104,6 @@ rule
             attribute           { [:T_ATTRIBUTE, text] }
             exception           { [:T_EXCEPTION, text] }
             oneway              { [:T_ONEWAY, text] }
-            inout               { [:T_INOUT, text] }
             raises              { [:T_RAISES, text] }
             context             { [:T_CONTEXT, text] }
 
