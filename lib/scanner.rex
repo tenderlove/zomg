@@ -1,3 +1,5 @@
+module ZOMG
+module IDL
 class Scanner
 
 macro
@@ -29,10 +31,10 @@ macro
 rule
 
 # [:state]  pattern  [actions]
-            \s\n
+            [\s\n]
             \/\/[^\n]*
             \#pragma[^\n]*\n    { [:T_PRAGMA, text] }
-            \#[^\n]*\n          { preprocessor_directive( yytext ) }
+            \#[^\n]*\n          { [:T_PREPROCESSOR, text] }
             \{                  { [:T_LEFT_CURLY_BRACKET, text] }
             \}                  { [:T_RIGHT_CURLY_BRACKET, text] }
             \[                  { [:T_LEFT_SQUARE_BRACKET, text] }
@@ -126,5 +128,7 @@ rule
             {Int_Literal}       { [:T_INTEGER_LITERAL, text] }
             {Char_Literal}      { [:T_CHARACTER_LITERAL, text] }
             {String_Literal}    { [:T_STRING_LITERAL, text] }
-            .                   { [:T_UNKNOWN, text] }
+            [^\s\n\r]           { [:T_UNKNOWN, text] }
+end
+end
 end
