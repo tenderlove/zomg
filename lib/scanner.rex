@@ -119,14 +119,16 @@ rule
                                   [:T_FLOATING_PT_LITERAL, text]
                                 }
             {Float_Literal3}    { [:T_FLOATING_PT_LITERAL, text] }
+            {Fixed_Literal4}    { [:T_FIXED_PT_LITERAL, text.gsub(/[Dd]/,'')] }
             {Float_Literal4}    { [:T_FLOATING_PT_LITERAL, text] }
+            {Fixed_Literal2}    { [:T_FIXED_PT_LITERAL, text.gsub(/[.dD]/,'')] }
             {Float_Literal5}    { [:T_FLOATING_PT_LITERAL, "#{text}0"] }
             {Float_Literal6}    { [:T_FLOATING_PT_LITERAL, "0#{text}"] }
+            {Fixed_Literal3}    {
+                             [:T_FIXED_PT_LITERAL, "0#{text.gsub(/[dD]/, '')}"]
+                                }
             {Float_Literal7}    { [:T_FLOATING_PT_LITERAL, "0#{text}"] }
-            {Fixed_Literal1}    { [:T_FIXED_PT_LITERAL, text] }
-            {Fixed_Literal2}    { [:T_FIXED_PT_LITERAL, text] }
-            {Fixed_Literal3}    { [:T_FIXED_PT_LITERAL, text] }
-            {Fixed_Literal4}    { [:T_FIXED_PT_LITERAL, text] }
+            {Fixed_Literal1}    { [:T_FIXED_PT_LITERAL, text.gsub(/[dD]/,'')] }
             {Hex_Literal}       { [:T_INTEGER_LITERAL, text] }
             {Oct_Literal}       { [:T_INTEGER_LITERAL, text] }
             {Int_Literal}       { [:T_INTEGER_LITERAL, text] }

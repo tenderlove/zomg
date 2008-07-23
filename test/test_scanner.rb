@@ -119,6 +119,13 @@ class ScannerTest < Test::Unit::TestCase
     :float_lit_6  => [:T_FLOATING_PT_LITERAL, '0.12e10', '.12e10'],
     :float_lit_61 => [:T_FLOATING_PT_LITERAL, '0.12e+10', '.12e+10'],
     :float_lit_7  => [:T_FLOATING_PT_LITERAL, '0.12', '.12'],
+    :fixed_lit_1  => [:T_FIXED_PT_LITERAL, '123', '123d'],
+    :fixed_lit_2  => [:T_FIXED_PT_LITERAL, '123', '123.d'],
+    :fixed_lit_21 => [:T_FIXED_PT_LITERAL, '123', '123.D'],
+    :fixed_lit_3  => [:T_FIXED_PT_LITERAL, '0.123', '.123d'],
+    :fixed_lit_31 => [:T_FIXED_PT_LITERAL, '0.123', '.123D'],
+    :fixed_lit_4  => [:T_FIXED_PT_LITERAL, '0.123', '0.123d'],
+    :fixed_lit_41 => [:T_FIXED_PT_LITERAL, '0.123', '0.123D'],
   }.each do |type, token|
     define_method(:"test_#{type}") do
       parse_text = token.length == 3 ? token.pop : token.last
