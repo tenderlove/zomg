@@ -16,12 +16,12 @@ macro
   Char              ([^\n\t\"\'\\\]|{Esc_Sequence})
   Char_Literal      '({Char}|\")'
   String_Literal    "({Char}|')*"
-  Float_Literal1    {Digits}\.{Digits}?[eE][\+-]?{Digits}  
+  Float_Literal1    {Digits}\.({Digits})?[eE][\+-]?{Digits}
   Float_Literal2    {Digits}[eE][\+-]?{Digits}
   Float_Literal3    {Digits}\.{Digits}
   Float_Literal4    {Digits}\.
-  Float_Literal5    \.{Digits} 
-  Float_Literal6    \.{Digits}[eE][\+-]?{Digits}  
+  Float_Literal5    \.{Digits}[eE][\+-]?{Digits}
+  Float_Literal6    \.{Digits}
   Fixed_Literal1    {Digits}[dD]
   Fixed_Literal2    {Digits}\.[dD]
   Fixed_Literal3    \.{Digits}[dD]
