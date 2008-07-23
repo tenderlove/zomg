@@ -59,6 +59,34 @@ class ScannerTest < Test::Unit::TestCase
     ], " (\n,) \n")
   end
 
+  def test_semicolon
+    assert_tokens([[:T_SEMICOLON, ";"]], ";")
+    assert_tokens([
+      [:T_LEFT_PARANTHESIS, "("],
+      [:T_SEMICOLON, ";"],
+      [:T_RIGHT_PARANTHESIS, ")"]
+    ], " (\n;) \n")
+  end
+
+  def test_equal
+    assert_tokens([[:T_EQUAL, "="]], "=")
+    assert_tokens([
+      [:T_LEFT_PARANTHESIS, "("],
+      [:T_EQUAL, "="],
+      [:T_RIGHT_PARANTHESIS, ")"]
+    ], " (\n=) \n")
+  end
+
+  def test_shift_right
+    assert_tokens([[:T_SHIFTRIGHT, ">>"]], ">>")
+    assert_tokens([
+      [:T_LEFT_SQUARE_BRACKET, "["],
+      [:T_SHIFTRIGHT, ">>"],
+      [:T_RIGHT_SQUARE_BRACKET, "]"]
+    ], " [\n>>] \n")
+  end
+
+
   def assert_tokens(tokens, string)
     @scanner.scan_evaluate(string)
     tokens.each do |token|
