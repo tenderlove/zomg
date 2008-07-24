@@ -1,0 +1,45 @@
+// Description        : CORBA IDL containing an interface that
+//                      has a one-way method invocation
+
+/**
+* Module that contains interfaces for simple tests. IDLs contained in
+* this module includes the following:
+* <UL>
+* <LI>Simple data types including strings, longs, chars, etc.
+* <LI>Interface that contains One-way operations
+* </UL>
+* @author Kunal Ashar
+* @version 1.0
+*/
+module OneWaySimpleTest
+{
+    /**
+    * One-way interface for simple data types. Clients and servers written
+    * using this interface can be used with all services.
+    * @author Kunal Ashar
+    * @version 1.0
+    */
+    interface sim1wcor
+    {
+        /**
+        * Simple one-way method that tests the adapter's core functionality.
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @version 1.0
+        * @param String inStr: Pass in a string parameter to the method. The
+        * direction is "in" only. Typically, the string literal string
+        * "Invoking..." is passed into this parameter.
+        * @param Long inLong: Pass a Long parameter to the method. The direction
+        * is "in" only. Typically, the value 99999999 is passed into the
+        * parameter
+        * @return void
+        */
+        oneway void OneWayMethod
+        (
+            in string inStr,
+            in long inLong
+        );
+    };
+};

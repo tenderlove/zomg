@@ -1,7 +1,6 @@
-require 'test/unit'
-require 'zomg'
+require 'helper'
 
-class ParserTest < Test::Unit::TestCase
+class ParserTest < ZOMG::Test
   def setup
     @parser = ZOMG::IDL::Parser.new
   end
@@ -10,5 +9,9 @@ class ParserTest < Test::Unit::TestCase
     assert_nothing_raised {
       ZOMG::IDL::Parser.new
     }
+  end
+
+  def test_parse_simple
+    @parser.parse_file(simple('simple1.idl'))
   end
 end

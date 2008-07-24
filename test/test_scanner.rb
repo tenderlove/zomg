@@ -1,9 +1,30 @@
-require 'test/unit'
-require 'zomg'
+require 'helper'
 
-class ScannerTest < Test::Unit::TestCase
+class ScannerTest < ZOMG::Test
   def setup
     @scanner = ZOMG::IDL::Scanner.new
+  end
+
+  def test_load_file
+    @scanner.load_file(simple 'simple1.idl')
+    tokens = []
+    while token = @scanner.next_token
+      tokens << token
+    end
+    assert tokens.length > 0
+  end
+
+  def test_instr
+    assert_tokens([
+                  [:T_IN, "in"],
+                  [:T_STRING, "string"],
+                  [:T_IDENTIFIER, "inStr"],
+    ], "in string inStr")
+  end
+
+  def test_comment
+    assert_tokens([[:T_COMMENT, "// boner"]], "// boner")
+    assert_tokens([[:T_COMMENT, "/* boner */"]], "/* boner */")
   end
 
   def test_pragma
@@ -41,24 +62,8 @@ class ScannerTest < Test::Unit::TestCase
     ], " ( ) \n")
   end
 
+  # Test literals
   {
-    :minus        => [:T_MINUS_SIGN, '-'],
-    :plus         => [:T_PLUS_SIGN, '+'],
-    :shift_left   => [:T_SHIFTLEFT, '<<'],
-    :shift_right  => [:T_SHIFTRIGHT, '>>'],
-    :equal        => [:T_EQUAL, '='],
-    :semicolon    => [:T_SEMICOLON, ';'],
-    :comma        => [:T_COMMA, ','],
-    :colon        => [:T_COLON, ':'],
-    :asterisk     => [:T_ASTERISK, '*'],
-    :solidus      => [:T_SOLIDUS, '/'],
-    :percent      => [:T_PERCENT_SIGN, '%'],
-    :tilde        => [:T_TILDE, '~'],
-    :pipe         => [:T_VERTICAL_LIN, '|'],
-    :caret        => [:T_CIRCUMFLEX, '^'],
-    :ampersand    => [:T_AMPERSAND, '&'],
-    :less_than    => [:T_LESS_THAN_SIGN, '<'],
-    :greater_than => [:T_GREATER_THAN_SIGN, '>'],
     :const        => [:T_CONST, 'const'],
     :typedef      => [:T_TYPEDEF, 'typedef'],
     :float        => [:T_FLOAT, 'float'],
@@ -73,8 +78,6 @@ class ScannerTest < Test::Unit::TestCase
     :unsigned     => [:T_UNSIGNED, 'unsigned'],
     :long         => [:T_LONG, 'long'],
     :short        => [:T_SHORT, 'short'],
-    :FALSE        => [:T_FALSE, 'FALSE'],
-    :TRUE         => [:T_TRUE, 'TRUE'],
     :struct       => [:T_STRUCT, 'struct'],
     :union        => [:T_UNION, 'union'],
     :switch       => [:T_SWITCH, 'switch'],
@@ -93,8 +96,6 @@ class ScannerTest < Test::Unit::TestCase
     :private      => [:T_PRIVATE, 'private'],
     :factory      => [:T_FACTORY, 'factory'],
     :native       => [:T_NATIVE, 'native'],
-    :ValueBase    => [:T_VALUEBASE, 'ValueBase'],
-    :scope        => [:T_SCOPE, '::'],
     :module       => [:T_MODULE, 'module'],
     :octet        => [:T_OCTET, 'octet'],
     :any          => [:T_ANY, 'any'],
@@ -106,6 +107,45 @@ class ScannerTest < Test::Unit::TestCase
     :inout        => [:T_INOUT, 'inout'],
     :raises       => [:T_RAISES, 'raises'],
     :context      => [:T_CONTEXT, 'context'],
+  }.each do |type, token|
+    define_method(:"test_#{type}") do
+      parse_text = token.length == 3 ? token.pop : token.last
+      assert_tokens([token], parse_text)
+      assert_tokens([
+        [:T_LEFT_SQUARE_BRACKET, "["],
+        token,
+        [:T_RIGHT_SQUARE_BRACKET, "]"]
+      ], " [\n#{parse_text}] \n")
+      assert_tokens([
+                    [:T_IN, "in"],
+                    [:T_STRING, "string"],
+                    [:T_IDENTIFIER, "#{parse_text}Str"],
+      ], "in string #{parse_text}Str")
+    end
+  end
+
+  {
+    :minus        => [:T_MINUS_SIGN, '-'],
+    :plus         => [:T_PLUS_SIGN, '+'],
+    :shift_left   => [:T_SHIFTLEFT, '<<'],
+    :shift_right  => [:T_SHIFTRIGHT, '>>'],
+    :equal        => [:T_EQUAL, '='],
+    :semicolon    => [:T_SEMICOLON, ';'],
+    :comma        => [:T_COMMA, ','],
+    :colon        => [:T_COLON, ':'],
+    :asterisk     => [:T_ASTERISK, '*'],
+    :solidus      => [:T_SOLIDUS, '/'],
+    :percent      => [:T_PERCENT_SIGN, '%'],
+    :tilde        => [:T_TILDE, '~'],
+    :pipe         => [:T_VERTICAL_LIN, '|'],
+    :caret        => [:T_CIRCUMFLEX, '^'],
+    :ampersand    => [:T_AMPERSAND, '&'],
+    :less_than    => [:T_LESS_THAN_SIGN, '<'],
+    :greater_than => [:T_GREATER_THAN_SIGN, '>'],
+    :FALSE        => [:T_FALSE, 'FALSE'],
+    :TRUE         => [:T_TRUE, 'TRUE'],
+    :ValueBase    => [:T_VALUEBASE, 'ValueBase'],
+    :scope        => [:T_SCOPE, '::'],
     :object       => [:T_OBJECT, 'Object'],
     :principal    => [:T_PRINCIPAL, 'Principal'],
     :identifier   => [:T_IDENTIFIER, 'hello'],
@@ -142,7 +182,7 @@ class ScannerTest < Test::Unit::TestCase
         token,
         [:T_RIGHT_SQUARE_BRACKET, "]"]
       ], " [\n#{parse_text}] \n")
-      end
+    end
   end
 
   def assert_tokens(tokens, string)

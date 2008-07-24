@@ -9,6 +9,7 @@ macro
   Int_Literal       [1-9][0-9]*
   Oct_Literal       0{Oct_Digit}*
   Hex_Literal       0[xX]{Hex_Digit}*
+  Comment           \/\*(.|[\r\n])*?\*\/
   Esc_Sequence1     \\\\\\\\\[ntvbrfa\\\\?\\\\'\"]
   Esc_Sequence2     \\\\\\\\\{Oct_Digit}{1,3}
   Esc_Sequence3     \\\\\\\\\[xX]{Hex_Digit}{1,2}
@@ -28,12 +29,14 @@ macro
   Fixed_Literal3    \.{Digits}[dD]
   Fixed_Literal4    {Digits}\.{Digits}[dD]
   CORBA_Identifier  [a-zA-Z_][a-zA-Z0-9_]*
+  IDENT             [a-zA-Z0-9_]
 
 rule
 
 # [:state]  pattern  [actions]
             [\s\n\r]
-            \/\/[^\n]*
+            {Comment}           { [:T_COMMENT, text] }
+            \/\/[^\n]*          { [:T_COMMENT, text] }
             \#pragma[^\n]*\n    { [:T_PRAGMA, text] }
             \#[^\n]*\n          { [:T_PREPROCESSOR, text] }
             \{                  { [:T_LEFT_CURLY_BRACKET, text] }
@@ -60,53 +63,53 @@ rule
             &                   { [:T_AMPERSAND,text] }
             <                   { [:T_LESS_THAN_SIGN,text] }
             >                   { [:T_GREATER_THAN_SIGN, text] }
-            const               { [:T_CONST, text] }
-            typedef             { [:T_TYPEDEF, text] }
-            float               { [:T_FLOAT, text] }
-            double              { [:T_DOUBLE, text] }
-            char                { [:T_CHAR, text] }
-            wchar               { [:T_WCHAR, text] }
-            fixed               { [:T_FIXED, text] }
-            boolean             { [:T_BOOLEAN, text] }
-            string              { [:T_STRING, text] }
-            wstring             { [:T_WSTRING, text] }
-            void                { [:T_VOID, text] }
-            unsigned            { [:T_UNSIGNED, text] }
-            long                { [:T_LONG, text] }
-            short               { [:T_SHORT, text] }
-            FALSE               { [:T_FALSE, text] }
-            TRUE                { [:T_TRUE, text] }
-            struct              { [:T_STRUCT, text] }
-            union               { [:T_UNION, text] }
-            switch              { [:T_SWITCH, text] }
-            case                { [:T_CASE, text] }
-            default             { [:T_DEFAULT, text] }
-            enum                { [:T_ENUM, text] }
-            interface           { [:T_INTERFACE, text] }
-            inout               { [:T_INOUT, text] }
-            in                  { [:T_IN, text] }
-            out                 { [:T_OUT, text] }
-            abstract            { [:T_ABSTRACT, text] }
-            valuetype           { [:T_VALUETYPE, text] }
-            truncatable         { [:T_TRUNCATABLE, text] }
-            supports            { [:T_SUPPORTS, text] }
-            custom              { [:T_CUSTOM, text] }
-            public              { [:T_PUBLIC, text] }
-            private             { [:T_PRIVATE, text] }
-            factory             { [:T_FACTORY, text] }
-            native              { [:T_NATIVE, text] }
-            ValueBase           { [:T_VALUEBASE, text] }
+            const(?!{IDENT})      { [:T_CONST, text] }
+            typedef(?!{IDENT})    { [:T_TYPEDEF, text] }
+            float(?!{IDENT})      { [:T_FLOAT, text] }
+            double(?!{IDENT})     { [:T_DOUBLE, text] }
+            char(?!{IDENT})       { [:T_CHAR, text] }
+            wchar(?!{IDENT})      { [:T_WCHAR, text] }
+            fixed(?!{IDENT})      { [:T_FIXED, text] }
+            boolean(?!{IDENT})    { [:T_BOOLEAN, text] }
+            string(?!{IDENT})     { [:T_STRING, text] }
+            wstring(?!{IDENT})    { [:T_WSTRING, text] }
+            void(?!{IDENT})       { [:T_VOID, text] }
+            unsigned(?!{IDENT})   { [:T_UNSIGNED, text] }
+            long(?!{IDENT})       { [:T_LONG, text] }
+            short(?!{IDENT})      { [:T_SHORT, text] }
+            FALSE                 { [:T_FALSE, text] }
+            TRUE                  { [:T_TRUE, text] }
+            struct(?!{IDENT})     { [:T_STRUCT, text] }
+            union(?!{IDENT})      { [:T_UNION, text] }
+            switch(?!{IDENT})     { [:T_SWITCH, text] }
+            case(?!{IDENT})       { [:T_CASE, text] }
+            default(?!{IDENT})    { [:T_DEFAULT, text] }
+            enum(?!{IDENT})       { [:T_ENUM, text] }
+            interface(?!{IDENT})  { [:T_INTERFACE, text] }
+            inout(?!{IDENT})      { [:T_INOUT, text] }
+            in(?!{IDENT})         { [:T_IN, text] }
+            out(?!{IDENT})          { [:T_OUT, text] }
+            abstract(?!{IDENT})     { [:T_ABSTRACT, text] }
+            valuetype(?!{IDENT})    { [:T_VALUETYPE, text] }
+            truncatable(?!{IDENT})  { [:T_TRUNCATABLE, text] }
+            supports(?!{IDENT})     { [:T_SUPPORTS, text] }
+            custom(?!{IDENT})       { [:T_CUSTOM, text] }
+            public(?!{IDENT})       { [:T_PUBLIC, text] }
+            private(?!{IDENT})      { [:T_PRIVATE, text] }
+            factory(?!{IDENT})      { [:T_FACTORY, text] }
+            native(?!{IDENT})       { [:T_NATIVE, text] }
+            ValueBase             { [:T_VALUEBASE, text] }
 
-            module              { [:T_MODULE, text] }
-            octet               { [:T_OCTET, text] }
-            any                 { [:T_ANY, text] }
-            sequence            { [:T_SEQUENCE, text] }
-            readonly            { [:T_READONLY, text] }
-            attribute           { [:T_ATTRIBUTE, text] }
-            exception           { [:T_EXCEPTION, text] }
-            oneway              { [:T_ONEWAY, text] }
-            raises              { [:T_RAISES, text] }
-            context             { [:T_CONTEXT, text] }
+            module(?!{IDENT})     { [:T_MODULE, text] }
+            octet(?!{IDENT})      { [:T_OCTET, text] }
+            any(?!{IDENT})        { [:T_ANY, text] }
+            sequence(?!{IDENT})   { [:T_SEQUENCE, text] }
+            readonly(?!{IDENT})   { [:T_READONLY, text] }
+            attribute(?!{IDENT})  { [:T_ATTRIBUTE, text] }
+            exception(?!{IDENT})  { [:T_EXCEPTION, text] }
+            oneway(?!{IDENT})     { [:T_ONEWAY, text] }
+            raises(?!{IDENT})     { [:T_RAISES, text] }
+            context(?!{IDENT})    { [:T_CONTEXT, text] }
 
             Object              { [:T_OBJECT, text] }
             Principal           { [:T_PRINCIPAL, text] }

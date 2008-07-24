@@ -15,7 +15,7 @@ Hoe.new('zomg', '1.0.0') do |p|
 end
 
 file GENERATED_LEXER => 'lib/yacc.y' do |t|
-  sh "racc -o #{t.name} #{t.prerequisites.first}"
+  sh "racc -g -o #{t.name} #{t.prerequisites.first}"
 end
 
 file GENERATED_SCANNER => 'lib/scanner.rex' do |t|

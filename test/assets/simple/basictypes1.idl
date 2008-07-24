@@ -1,0 +1,80 @@
+// Description     : Tests most basic types used by all ORBs
+
+struct BasicTypes
+{
+    short           argShort;
+    unsigned short  argUShort;
+    long            argLong;
+    unsigned long   argULong;
+    float           argFloat;
+    double          argDouble;
+    char            argChar;
+    string          argString;
+    boolean         argBoolean;
+    octet           argOctet;
+};
+
+enum Color { blue, green, red, black };
+
+union U switch( long ) {
+   case 10: string str;
+   case 20: short s;
+   case 50: long r;
+   case 60: float f;
+   default: char c;
+};
+
+typedef long IntSequence[10];
+
+typedef sequence<long> longSeq;
+
+interface RequestBht
+{
+    //
+    // Basic types
+    //
+        void            requestVoid     ( );
+        short           requestShort    ( in short           arg );
+        unsigned short  requestUShort   ( in unsigned short  arg );
+        long            requestLong     ( in long            arg );
+        unsigned long   requestULong    ( in unsigned long   arg );
+        float           requestFloat    ( in float           arg );
+        double          requestDouble   ( in double          arg );
+        char            requestChar     ( in char            arg );
+        string          requestString   ( in string          arg );
+        boolean         requestBoolean  ( in boolean         arg );
+        octet           requestOctet    ( in octet           arg );
+        IntSequence     requestArray    ( in IntSequence arg);
+        Color           requestEnum     ( in Color arg);
+        U               requestUnion    ( in U arg);
+        BasicTypes      requestBasicTypes( in BasicTypes      arg );
+
+        oneway  void  onewayVoid     ( );
+        oneway  void  onewayShort    ( in short           arg );
+        oneway  void  onewayUShort   ( in unsigned short  arg );
+        oneway  void  onewayLong     ( in long            arg );
+        oneway  void  onewayULong    ( in unsigned long   arg );
+        oneway  void  onewayFloat    ( in float           arg );
+        oneway  void  onewayDouble   ( in double          arg );
+        oneway  void  onewayChar     ( in char            arg );
+        oneway  void  onewayString   ( in string          arg );
+        oneway  void  onewayBoolean  ( in boolean         arg );
+        oneway  void  onewayOctet    ( in octet           arg );
+        oneway  void  onewayArray    ( in IntSequence arg);
+        oneway  void  onewayEnum     ( in Color arg);
+        oneway  void  onewayUnion    ( in U arg);
+
+        //
+        // IN, OUT, INOUT, RESULT tests
+        //
+        short   request_short       ( in short  i1, out short  i2, inout short  i3 );
+        long    request_long        ( in long   i1, out long   i2, inout long   i3 );
+        float   request_float       ( in float  i1, out float  i2, inout float  i3 );
+        string  request_string      ( in string i1, out string i2, inout string i3 );
+        octet   request_octet       ( in octet  i1, out octet  i2, inout octet  i3 );
+        IntSequence request_array   ( in IntSequence i1, out IntSequence i2, inout IntSequence i3);
+        Color request_enum          ( in Color i1, out Color i2, inout Color i3);
+        U     request_union         ( in U i1, out U i2, inout U i3);
+
+};
+

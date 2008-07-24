@@ -1,0 +1,63 @@
+typedef short shortType;
+struct zahl {
+
+  short      day;
+  short      hour;
+};
+
+union testUnion switch(short)
+{
+    case 0:     short s;
+    case 1:         long l;
+    default:     double d;
+    };
+
+enum size { SMALL, MEDIUM, LARGE };
+
+
+interface Hello
+{
+  exception NoValid{};
+  union U switch (char)
+  {
+
+    case 'L':
+      long  long_mem;
+    case 'c':
+    case 'C':
+      char  char_mem;
+    default:
+      string    string_mem;
+  };
+
+  typedef long LongArray[3];
+  typedef sequence<long> longSeq ;
+
+  void          lookForValue() raises(NoValid);
+  void          say_hello();
+  double        returnDouble();
+  long          returnLong();
+  unsigned long     returnUlong();
+  float         returnFloat();
+  long long         returnLonglong();
+  unsigned long long    returnUlonglong();
+  char          returnChar();
+  boolean       returnBoolean();
+  shortType         returnShort();
+  unsigned short    returnUshort();
+  octet             returnOctet();
+  zahl              returnStruct();
+  size          returnEnum();
+  string            returnString();
+  wstring       returnWstring();
+  longSeq       returnSequence();
+  U             returnUnion();
+  LongArray     returnArray();
+  any           returnTKWstring();
+  any           returnTKStruct();
+  any           returnTKUnion();
+  any           returnTKEnum();
+  any           returnTKSequence();
+  any           returnTKArray();
+
+};

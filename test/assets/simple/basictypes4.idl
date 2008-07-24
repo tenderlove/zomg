@@ -1,0 +1,73 @@
+module DCOM_Tests // OMG IDL
+{
+    interface BasicTypesTest
+    {
+        typedef string<10> BndString;
+
+        attribute boolean boolTest;
+        attribute char charTest;
+        attribute double doubleTest;
+        attribute float floatTest;
+        attribute long longTest;
+        attribute octet octetTest;
+        attribute short shortTest;
+        attribute string stringTest;
+        attribute BndString stringnTest;
+        attribute unsigned long ulongTest;
+        attribute unsigned short ushortTest;
+        readonly attribute short readonlyShortTest;
+
+        // Sets all the attributes
+        boolean setAll (
+            in boolean boolTest,
+            in char charTest,
+            in double doubleTest,
+            in float floatTest,
+            in long longTest,
+            in octet octetTest,
+            in short shortTest,
+            in string stringTest,
+            in BndString stringnTest,
+            in unsigned long ulongTest,
+            in unsigned short ushortTest);
+
+        // Gets all the attributes
+        boolean getAll (
+            out boolean boolTest,
+            out char charTest,
+            out double doubleTest,
+            out float floatTest,
+            out long longTest,
+            out octet octetTest,
+            out short shortTest,
+            out string stringTest,
+            out BndString stringnTest,
+            out unsigned long ulongTest,
+            out unsigned short ushortTest);
+
+        boolean setAndIncrement (
+            inout boolean boolTest,
+            inout char charTest,
+            inout double doubleTest,
+            inout float floatTest,
+            inout long longTest,
+            inout octet octetTest,
+            inout short shortTest,
+            inout string stringTest,
+            inout BndString stringnTest,
+            inout unsigned long ulongTest,
+            inout unsigned short ushortTest);
+
+        boolean boolReturn ();
+        char charReturn ();
+        double doubleReturn();
+        float floatReturn();
+        long longReturn ();
+        octet octetReturn();
+        short shortReturn ();
+        string stringReturn();
+        BndString stringnReturn();
+        unsigned long ulongReturn ();
+        unsigned short ushortReturn();
+    }; // End of Interface TypesTest
+}; // End of Module MyModule

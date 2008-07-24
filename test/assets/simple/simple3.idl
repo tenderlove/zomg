@@ -1,0 +1,36 @@
+// Description        : CORBA IDL containing an attribute that causes the
+//                      adapter to perform both one & two-way invocations
+
+/**
+* Module that contains interfaces for simple tests. IDLs contained in
+* this module includes the following:
+* <UL>
+* <LI>Simple data types including strings, longs, chars, etc.
+* <LI>Interface that contains attributes
+* </UL>
+* @author Kunal Ashar
+* @version 1.0
+*/
+module AttributesSimpleTest
+{
+    /**
+    * Attribute interface for simple data types. Clients and servers written
+    * using this interface can be used with all services.
+    * @author Kunal Ashar
+    * @version 1.0
+    */
+    interface simattrcor
+    {
+        /**
+        * Simple attribute that tests the adapter's core functionality.
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @version 1.0
+        * @param String test: A CORBA attribute that gets mapped to get_test
+        * and set_test in the adapter
+        */
+        attribute string test;
+    };
+};

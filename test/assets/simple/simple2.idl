@@ -1,0 +1,61 @@
+// Description        : CORBA IDL containing an interface that
+//                      has a two-way method invocation and a user exception
+//****************************************************************************
+
+/**
+* Module that contains interfaces for simple tests. IDLs contained in
+* this module includes the following:
+* <UL>
+* <LI>Simple data types including strings, longs, chars, etc.
+* <LI>Interface that contains Two-way operations
+* </UL>
+* @author Kunal Ashar
+* @version 1.0
+*/
+module TwoWaySimpleTest
+{
+    /**
+    * User exception that can be returned by the CORBA server
+    * @author Kunal Ashar
+    * @version 1.0
+    */
+    exception SimpleEx { };
+
+    /**
+    * Two-way interface for simple data types. Clients and servers written
+    * using this interface can be used with all services.
+    * @author Kunal Ashar
+    * @version 1.0
+    */
+    interface sim2wcor
+    {
+        /**
+        * Simple two-way method that tests the adapter's core functionality.
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @version 1.0
+        * @param String inStr: Pass in a string parameter to the method. The
+        * direction is "in" only. Typically, the string literal string
+        * "Invoking..." is passed into this parameter.
+        * @param Long inoutLong: Pass and return back a Long parameter to/from
+        * the method. The direction is both "in" and "out". Typically, the
+        * value 0 is passed into the parameter, and the value 99999999 is
+        * returned back.
+        * @param uShort outUShort: Return back an unsigned Short parameter from
+        * the method. The direction is "out" only . Typically, the value 1 is
+        * returned back via the parameter.
+        * @return String: Return a String data type via the return type.
+        * Typically, the string literal "Returning..." is sent through this
+        * parameter.
+        */
+        string TwoWayMethod
+        (
+            in string inStr,
+            inout long inoutLong,
+            out unsigned short outUShort
+        )
+        raises(SimpleEx);
+    };
+};

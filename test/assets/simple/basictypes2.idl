@@ -1,0 +1,197 @@
+// Description     : Tests most basic types used by all ORBs
+
+struct BasicTypes
+{
+    short           argShort;
+    unsigned short  argUShort;
+    long            argLong;
+    unsigned long   argULong;
+    float           argFloat;
+    double          argDouble;
+    char            argChar;
+    string          argString;
+    boolean         argBoolean;
+    octet           argOctet;
+};
+
+
+typedef long IntSequence[10];
+
+
+
+interface C2RTwowayVoid
+{
+    void twowayVoid ( );
+};
+
+interface C2RTwowayShort
+{
+    short twowayShort ( in short arg );
+};
+
+interface C2RTwowayUShort
+{
+    unsigned short twowayUShort ( in unsigned short arg );
+};
+
+interface C2RTwowayLong
+{
+    long twowayLong ( in long arg );
+};
+
+interface C2RTwowayULong
+{
+    unsigned long twowayULong ( in unsigned long arg );
+};
+
+interface C2RTwowayFloat
+{
+    float twowayFloat ( in float arg );
+};
+
+interface C2RTwowayDouble
+{
+    double twowayDouble ( in double arg );
+};
+
+interface C2RTwowayChar
+{
+    char twowayChar ( in char arg );
+};
+
+interface C2RTwowayString
+{
+    string twowayString ( in string arg );
+};
+
+interface C2RTwowayBoolean
+{
+    boolean twowayBoolean ( in boolean arg );
+};
+
+interface C2RTwowayOctet
+{
+    octet twowayOctet ( in octet arg );
+};
+
+interface C2RTwowayShortIO
+{
+    short twowayShortIO ( in short i1, out short i2, inout short i3 );
+};
+
+interface C2RTwowayLongIO
+{
+    long twowayLongIO ( in long i1, out long i2, inout long i3 );
+};
+
+interface C2RTwowayFloatIO
+{
+    float twowayFloatIO ( in float i1, out float i2, inout float i3 );
+};
+
+interface C2RTwowayStringIO
+{
+    string twowayStringIO ( in string i1, out string i2, inout string i3 );
+};
+
+
+interface C2ROnewayVoid
+{
+    oneway void onewayVoid ( );
+};
+
+interface C2ROnewayShort
+{
+    oneway void onewayShort ( in short arg );
+};
+
+interface C2ROnewayUShort
+{
+    oneway void  onewayUShort ( in unsigned short arg );
+};
+
+interface C2ROnewayLong
+{
+    oneway void  onewayLong ( in long arg );
+};
+
+interface C2ROnewayULong
+{
+    oneway void  onewayULong ( in unsigned long arg );
+};
+
+interface C2ROnewayFloat
+{
+    oneway void  onewayFloat ( in float arg );
+};
+
+interface C2ROnewayDouble
+{
+    oneway void  onewayDouble ( in double arg );
+};
+
+interface C2ROnewayChar
+{
+    oneway void  onewayChar ( in char arg );
+};
+
+interface C2ROnewayString
+{
+    oneway void  onewayString ( in string arg );
+};
+
+interface C2ROnewayBoolean
+{
+    oneway void  onewayBoolean ( in boolean arg );
+};
+
+interface C2ROnewayOctet
+{
+    oneway void  onewayOctet (in octet arg );
+};
+
+
+interface RequestSenderC2R
+{
+    //
+    // Basic types
+    //
+    void            requestVoid     ( );
+    short           requestShort    ( in short           arg );
+    unsigned short  requestUShort   ( in unsigned short  arg );
+    long            requestLong     ( in long            arg );
+    unsigned long   requestULong    ( in unsigned long   arg );
+    float           requestFloat    ( in float           arg );
+    double          requestDouble   ( in double          arg );
+    char            requestChar     ( in char            arg );
+    string          requestString   ( in string          arg );
+    boolean         requestBoolean  ( in boolean         arg );
+    octet           requestOctet    ( in octet           arg );
+
+    oneway  void  onewayVoid     ( );
+    oneway  void  onewayShort    ( in short           arg );
+    oneway  void  onewayUShort   ( in unsigned short  arg );
+    oneway  void  onewayLong     ( in long            arg );
+    oneway  void  onewayULong    ( in unsigned long   arg );
+    oneway  void  onewayFloat    ( in float           arg );
+    oneway  void  onewayDouble   ( in double          arg );
+    oneway  void  onewayChar     ( in char            arg );
+    oneway  void  onewayString   ( in string          arg );
+    oneway  void  onewayBoolean  ( in boolean         arg );
+    oneway  void  onewayOctet    ( in octet           arg );
+
+    //
+    // Complex types
+    //
+    BasicTypes   requestBasicTypes   ( in BasicTypes      arg );
+    IntSequence  requestIntSequence  ( in IntSequence     arg );
+
+    //
+    // IN, OUT, INOUT, RESULT tests
+    //
+    short   request_IO_1  ( in short  i1, out short  i2, inout short  i3 );
+    long    request_IO_2  ( in long   i1, out long   i2, inout long   i3 );
+    float   request_IO_3  ( in float  i1, out float  i2, inout float  i3 );
+    string  request_IO_4  ( in string i1, out string i2, inout string i3 );
+
+};
