@@ -1,6 +1,11 @@
 module ZOMG
   module IDL
     class Parser < Lexer
+      class << self
+        def parse_file(filename)
+          new.parse_file(filename)
+        end
+      end
       def initialize
         @scanner = Scanner.new
       end
