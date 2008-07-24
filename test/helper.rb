@@ -3,6 +3,7 @@ require 'zomg'
 
 module ZOMG
   class Test < Test::Unit::TestCase
+    include ZOMG::IDL::Nodes
     ASSETS = File.expand_path(File.join(File.dirname(__FILE__), 'assets'))
 
     undef :default_test

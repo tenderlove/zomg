@@ -12,6 +12,17 @@ class ParserTest < ZOMG::Test
   end
 
   def test_parse_simple
-    @parser.parse_file(simple('simple1.idl'))
+    tree = @parser.parse_file(simple('simple1.idl'))
+    assert_instance_of(Specification, tree)
+    assert_equal(1, tree.children.length)
+
+    idl_module = tree.children.first
+    assert_instance_of(Module, idl_module)
+    assert_equal('OneWaySimpleTest', idl_module.name)
+
+    assert_equal(1, idl_module.children.length)
+    idl_interface = idl_module.children.first
+    assert_instance_of(Interface, idl_interface)
+    assert_equal('sim1wcor', idl_interface.name)
   end
 end

@@ -6,7 +6,7 @@ class ScannerTest < ZOMG::Test
   end
 
   def test_load_file
-    @scanner.load_file(simple 'simple1.idl')
+    @scanner.load_file(simple('simple1.idl'))
     tokens = []
     while token = @scanner.next_token
       tokens << token

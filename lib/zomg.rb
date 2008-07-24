@@ -1,3 +1,11 @@
+%w{
+  node
+  specification
+  module
+  interface
+}.each { |node_type|
+  require "zomg/idl/nodes/#{node_type}"
+}
 require 'zomg/idl/scanner'
 require 'zomg/idl/lexer'
 require 'zomg/idl/parser'

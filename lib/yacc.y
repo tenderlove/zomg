@@ -85,13 +85,13 @@ rule
 
 /*1*/
 specification
-	: /*empty*/
-	| definitions
+	: /*empty*/   { result = Specification.new([]) }
+	| definitions { result = Specification.new(val[0]) }
 	;
 
 	
 definitions
-	: definition
+	: definition { result = val }
 	| definition definitions
 	;
 
@@ -108,7 +108,7 @@ definition
 /*3*/
 module
 	: T_MODULE T_IDENTIFIER T_LEFT_CURLY_BRACKET
-                   definitions T_RIGHT_CURLY_BRACKET
+       definitions T_RIGHT_CURLY_BRACKET { result = Module.new(val[1], val[3]) }
 	;
 
 /*4*/
@@ -120,7 +120,7 @@ interface
 /*5*/
 interface_dcl
 	: interface_header T_LEFT_CURLY_BRACKET interface_body
-                                         T_RIGHT_CURLY_BRACKET
+      T_RIGHT_CURLY_BRACKET { val[0].children = val[2] }
 	;
 
 /*6*/
@@ -131,7 +131,7 @@ forward_dcl
 
 /*7*/
 interface_header
-	: T_INTERFACE T_IDENTIFIER
+	: T_INTERFACE T_IDENTIFIER { result = Interface.new(val[1], [], false) }
 	| T_INTERFACE T_IDENTIFIER interface_inheritance_spec
 	| T_ABSTRACT T_INTERFACE T_IDENTIFIER
 	| T_ABSTRACT T_INTERFACE T_IDENTIFIER interface_inheritance_spec
@@ -772,3 +772,6 @@ value_base_type
 principal_type
 	: T_PRINCIPAL
 	;
+
+---- inner
+  include ZOMG::IDL::Nodes
