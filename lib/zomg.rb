@@ -6,6 +6,7 @@
   operation
   parameter
   exception
+  attribute
 }.each { |node_type|
   require "zomg/idl/nodes/#{node_type}"
 }

@@ -661,12 +661,14 @@ fixed_array_size
 
 /*85*/
 attr_dcl
-	: T_ATTRIBUTE param_type_spec simple_declarators
+	: T_ATTRIBUTE param_type_spec simple_declarators {
+      result = Attribute.new(val[1], val[2])
+    }
 	| T_READONLY T_ATTRIBUTE param_type_spec simple_declarators
 	; 
 
 simple_declarators
-	: simple_declarator
+	: simple_declarator { result = val }
 	| simple_declarator T_COMMA simple_declarators
 	;
 
