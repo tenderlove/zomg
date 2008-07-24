@@ -92,7 +92,7 @@ specification
 	
 definitions
 	: definition { result = val }
-	| definition definitions
+	| definition definitions { result = val.flatten }
 	;
 
 /*2*/
@@ -167,7 +167,7 @@ interface_names
 	;
 
 scoped_names
-	: scoped_name
+	: scoped_name { result = val }
 	| scoped_name T_COMMA scoped_names
 	;
 
@@ -179,7 +179,7 @@ interface_name
 /*12*/
 scoped_name
 	: T_IDENTIFIER
-        | T_SCOPE T_IDENTIFIER
+  | T_SCOPE T_IDENTIFIER
 	| scoped_name T_SCOPE T_IDENTIFIER
 	;
 
@@ -509,7 +509,7 @@ unsigned_int
 
 /*60*/
 unsigned_short_int
-	: T_UNSIGNED T_SHORT
+	: T_UNSIGNED T_SHORT { result = val.join(' ') }
 	;
 
 /*61*/
@@ -673,7 +673,7 @@ simple_declarators
 /*86*/
 except_dcl
 	: T_EXCEPTION T_IDENTIFIER T_LEFT_CURLY_BRACKET members
-                                          T_RIGHT_CURLY_BRACKET
+      T_RIGHT_CURLY_BRACKET { result = Exception.new(val[1], val[3]) }
 	;
 
 members
@@ -684,7 +684,7 @@ members
 /*87*/
 op_dcl
 	: op_attribute op_type_spec T_IDENTIFIER parameter_dcls
-      raises_expr context_expr { result = OpDecl.new(*val) }
+      raises_expr context_expr { result = Operation.new(*val) }
 	;
 
 /*88*/
@@ -725,7 +725,9 @@ param_attribute
 /*93*/
 raises_expr
 	: /*empty*/
-	| T_RAISES T_LEFT_PARANTHESIS scoped_names T_RIGHT_PARANTHESIS
+	| T_RAISES T_LEFT_PARANTHESIS scoped_names T_RIGHT_PARANTHESIS {
+      result = val[2]
+    }
 	;
 
 /*94*/

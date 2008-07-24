@@ -1,7 +1,7 @@
 module ZOMG
   module IDL
     module Nodes
-      class OpDecl < Node
+      class Operation < Node
         attr_accessor :attribute, :returns, :name, :raises, :context
         def initialize(attribute, returns, name, params, raises, context)
           super(params)
