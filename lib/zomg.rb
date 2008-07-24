@@ -3,6 +3,8 @@
   specification
   module
   interface
+  op_decl
+  parameter
 }.each { |node_type|
   require "zomg/idl/nodes/#{node_type}"
 }

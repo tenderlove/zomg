@@ -144,7 +144,7 @@ interface_body
 	;
 
 exports
-	: export
+	: export { result = val }
 	| export exports
 	;
 
@@ -684,7 +684,7 @@ members
 /*87*/
 op_dcl
 	: op_attribute op_type_spec T_IDENTIFIER parameter_dcls
-                                       raises_expr context_expr
+      raises_expr context_expr { result = OpDecl.new(*val) }
 	;
 
 /*88*/
@@ -701,18 +701,18 @@ op_type_spec
 
 /*90*/
 parameter_dcls
-	: T_LEFT_PARANTHESIS param_dcls T_RIGHT_PARANTHESIS
-	| T_LEFT_PARANTHESIS T_RIGHT_PARANTHESIS
+	: T_LEFT_PARANTHESIS param_dcls T_RIGHT_PARANTHESIS { result = val[1] }
+	| T_LEFT_PARANTHESIS T_RIGHT_PARANTHESIS { result = [] }
 	;
 
 param_dcls
-	: param_dcl
-	| param_dcl T_COMMA param_dcls
+	: param_dcl { result = val }
+	| param_dcl T_COMMA param_dcls { result = [val.first, val.last].flatten }
 	;
 
 /*91*/
 param_dcl
-	: param_attribute param_type_spec simple_declarator
+	: param_attribute param_type_spec simple_declarator { result = Parameter.new(*val) }
 	;
 
 /*92*/
