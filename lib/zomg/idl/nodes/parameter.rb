@@ -2,11 +2,15 @@ module ZOMG
   module IDL
     module Nodes
       class Parameter < Node
-        attr_accessor :attribute, :type, :name
-        def initialize(attribute, type, name)
+        attr_accessor :attribute, :type, :declarator
+        def initialize(attribute, type, declarator)
           @attribute  = attribute
           @type       = type
-          @name       = name
+          @declarator = declarator
+        end
+
+        def name
+          declarator.name
         end
       end
     end

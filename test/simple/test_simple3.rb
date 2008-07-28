@@ -15,6 +15,6 @@ class Simple3Test < ZOMG::Test
     attribute = interface.children.first
     assert_instance_of(Attribute, attribute)
     assert_equal(1, attribute.children.length)
-    assert_equal('test', attribute.children.first)
+    assert_equal('test', attribute.children.first.name)
   end
 end

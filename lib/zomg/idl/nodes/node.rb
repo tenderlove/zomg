@@ -7,6 +7,9 @@ module ZOMG
           @children = children
         end
       end
+      %w{ Boolean Char Double Float Long Octet Short String UnsignedLong
+        UnsignedShort
+      }.each { |type| const_set(type.to_sym, Class.new(Node)) }
     end
   end
 end

@@ -457,7 +457,7 @@ declarator
 
 /*51*/
 simple_declarator
-	: T_IDENTIFIER
+	: T_IDENTIFIER { result = SimpleDeclarator.new(val[0]) }
 	;
 
 /*52*/
@@ -467,8 +467,8 @@ complex_declarator
 
 /*53*/
 floating_pt_type
-	: T_FLOAT
-	| T_DOUBLE
+	: T_FLOAT { result = Float.new([]) }
+	| T_DOUBLE { result = Double.new([]) }
 	| T_LONG T_DOUBLE
 	;
 
@@ -487,12 +487,12 @@ signed_int
 
 /*56*/
 signed_short_int
-	: T_SHORT
+	: T_SHORT { result = Short.new([]) }
 	;
 
 /*57*/
 signed_long_int
-	: T_LONG
+	: T_LONG { result = Long.new([]) }
 	;
 
 /*58*/
@@ -509,12 +509,12 @@ unsigned_int
 
 /*60*/
 unsigned_short_int
-	: T_UNSIGNED T_SHORT { result = val.join(' ') }
+	: T_UNSIGNED T_SHORT { result = UnsignedShort.new([]) }
 	;
 
 /*61*/
 unsigned_long_int
-	: T_UNSIGNED T_LONG
+	: T_UNSIGNED T_LONG { result = UnsignedLong.new([]) }
 	;
 
 /*62*/
@@ -524,7 +524,7 @@ unsigned_longlong_int
 
 /*63*/
 char_type
-	: T_CHAR
+	: T_CHAR { result = Char.new([]) }
 	;
 
 /*64*/
@@ -534,12 +534,12 @@ wide_char_type
 
 /*65*/
 boolean_type
-	: T_BOOLEAN
+	: T_BOOLEAN { result = Boolean.new([]) }
 	;
 
 /*66*/
 octet_type
-	: T_OCTET
+	: T_OCTET { result = Octet.new([]) }
 	;
 
 /*67*/
@@ -555,18 +555,20 @@ object_type
 /*69*/
 struct_type
 	: T_STRUCT T_IDENTIFIER T_LEFT_CURLY_BRACKET member_list 
-                                               T_RIGHT_CURLY_BRACKET
+      T_RIGHT_CURLY_BRACKET { result = Struct.new(val[1], val[3]) }
 	;
 
 /*70*/
 member_list
-	: member
-	| member member_list
+	: member { result = val }
+	| member member_list { result = val.flatten }
 	;
 
 /*71*/
 member
-	: type_spec declarators T_SEMICOLON
+	: type_spec declarators T_SEMICOLON {
+      result = Member.new(val[0], val[1])
+    }
 	;
 
 /*72*/
@@ -635,7 +637,7 @@ sequence_type
 /*81*/
 string_type
 	: T_STRING T_LESS_THAN_SIGN positive_int_const T_GREATER_THAN_SIGN
-	| T_STRING
+	| T_STRING { result = String.new([]) }
 	;
 
 /*82*/

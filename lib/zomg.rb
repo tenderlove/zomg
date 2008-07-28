@@ -7,6 +7,9 @@
   parameter
   exception
   attribute
+  struct
+  simple_declarator
+  member
 }.each { |node_type|
   require "zomg/idl/nodes/#{node_type}"
 }
