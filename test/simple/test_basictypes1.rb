@@ -5,6 +5,16 @@ class BasitTypes1Test < ZOMG::Test
     @tree = ZOMG::IDL::Parser.parse_file(simple('basictypes1.idl'))
   end
 
+  def test_enum
+    assert_equal(6, @tree.children.length)
+    (_, enum, _, _, _, _) = *(@tree.children)
+    assert enum
+    assert_instance_of(Enum, enum)
+    assert_equal('Color', enum.name)
+    assert_equal(4, enum.children.length)
+    assert_equal(%w{ blue green red black }.sort, enum.children.sort)
+  end
+
   def test_struct
     assert_equal(6, @tree.children.length)
     (struct, _, _, _, _, _) = *(@tree.children)

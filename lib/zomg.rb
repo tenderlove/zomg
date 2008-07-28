@@ -10,6 +10,7 @@
   struct
   simple_declarator
   member
+  enum
 }.each { |node_type|
   require "zomg/idl/nodes/#{node_type}"
 }

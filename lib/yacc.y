@@ -614,12 +614,12 @@ element_spec
 /*78*/
 enum_type
 	: T_ENUM T_IDENTIFIER T_LEFT_CURLY_BRACKET enumerators
-                                         T_RIGHT_CURLY_BRACKET
+      T_RIGHT_CURLY_BRACKET { result = Enum.new(val[1], val[3]) }
 	;
 
 enumerators
-	: enumerator
-	| enumerator T_COMMA enumerators
+	: enumerator { result = val }
+	| enumerator T_COMMA enumerators { result = [val.first, val.last].flatten }
 	;
 
 /*79*/
