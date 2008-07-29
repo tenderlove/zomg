@@ -377,7 +377,7 @@ primary_expr
 /*39*/
 /*40*/
 literal
-	: T_INTEGER_LITERAL
+	: T_INTEGER_LITERAL { result = IntegerLiteral.new(val.first) }
 	| T_string_literal
 	| T_CHARACTER_LITERAL
 	| T_FIXED_PT_LITERAL
@@ -575,7 +575,9 @@ member
 union_type
 	: T_UNION T_IDENTIFIER T_SWITCH T_LEFT_PARANTHESIS
           switch_type_spec T_RIGHT_PARANTHESIS T_LEFT_CURLY_BRACKET
-          switch_body T_RIGHT_CURLY_BRACKET
+          switch_body T_RIGHT_CURLY_BRACKET {
+            result = Union.new(val[1], val[4], val[7])
+          }
 	; 
 
 /*73*/
@@ -589,26 +591,26 @@ switch_type_spec
 
 /*74*/
 switch_body
-	: case
-	| case switch_body
+	: case { result = val }
+	| case switch_body { result = val.flatten }
 	;
 
 /*75*/
 case	
 	: case_label case
-	| case_label element_spec T_SEMICOLON
+	| case_label element_spec T_SEMICOLON { result = Case.new(val[0], val[1]) }
 	| case_label T_PRAGMA element_spec T_SEMICOLON   /* New */
 	;
 
 /*76*/
 case_label
-	: T_CASE const_exp T_COLON 
-	| T_DEFAULT T_COLON
+	: T_CASE const_exp T_COLON { result = CaseLabel.new(val[1]) }
+	| T_DEFAULT T_COLON { result = DefaultLabel.new(val[0]) }
 	;
 
 /*77*/
 element_spec
-	: type_spec declarator
+	: type_spec declarator { result = ElementSpec.new(val) }
 	;
 
 /*78*/

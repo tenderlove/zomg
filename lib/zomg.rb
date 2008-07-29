@@ -11,6 +11,8 @@
   simple_declarator
   member
   enum
+  union
+  case
 }.each { |node_type|
   require "zomg/idl/nodes/#{node_type}"
 }

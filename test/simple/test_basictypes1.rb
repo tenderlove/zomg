@@ -5,6 +5,34 @@ class BasitTypes1Test < ZOMG::Test
     @tree = ZOMG::IDL::Parser.parse_file(simple('basictypes1.idl'))
   end
 
+  #def test_typedef_long
+  #  assert_equal(6, @tree.children.length)
+  #  (_, _, _, long, _, _) = *(@tree.children)
+  #  assert long
+  #end
+
+  def test_union
+    assert_equal(6, @tree.children.length)
+    (_, _, union, _, _, _) = *(@tree.children)
+    assert union
+    assert_instance_of(Union, union)
+    assert_equal('U', union.name)
+    assert_instance_of(Long, union.switch_type)
+    assert_instance_of(Array, union.children)
+    assert_equal(5, union.children.length)
+    union.children.each { |child| assert_instance_of(Case, child) }
+    [ CaseLabel,
+      CaseLabel,
+      CaseLabel,
+      CaseLabel,
+      DefaultLabel ].each_with_index { |l,i|
+        assert_instance_of(l, union.children[i].label)
+    }
+    assert_equal([10, 20, 50, 60], union.children.find_all { |child|
+      child.label.is_a?(CaseLabel)
+    }.map { |cl| cl.label.to_i })
+  end
+
   def test_enum
     assert_equal(6, @tree.children.length)
     (_, enum, _, _, _, _) = *(@tree.children)
