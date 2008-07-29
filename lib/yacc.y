@@ -394,7 +394,7 @@ positive_int_const
 /*42*/
 /*43*/
 type_dcl
-	: T_TYPEDEF type_spec declarators
+	: T_TYPEDEF type_spec declarators { result = Typedef.new([val[1], val[2]]) }
 	| struct_type
 	| union_type
 	| enum_type
@@ -633,7 +633,9 @@ enumerator
 sequence_type
 	: T_SEQUENCE T_LESS_THAN_SIGN simple_type_spec T_COMMA
                         positive_int_const T_GREATER_THAN_SIGN
-	| T_SEQUENCE T_LESS_THAN_SIGN simple_type_spec T_GREATER_THAN_SIGN
+	| T_SEQUENCE T_LESS_THAN_SIGN simple_type_spec T_GREATER_THAN_SIGN {
+      result = Sequence.new(val[2])
+    }
 	;
 
 /*81*/

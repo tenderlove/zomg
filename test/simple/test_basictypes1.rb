@@ -5,11 +5,15 @@ class BasitTypes1Test < ZOMG::Test
     @tree = ZOMG::IDL::Parser.parse_file(simple('basictypes1.idl'))
   end
 
-  #def test_typedef_long
-  #  assert_equal(6, @tree.children.length)
-  #  (_, _, _, long, _, _) = *(@tree.children)
-  #  assert long
-  #end
+  def test_typedef_long
+    assert_equal(6, @tree.children.length)
+    (_, _, _, long, seq, _) = *(@tree.children)
+    assert long
+    assert seq
+
+    assert_instance_of(Typedef, long)
+    assert_instance_of(Typedef, seq)
+  end
 
   def test_union
     assert_equal(6, @tree.children.length)
