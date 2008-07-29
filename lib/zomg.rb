@@ -1,3 +1,6 @@
+require 'zomg/idl/visitable'
+require 'zomg/idl/visitors/sexp'
+
 %w{
   node
   specification

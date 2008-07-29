@@ -445,8 +445,8 @@ constr_type_spec
 
 /*49*/
 declarators
-	: declarator
-	| declarator T_COMMA declarators
+	: declarator { result = val }
+	| declarator T_COMMA declarators { result = [val.first, val.last].flatten }
 	;
 
 /*50*/

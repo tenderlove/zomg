@@ -13,6 +13,7 @@ class BasitTypes1Test < ZOMG::Test
 
     assert_instance_of(Typedef, long)
     assert_instance_of(Typedef, seq)
+    p @tree.to_sexp
   end
 
   def test_union
