@@ -5,6 +5,17 @@ class BasitTypes1Test < ZOMG::Test
     @tree = ZOMG::IDL::Parser.parse_file(simple('basictypes1.idl'))
   end
 
+  def test_interface
+    assert_equal(6, @tree.children.length)
+    (_, _, _, _, _, interface) = *(@tree.children)
+    interface.children.each do |child|
+      assert_instance_of(Operation, child)
+      assert_nothing_raised {
+        child.to_sexp
+      }
+    end
+  end
+
   def test_typedef_long
     assert_equal(6, @tree.children.length)
     (_, _, _, long, seq, _) = *(@tree.children)
