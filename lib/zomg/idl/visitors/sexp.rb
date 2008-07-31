@@ -90,6 +90,10 @@ module ZOMG
           ]
         end
 
+        def visit_Module(o)
+          [:module, o.name, o.children.map { |c| c.accept(self) }]
+        end
+
         # Terminal nodes
         def visit_In(o)
           :in
@@ -120,7 +124,7 @@ module ZOMG
         end
 
         def visit_String(o)
-          :string
+          [:string, o.size && o.size.accept(self)]
         end
 
         def visit_Short(o)

@@ -14,6 +14,10 @@ module ZOMG
           children.to_i
         end
 
+        def duhr
+          Duhr.new(self)
+        end
+
         def to_sexp
           Sexp.new.accept(self)
         end

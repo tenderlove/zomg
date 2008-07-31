@@ -1,5 +1,6 @@
 require 'zomg/idl/visitable'
 require 'zomg/idl/visitors/sexp'
+require 'zomg/idl/visitors/duhr'
 
 %w{
   node
@@ -20,6 +21,7 @@ require 'zomg/idl/visitors/sexp'
   typedef
   interface_header
   scoped_name
+  string
 }.each { |node_type|
   require "zomg/idl/nodes/#{node_type}"
 }
