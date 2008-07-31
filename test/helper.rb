@@ -8,6 +8,10 @@ module ZOMG
 
     undef :default_test
 
+    def assert_sexp(sexp, obj)
+      assert_equal(sexp, obj.to_sexp)
+    end
+
     def method_missing(name, *args)
       super unless args[0]
       file = File.join(ASSETS, name.to_s, args[0])

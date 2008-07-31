@@ -6,7 +6,7 @@ module ZOMG
         include Visitors
 
         attr_accessor :children
-        def initialize(children)
+        def initialize(children = [])
           @children = children
         end
 
@@ -20,7 +20,7 @@ module ZOMG
       end
       %w{ Boolean Char Double Float Long Octet Short String UnsignedLong
         UnsignedShort ElementSpec CaseLabel DefaultLabel IntegerLiteral
-        Sequence Typedef
+        Sequence ArraySize Void In Out InOut
       }.each { |type| const_set(type.to_sym, Class.new(Node)) }
     end
   end

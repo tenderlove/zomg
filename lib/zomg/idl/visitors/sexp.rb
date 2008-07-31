@@ -11,7 +11,7 @@ module ZOMG
         end
 
         def visit_Member(o)
-          [:member, o.type, o.children.map { |c| c.accept(self) }]
+          [:member, o.type.accept(self), o.children.map { |c| c.accept(self) }]
         end
 
         def visit_Enum(o)
@@ -34,9 +34,77 @@ module ZOMG
           [:element_spec, o.children.map { |c| c.accept(self) }]
         end
 
+        def visit_Typedef(o)
+          [ :typedef,
+            o.type_spec.accept(self),
+            o.children.map { |c| c.accept(self) }
+          ]
+        end
+
+        def visit_ArrayDeclarator(o)
+          [:array_decl, o.name, o.children.map { |c| c.accept(self) }]
+        end
+
+        def visit_Sequence(o)
+          [:sequence, o.children.accept(self)]
+        end
+
+        def visit_Interface(o)
+          [ :interface,
+            o.header.accept(self),
+            o.children.map { |c| c.accept(self) }
+          ]
+        end
+
+        def visit_Operation(o)
+          [:op,
+            o.attribute && :oneway,
+            o.returns.accept(self),
+            o.name,
+            o.children.map { |c| c.accept(self) },
+            o.raises && o.raises.map { |c| c.accept(self) },
+            o.context && o.context.map { |c| c.accept(self) }
+          ]
+        end
+
+        def visit_Parameter(o)
+          [ :param,
+            o.attribute.accept(self),
+            o.type.accept(self),
+            o.declarator.accept(self),
+          ]
+        end
+
+        def visit_ScopedName(o)
+          [ :scoped_name,
+            o.name,
+            o.children.map { |c| c.accept(self) }
+          ]
+        end
+
         # Terminal nodes
+        def visit_In(o)
+          :in
+        end
+
+        def visit_Out(o)
+          :out
+        end
+
+        def visit_InOut(o)
+          :in_out
+        end
+
+        def visit_InterfaceHeader(o)
+          [:header, o.abstract, o.name]
+        end
+
         def visit_DefaultLabel(o)
           [:default]
+        end
+
+        def visit_ArraySize(o)
+          [:size, o.children.accept(self)]
         end
 
         def visit_Char(o)
@@ -57,6 +125,30 @@ module ZOMG
 
         def visit_Float(o)
           :float
+        end
+
+        def visit_UnsignedShort(o)
+          :ushort
+        end
+
+        def visit_UnsignedLong(o)
+          :ulong
+        end
+
+        def visit_Double(o)
+          :double
+        end
+
+        def visit_Boolean(o)
+          :boolean
+        end
+
+        def visit_Void(o)
+          :void
+        end
+
+        def visit_Octet(o)
+          :octet
         end
 
         def visit_SimpleDeclarator(o)

@@ -16,6 +16,10 @@ require 'zomg/idl/visitors/sexp'
   enum
   union
   case
+  array_declarator
+  typedef
+  interface_header
+  scoped_name
 }.each { |node_type|
   require "zomg/idl/nodes/#{node_type}"
 }

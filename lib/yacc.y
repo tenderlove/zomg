@@ -120,7 +120,9 @@ interface
 /*5*/
 interface_dcl
 	: interface_header T_LEFT_CURLY_BRACKET interface_body
-      T_RIGHT_CURLY_BRACKET { val[0].children = val[2] }
+      T_RIGHT_CURLY_BRACKET {
+        result = Interface.new(val[0], val[2])
+      }
 	;
 
 /*6*/
@@ -131,7 +133,7 @@ forward_dcl
 
 /*7*/
 interface_header
-	: T_INTERFACE T_IDENTIFIER { result = Interface.new(val[1], [], false) }
+	: T_INTERFACE T_IDENTIFIER { result = InterfaceHeader.new(false, val[1]) }
 	| T_INTERFACE T_IDENTIFIER interface_inheritance_spec
 	| T_ABSTRACT T_INTERFACE T_IDENTIFIER
 	| T_ABSTRACT T_INTERFACE T_IDENTIFIER interface_inheritance_spec
@@ -145,7 +147,7 @@ interface_body
 
 exports
 	: export { result = val }
-	| export exports
+	| export exports { result = val.flatten }
 	;
 
 /*9*/
@@ -178,7 +180,7 @@ interface_name
 
 /*12*/
 scoped_name
-	: T_IDENTIFIER
+	: T_IDENTIFIER { result = ScopedName.new(val[0]) }
   | T_SCOPE T_IDENTIFIER
 	| scoped_name T_SCOPE T_IDENTIFIER
 	;
@@ -394,7 +396,7 @@ positive_int_const
 /*42*/
 /*43*/
 type_dcl
-	: T_TYPEDEF type_spec declarators { result = Typedef.new([val[1], val[2]]) }
+	: T_TYPEDEF type_spec declarators { result = Typedef.new(val[1], val[2]) }
 	| struct_type
 	| union_type
 	| enum_type
@@ -652,17 +654,21 @@ wide_string_type
 
 /*83*/
 array_declarator
-	: T_IDENTIFIER fixed_array_sizes
+	: T_IDENTIFIER fixed_array_sizes {
+      result = ArrayDeclarator.new(val[0], val[1])
+    }
 	;
 
 fixed_array_sizes
-	: fixed_array_size
-	| fixed_array_size fixed_array_sizes
+	: fixed_array_size { result = val }
+	| fixed_array_size fixed_array_sizes { result = val.flatten }
 	;
 
 /*84*/
 fixed_array_size
-	: T_LEFT_SQUARE_BRACKET positive_int_const T_RIGHT_SQUARE_BRACKET
+	: T_LEFT_SQUARE_BRACKET positive_int_const T_RIGHT_SQUARE_BRACKET {
+      result = ArraySize.new(val[1])
+    }
 	;
 
 /*85*/
@@ -704,7 +710,7 @@ op_attribute
 /*89*/
 op_type_spec	
 	: param_type_spec
-	| T_VOID
+	| T_VOID { result = Void.new([]) }
 	;
 
 /*90*/
@@ -725,9 +731,9 @@ param_dcl
 
 /*92*/
 param_attribute
-	: T_IN
-	| T_OUT
-	| T_INOUT
+	: T_IN { result = In.new }
+	| T_OUT { result = Out.new }
+	| T_INOUT { result = InOut.new }
 	;
 
 /*93*/
