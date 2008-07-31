@@ -134,7 +134,9 @@ forward_dcl
 /*7*/
 interface_header
 	: T_INTERFACE T_IDENTIFIER { result = InterfaceHeader.new(false, val[1]) }
-	| T_INTERFACE T_IDENTIFIER interface_inheritance_spec
+	| T_INTERFACE T_IDENTIFIER interface_inheritance_spec {
+      result = InterfaceHeader.new(false, val[1], val[2])
+    }
 	| T_ABSTRACT T_INTERFACE T_IDENTIFIER
 	| T_ABSTRACT T_INTERFACE T_IDENTIFIER interface_inheritance_spec
 	; 
@@ -161,7 +163,7 @@ export
 
 /*10*/
 interface_inheritance_spec
-	: T_COLON interface_names
+	: T_COLON interface_names { result = val[1] }
 	;
 
 interface_names
@@ -676,7 +678,9 @@ attr_dcl
 	: T_ATTRIBUTE param_type_spec simple_declarators {
       result = Attribute.new(val[1], val[2])
     }
-	| T_READONLY T_ATTRIBUTE param_type_spec simple_declarators
+	| T_READONLY T_ATTRIBUTE param_type_spec simple_declarators {
+      result = Attribute.new(val[2], val[3], true)
+    }
 	; 
 
 simple_declarators

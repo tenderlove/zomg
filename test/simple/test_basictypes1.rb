@@ -1,6 +1,6 @@
 require 'helper'
 
-class BasitTypes1Test < ZOMG::Test
+class BasicTypes1Test < ZOMG::Test
   def setup
     @tree = ZOMG::IDL::Parser.parse_file(simple('basictypes1.idl'))
   end

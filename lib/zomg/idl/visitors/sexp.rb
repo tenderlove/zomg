@@ -82,6 +82,14 @@ module ZOMG
           ]
         end
 
+        def visit_Attribute(o)
+          [ :attribute,
+            o.readonly && :readonly,
+            o.type.accept(self),
+            o.children.map { |c| c.accept(self) }
+          ]
+        end
+
         # Terminal nodes
         def visit_In(o)
           :in
@@ -96,7 +104,7 @@ module ZOMG
         end
 
         def visit_InterfaceHeader(o)
-          [:header, o.abstract, o.name]
+          [:header, o.abstract, o.name, o.children.map { |c| c.accept(self) }]
         end
 
         def visit_DefaultLabel(o)
