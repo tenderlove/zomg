@@ -7,6 +7,7 @@ module ZOMG
           @size = size
         end
       end
+      WString = String
     end
   end
 end

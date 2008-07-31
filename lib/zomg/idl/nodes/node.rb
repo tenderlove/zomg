@@ -22,9 +22,10 @@ module ZOMG
           Sexp.new.accept(self)
         end
       end
-      %w{ Boolean Char Double Float Long Octet Short String UnsignedLong
+      %w{ Boolean Char Double Float Long Octet Short UnsignedLong
         UnsignedShort ElementSpec CaseLabel DefaultLabel IntegerLiteral
-        Sequence ArraySize Void In Out InOut
+        Sequence ArraySize Void In Out InOut CharacterLiteral
+        UnsignedLongLong LongLong Any
       }.each { |type| const_set(type.to_sym, Class.new(Node)) }
     end
   end

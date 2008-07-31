@@ -383,7 +383,7 @@ primary_expr
 literal
 	: T_INTEGER_LITERAL { result = IntegerLiteral.new(val.first) }
 	| T_string_literal
-	| T_CHARACTER_LITERAL
+	| T_CHARACTER_LITERAL { result = CharacterLiteral.new(val.first) }
 	| T_FIXED_PT_LITERAL
 	| T_FLOATING_PT_LITERAL
 	| T_TRUE  /*boolean_literal*/
@@ -501,7 +501,7 @@ signed_long_int
 
 /*58*/
 signed_longlong_int
-	: T_LONG T_LONG
+	: T_LONG T_LONG { result = LongLong.new }
 	;
 
 /*59*/
@@ -523,7 +523,7 @@ unsigned_long_int
 
 /*62*/
 unsigned_longlong_int
-	: T_UNSIGNED T_LONG T_LONG
+	: T_UNSIGNED T_LONG T_LONG { result = UnsignedLongLong.new }
 	;
 
 /*63*/
@@ -548,7 +548,7 @@ octet_type
 
 /*67*/
 any_type
-	: T_ANY
+	: T_ANY { result = Any.new }
 	;
 
 /*68*/
@@ -653,7 +653,7 @@ string_type
 /*82*/
 wide_string_type
 	: T_WSTRING T_LESS_THAN_SIGN positive_int_const T_GREATER_THAN_SIGN
-	| T_WSTRING
+	| T_WSTRING { result = WString.new }
 	;
 
 /*83*/
@@ -697,7 +697,7 @@ except_dcl
 	;
 
 members
-	: /*empty*/
+	: /*empty*/ { result = [] }
 	| member members
 	;
 

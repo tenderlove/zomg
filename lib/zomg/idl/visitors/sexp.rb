@@ -94,6 +94,10 @@ module ZOMG
           [:module, o.name, o.children.map { |c| c.accept(self) }]
         end
 
+        def visit_Exception(o)
+          [:exception, o.name, o.children.map { |c| c.accept(self) }]
+        end
+
         # Terminal nodes
         def visit_In(o)
           :in
@@ -101,6 +105,10 @@ module ZOMG
 
         def visit_Out(o)
           :out
+        end
+
+        def visit_Any(o)
+          :any
         end
 
         def visit_InOut(o)
@@ -127,12 +135,24 @@ module ZOMG
           [:string, o.size && o.size.accept(self)]
         end
 
+        def visit_WString(o)
+          [:string, o.size && o.size.accept(self)]
+        end
+
         def visit_Short(o)
           :short
         end
 
         def visit_Long(o)
           :long
+        end
+
+        def visit_LongLong(o)
+          :long_long
+        end
+
+        def visit_UnsignedLongLong(o)
+          :ulong_long
         end
 
         def visit_Float(o)
@@ -169,6 +189,10 @@ module ZOMG
 
         def visit_IntegerLiteral(o)
           [:int, o.to_i]
+        end
+
+        def visit_CharacterLiteral(o)
+          [:charlit, o.children]
         end
 
         def accept(target)
