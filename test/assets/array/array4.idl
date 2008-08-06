@@ -1,0 +1,7 @@
+interface arrayez {
+    typedef long arr8k[2048];
+    long test_in8k(in arr8k a);
+    long test_out8k(out arr8k a);
+    long test_io8k(in arr8k a, out arr8k b);
+};
+

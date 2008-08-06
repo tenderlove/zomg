@@ -25,7 +25,7 @@ class BasicTypes1Test < ZOMG::Test
     assert_instance_of(Typedef, long)
     assert_instance_of(Typedef, seq)
     assert_sexp([:typedef, :long, [[:array_decl, "IntSequence", [[:size, [:int, 10]]]]]], long)
-    assert_sexp([:typedef, [:sequence, :long], [[:decl, "longSeq"]]], seq)
+    assert_sexp([:typedef, [:sequence, [:long]], [[:decl, "longSeq"]]], seq)
   end
 
   def test_union

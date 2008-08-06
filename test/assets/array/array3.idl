@@ -1,0 +1,8 @@
+typedef sequence<long,10> vec10;
+typedef char str22[22][2];
+typedef boolean boolarray[3][40];
+typedef sequence<long> vec;
+typedef unsigned short A_matrix[2][3][4];
+typedef A_matrix A_rmatrix[2][3][4][5];
+typedef string<15> a;
+

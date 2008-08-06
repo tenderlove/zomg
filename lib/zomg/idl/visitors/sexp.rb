@@ -46,7 +46,7 @@ module ZOMG
         end
 
         def visit_Sequence(o)
-          [:sequence, o.children.accept(self)]
+          [:sequence, o.children.map { |c| c.accept(self) }]
         end
 
         def visit_Interface(o)
@@ -99,6 +99,10 @@ module ZOMG
         end
 
         # Terminal nodes
+        def visit_ForwardDeclaration(o)
+          [:forward_decl, o.children]
+        end
+
         def visit_In(o)
           :in
         end

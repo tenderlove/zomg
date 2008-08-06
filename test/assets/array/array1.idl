@@ -1,0 +1,60 @@
+
+/*
+ *  Test various combinations of Arrays in IDL
+ */
+
+
+typedef char VectorChar[5];
+typedef octet VectorOctet[5];
+
+struct S0 {
+  char c[5];
+  octet o[5];
+};
+
+typedef short Vector[10];
+typedef Vector Matrix[10];
+typedef Vector VB;
+typedef VB MB[10];
+
+typedef short arr[1][2];
+typedef sequence<arr,2> arrseq;
+
+struct S1 {
+  long x;
+  char b[ 3 ];
+  long c[ 5 ][ 4 ];
+  string s[6];
+};
+
+typedef S1 S1_arr[ 3 ][ 4 ];
+
+// Note: long_arr is an array of fixed length data
+typedef long long_arr[ 10 ];
+
+interface foo;
+typedef foo foo_arr[6];
+
+// Note: SS is an array of variable data
+typedef string SS[ 5 ][ 4 ];
+
+struct S2 {
+  long x;
+  SS ss_obj;
+};
+
+
+struct S3 {
+  long a[1];
+  long b[1][2];
+  long c[1][2][3];
+};
+
+typedef sequence<S1_arr> S1_seq;
+
+
+interface foo {
+  SS bar( in SS x, inout SS y, out SS z, out long_arr w );
+  long_arr baz();
+};
+

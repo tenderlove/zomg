@@ -1,0 +1,80 @@
+/* This should test for alignment constraints on arrays */
+
+// This is a data structure that ends in unconstrained alignment
+struct end {
+    long elem1;
+    char elem2;
+};
+// This is a data structure that begins in unconstrained alignment
+struct begin {
+    char elem1;
+    long elem2;
+};
+
+struct cLd {
+    char first;
+    long data[50];
+    double last;
+};
+
+struct dLc {
+    double first;
+    long data[50];
+    char last;
+};
+
+struct sLs {
+    short first;
+    long data[50];
+    short last;
+};
+
+struct cLCd {
+    char first;
+    end data[50];
+    double last;
+};
+
+struct dLCc {
+    double first;
+    end data[50];
+    char last;
+};
+
+struct sLCs {
+    short first;
+    end data[50];
+    short last;
+};
+
+struct cCLd {
+    char first;
+    begin data[50];
+    double last;
+};
+
+struct dCLc {
+    double first;
+    begin data[50];
+    char last;
+};
+
+struct sCLs {
+    short first;
+    begin data[50];
+    short last;
+};
+
+#define test(t) t test_##t (in t inp, inout t iop, out t outp)
+
+interface arrays {
+    test(cLd);
+    test(dLc);
+    test(sLs);
+    test(cLCd);
+    test(dLCc);
+    test(sLCs);
+    test(cCLd);
+    test(dCLc);
+    test(sCLs);
+};
