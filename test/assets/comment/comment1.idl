@@ -1,0 +1,57 @@
+
+
+/* This is a simple C style comment line */
+
+// This is a simple C++ style comment line
+
+     /* This is another simple C style comment line */
+
+     // This is another simple C++ style comment line
+
+typedef long Apple;
+
+/* Comments do not nest /* /* /* /* */
+
+typedef long Banana;
+
+// The // characters have no special meaning inside an existing //
+
+typedef long Carrots;
+
+// The /* characters have no special meaning inside an existing //
+
+typedef long Lemon;
+
+// The */ characters have no special meaning inside an existing //
+
+typedef long BlackCherry;
+
+/* The // characters have no special meaning inside an existing /*   */
+
+typedef long Starfruit;
+
+/* The /* characters have no special meaning inside an existing /* */
+
+typedef long Rhubarb;
+
+/*
+    Comments
+    may
+    include
+    newlines
+
+*/
+
+interface idlServer{
+
+  void  PassionFruit(
+        in Apple p1,
+        in Banana p2,
+        in Carrots p3,
+        in Lemon p4,
+        in BlackCherry p5,
+        in Starfruit p6,
+        in Rhubarb p7);
+
+};
+

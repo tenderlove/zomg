@@ -1,0 +1,168 @@
+// TEST: c++ style comments
+//
+
+// TEST: #define
+//
+#define DEFTEST
+
+// TEST: #ifdef
+//
+#ifdef DEFTEST
+
+// TEST: #ifndef
+//
+    #ifndef FIRST_DEF
+
+        #define SECOND_DEF
+
+        #ifdef SECOND_DEF
+
+            #ifdef NON_EXISTENT
+                #define JUNK_DEF
+            // TEST: defined(<>)
+            #elif defined (JUNK_DEF)
+            // TEST: !defined(<>)
+            #elif !defined (SECOND_DEF)
+            // TEST: #else
+            #else
+                #define THIRD_DEF
+            #endif
+
+            // TEST: #undef
+            //
+            #undef SECOND_DEF
+
+            #ifndef SECOND_DEF
+
+                #ifdef THIRD_DEF
+
+                    // TEST: #if
+                    #if 0
+                        This code will not be compiled
+                    #elif 1
+
+// TEST: #include (simple)
+//
+#include "shortform.idl"
+
+// TEST: C-style comments
+//
+/*
+*basic .idl contains the following
+
+// TEST: typedef short-form
+//
+typedef struct mystruct1
+{
+  short     x;
+  long      y;
+  string    z;
+} struct_short_form;
+*/
+
+
+// TEST: CPP-style comments with preprocessor directives
+//"#include",
+//"#define",
+//"#ifdef",
+//"#ifndef",
+//"#if",
+//"#else",
+//"#elif",
+//"#endif",
+//"#undef",
+//"#pragma"
+//
+
+// TEST: C-style comments with preprocessor directives
+/*
+"#include",
+"#define",
+"#ifdef",
+"#ifndef",
+"#if",
+"#else",
+"#elif",
+"#endif",
+"#undef",
+"#pragma"
+*/
+
+// TEST: #if
+//
+#if !defined (MACRO1)
+    #define MACRO1 interface
+#elif
+    #define MACRO1 JUNK
+#endif
+
+#if defined (MACRO1)
+    #define MACRO2 MainGrid
+#endif
+
+//
+interface MainGrid {
+//
+//MACRO1 MACRO2 {
+    void getofMainGrid(in short n);
+    long setofMainGrid(inout short n);
+
+    readonly attribute short length;  // length of the gridmain
+    attribute short breadth;   // breadth of the gridmain
+
+    exception exMG { string reason;};
+};
+
+
+interface BaseGrid : MainGrid {
+    void getofBaseGrid(in short n);
+    long setofBaseGrid(in short n);
+
+    readonly attribute short roAtrBG ;  // length of the gridmain
+    attribute short atrBG;   // breadth of the gridmain
+
+    exception exBG { string reason;};
+};
+
+
+interface GridBase : MainGrid {
+    exception exGB { string reason;};
+
+    readonly attribute short roAtrGB ;  // length of the gridmain
+    attribute short atrGB;   // breadth of the gridmain
+
+    void getofGridBase(in short n);
+    long setofGridBase(in short n);
+};
+
+interface Grid : BaseGrid, GridBase {
+    exception exG { string reason;};
+    exception exH { string reason;};
+
+    readonly attribute short height;  // height of the grid
+    readonly attribute short width;   // width of the grid
+
+    // IDL operations
+    // set the element [n,m] of the grid, to value:
+    void set(in short n, in short m, in long value) raises (exG);
+
+    // return element [n,m] of the grid:
+    long get(in short n, in short m) raises (exG, exH);
+};
+
+// TEST: #pragma
+//
+//#pragma ID Grid "IDL:MyGrid:1.0"
+
+#pragma version Grid 2.0
+
+#pragma prefix "IDL2REPO-TEST"
+
+// TEST: #ENDIF
+//
+                    #endif //#if 0
+                #endif // #ifdef THIRD_DEF
+            #endif // #ifndef SECOND_DEF
+        #endif // #ifdef SECOND_DEF
+    #endif // #ifndef FIRST_DEF
+#endif // #ifdef DEFTEST

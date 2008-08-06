@@ -172,7 +172,7 @@ interface_names
 
 scoped_names
 	: scoped_name { result = val }
-	| scoped_name T_COMMA scoped_names
+	| scoped_name T_COMMA scoped_names { result = [val.first, val.last].flatten }
 	;
 
 /*11*/
@@ -700,7 +700,7 @@ except_dcl
 
 members
 	: /*empty*/ { result = [] }
-	| member members
+	| member members { result = val.flatten }
 	;
 
 /*87*/

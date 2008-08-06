@@ -13,7 +13,8 @@ module ZOMG
       def parse_file(filename)
         contents = File.read(filename)
         if contents =~ /^\s*#/
-          contents = IO.popen('gcc -E -', 'w+') { |io|
+          dir = File.dirname(File.expand_path(filename))
+          contents = IO.popen("gcc -E -I #{dir} -I . -", 'w+') { |io|
             io.write(contents)
             io.close_write
             io.read
@@ -28,6 +29,7 @@ module ZOMG
         return [false, false] unless token
         token = next_token() if token[0] == :T_COMMENT
         token = next_token() if token[0] == :T_PREPROCESSOR
+        token = next_token() if token[0] == :T_PRAGMA
         token
       end
 
