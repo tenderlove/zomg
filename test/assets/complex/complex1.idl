@@ -1,0 +1,495 @@
+// Description        : CORBA IDL containing an interface that
+//                      has multiple methods, each testing a complex datatype
+
+/**
+* Module that contains interfaces for complex tests. IDLs contained in
+* this module includes the following:
+* <UL>
+* <LI>Complex data types including structures, sequences, unions, etc.
+* <LI>Interface that contains One-way operations
+* </UL>
+*/
+module OneWayComplexTest
+{
+    /**
+    * Complex structure consisting of a string value and a
+    * sequence of floating point values
+    */
+    struct ComplexStructure
+    {
+        string string_value;
+        sequence<float> sequence_value;
+    };
+
+    /**
+    * A complex array consisting of 2 elements. Each element is a complex
+    * structure type
+    */
+    typedef ComplexStructure ComplexArray[2];
+
+    /**
+    * A complex unbounded sequence that holds any data types
+    */
+    typedef sequence<any> ComplexSequence;
+
+    /**
+    * An enumeration consisting of 5 elements, E1 to E5. The enumeration
+    * is used to test Union data types, based on a switch case of enum values
+    */
+    enum TestEnum { E1, E2, E3, E4, E5 };
+
+    /**
+    * An array consisting of 5 elements. Each element is a short
+    * data type. The array of 5 shorts is typedef-ed into the name
+    * "short"
+    */
+    typedef short short_array[5];
+
+    /**
+    * An array consisting of 5 elements. Each element is a double
+    * data type. The array of 5 doubled is typedef-ed into the name
+    * "double"
+    */
+    typedef double double_array[5];
+
+    /**
+    * An array consisting of 5 elements. Each element is a string
+    * data type. The array of 5 strings is typedef-ed into the name
+    * "string"
+    */
+    typedef string string_array[5];
+
+    /**
+    * A union that discriminates based on an enumeration, <CODE>TestEnum
+    * </CODE>. The discrimination rules are as follows:
+    * <UL>
+    * <LI>If discriminator is TestEnum::E1, return an array of short values
+    * <LI>If discriminator is TestEnum::E2, return an array of double values
+    * <LI>If discriminator is TestEnum::E3, return a long value
+    * <LI>If discriminator is TestEnum::E4, return a complex structure
+    * <LI>If discriminator is TestEnum::E5, return an array of string values
+    * </UL>
+    */
+    union ComplexUnion switch(TestEnum)
+    {
+    case E1:
+        short_array s;
+    case E2:
+        double_array d;
+    case E3:
+        long l;
+    case E4:
+        ComplexStructure cs;
+    default:
+        string_array str;
+    };
+
+    /**
+    * One-way interface for complex data types. Clients and servers written
+    * using this interface can be used with all services.
+    */
+    interface com1wcor
+    {
+        /**
+        * One-way method that does nothing. Although this is a test for
+        * complex data types, this method is a good place to start to test
+        * the adapter's core functionality. The method raises a complex
+        * exception when passed the correct parameter <CODE>(Server -ex)
+        * </CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA one-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param void
+        * @return void
+        */
+        oneway void test_void();
+
+        /**
+        * One-way method that tests the adapter ability to handle short
+        * data types Although this is a test for complex data types, this
+        * method is a good place to start to test the adapter's core
+        * functionality. The method raises a complex exception when
+        * passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA one-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param in short ivalue: Takes a reference to a short value. Since
+        * the direction is "in" only, the method takes in a value and does
+        * not return it back to the caller. Typically, the value 0 is passed
+        * into the parameter
+        * @return void
+        */
+        oneway void test_short
+        (
+            in short ivalue
+        );
+
+        /**
+        * One-way method that tests the adapter ability to handle long
+        * data types Although this is a test for complex data types, this
+        * method is a good place to start to test the adapter's core
+        * functionality. The method raises a complex exception when
+        * passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA one-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param in long ivalue: Takes a reference to a long value. Since
+        * the direction is "in" only, the method takes in a value and does
+        * not return it back to the caller. Typically, the value 99999999
+        * is passed into the parameter
+        * @return void
+        */
+        oneway void test_long
+        (
+            in long ivalue
+        );
+
+        /**
+        * One-way method that tests the adapter ability to handle long long
+        * data types Although this is a test for complex data types, this
+        * method is a good place to start to test the adapter's core
+        * functionality. The method raises a complex exception when
+        * passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA one-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param in long long ivalue: Takes a reference to a long long value.
+        * Since the direction is "in" only, the method takes in a value and
+        * does not return it back to the caller. Typically, the value 99999999
+        * is passed into the parameter
+        * @return void
+        */
+        oneway void test_longlong
+        (
+            in long long ivalue
+        );
+
+        /**
+        * One-way method that tests the adapter ability to handle unsigned
+        * short (ushort) data types Although this is a test for complex
+        * data types, this method is a good place to start to test the
+        * adapter's core functionality. The method raises a complex exception
+        * when passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA one-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param in ushort ivalue: Takes a reference to a ushort value. Since
+        * the direction is "in" only, the method takes in a value and does
+        * not return it back to the caller. Typically, the value 0 is passed
+        * into the parameter
+        * @return void
+        */
+        oneway void test_ushort
+        (
+            in unsigned short ivalue
+        );
+
+        /**
+        * One-way method that tests the adapter ability to handle unsigned
+        * long (ulong) data types Although this is a test for complex data
+        * types, this method is a good place to start to test the adapter's
+        * core functionality. The method raises a complex exception when
+        * passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA one-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param in ulong ivalue: Takes a reference to a ulong value. Since
+        * the direction is "in" only, the method takes in a value and does
+        * not return it back to the caller. Typically, the value 99999999
+        * is passed into the parameter
+        * @return void
+        */
+        oneway void test_ulong
+        (
+            in unsigned long ivalue
+        );
+
+        /**
+        * One-way method that tests the adapter ability to handle unsigned
+        * long long (ulonglong) data types Although this is a test for
+        * complex data types, this method is a good place to start to test
+        * the adapter's core functionality. The method raises a complex
+        * exception when passed the correct parameter <CODE>(Server -ex)
+        * </CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA one-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param in ulonglong ivalue: Takes a reference to a ulonglong value.
+        * Since the direction is "in" only, the method takes in a value and
+        * does not return it back to the caller. Typically, the value 99999999
+        * is passed into the parameter
+        * @return void
+        */
+        oneway void test_ulonglong
+        (
+            in unsigned long long ivalue
+        );
+
+        /**
+        * One-way method that tests the adapter ability to handle floating
+        * point (float) data types Although this is a test for complex data
+        * types, this method is a good place to start to test the adapter's
+        * core functionality. The method raises a complex exception when
+        * passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA one-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param in float ivalue: Takes a reference to a float value. Since
+        * the direction is "in" only, the method takes in a value and does
+        * not return it back to the caller. Typically, the value 0.0 is passed
+        * into the parameter
+        * @return void
+        */
+        oneway void test_float
+        (
+            in float ivalue
+        );
+
+        /**
+        * One-way method that tests the adapter ability to handle double
+        * data types Although this is a test for complex data types, this
+        * method is a good place to start to test the adapter's core
+        * functionality. The method raises a complex exception when
+        * passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA one-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param in double ivalue: Takes a reference to a double value. Since
+        * the direction is "in" only, the method takes in a value and does
+        * not return it back to the caller. Typically, the value
+        * 9999.9999 is passed into the parameter
+        * @return void
+        */
+        oneway void test_double
+        (
+            in double ivalue
+        );
+
+        /**
+        * One-way method that tests the adapter ability to handle string
+        * data types Although this is a test for complex data types, this
+        * method is a good place to start to test the adapter's core
+        * functionality. The method raises a complex exception when
+        * passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA one-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param in string ivalue: Takes a reference to a string value. Since
+        * the direction is "in" only, the method takes in a value and does
+        * not return it back to the caller. Typically, the value
+        * "Invoking..." is passed into the parameter
+        * @return void
+        */
+        oneway void test_string
+        (
+            in string ivalue
+        );
+
+        /**
+        * One-way method that tests the adapter ability to handle character
+        * (char) data types Although this is a test for complex data types,
+        * this method is a good place to start to test the adapter's core
+        * functionality. The method raises a complex exception when passed
+        * the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA one-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param in char ivalue: Takes a reference to a  value. Since the
+        * direction is "in" only, the method takes in a value and does not
+        * return it back to the caller. Typically, the value 'a' is passed
+        * into the parameter
+        * @return void
+        */
+        oneway void test_char
+        (
+            in char ivalue
+        );
+
+        /**
+        * One-way method that tests the adapter ability to handle wide string
+        * (wstring) data types Although this is a test for complex data types,
+        * this method is a good place to start to test the adapter's core
+        * functionality. The method raises a complex exception when
+        * passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA one-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param in wstring ivalue: Takes a reference to a wstring value.
+        * Since the direction is "in" only, the method takes in a value and
+        * does not return it back to the caller. Typically, the value
+        * "Invoking..." is passed into the parameter
+        * @return void
+        */
+        oneway void test_wstring
+        (
+            in wstring ivalue
+        );
+
+        /**
+        * One-way method that tests the adapter ability to handle wide
+        * character (wchar) data types Although this is a test for complex
+        * data types, this method is a good place to start to test the
+        * adapter's core functionality. The method raises a complex exception
+        * when passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA one-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param in wchar ivalue: Takes a reference to a  value. Since the
+        * direction is "in" only, the method takes in a value and does not
+        * return it back to the caller. Typically, the value 'a' is passed
+        * into the parameter
+        * @return void
+        */
+        oneway void test_wchar
+        (
+            in wchar ivalue
+        );
+
+        /**
+        * One-way method that tests the adapter ability to handle enumerated
+        * (enum) data types Although this is a test for complex data types,
+        * this method is a good place to start to test the adapter's core
+        * functionality. The method raises a complex exception when
+        * passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA one-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param in enum ivalue: Takes a reference to a enum value. Since
+        * the direction is "in" only, the method takes in a value and does
+        * not return it back to the caller. Typically, the value E1 is passed
+        * into the parameter
+        * @return void
+        */
+        oneway void test_enum
+        (
+            in TestEnum ivalue
+        );
+
+        /**
+        * One-way method that tests the adapter ability to handle object
+        * references (objref) as any data types. The method raises a complex
+        * exception when passed the correct parameter <CODE>(Server -ex)
+        * </CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA one-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param in objref ivalue: Takes a reference to a objref value.
+        * Since the direction is "in" only, the method takes in a value and
+        * does not return it back to the caller. Typically, the IOR of the
+        * client is passed into the parameter
+        * @return void
+        */
+        oneway void test_obj_ref
+        (
+            in any ivalue
+        );
+
+        /**
+        * One-way method that tests the adapter ability to handle union data
+        * types. The method raises a complex exception when passed the correct
+        * parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA one-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param in ComplexUnion ivalue: Takes a reference to a union value.
+        * Since the direction is "in" only, the method takes in a value and
+        * does not return it back to the caller
+        * @return void
+        */
+        oneway void test_union
+        (
+            in ComplexUnion ivalue
+        );
+
+        /**
+        * One-way method that tests the adapter ability to handle structure
+        * (struct) data types. The method raises a complex exception when
+        * passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA one-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param in ComplexStructure ivalue: Takes a reference to a struct
+        * value. Since the direction is "in" only, the method takes in a value
+        * and does not return it back to the caller
+        * @return void
+        */
+        oneway void test_struct
+        (
+            in ComplexStructure ivalue
+        );
+
+        /**
+        * One-way method that tests the adapter ability to handle array data
+        * types. The method raises a complex exception when passed the correct
+        * parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA one-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param in ComplexArray ivalue: Takes a reference to a array value.
+        * Since the direction is "in" only, the method takes in a value and
+        * does not return it back to the caller
+        * @return void
+        */
+        oneway void test_array
+        (
+            in ComplexArray ivalue
+        );
+
+        /**
+        * One-way method that tests the adapter ability to handle sequence
+        * data types. The method raises a complex exception when passed the
+        * correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA one-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param in ComplexSequence ivalue: Takes a reference to a sequence
+        * value. Since the direction is "in" only, the method takes in a value
+        * and does not return it back to the caller
+        * @return void
+        */
+        oneway void test_sequence
+        (
+            in ComplexSequence ivalue
+        );
+
+        /**
+        * One-way method that tests the adapter ability to handle any
+        * data types Although this is a test for complex data types, this
+        * method is a good place to start to test the adapter's core
+        * functionality. The method raises a complex exception when
+        * passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA one-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param in any ivalue: Takes a reference to an any value. Since
+        * the direction is "in" only, the method takes in a value and does
+        * not return it back to the caller. Typically, the value
+        * "Invoking..." is passed into the parameter
+        * @return void
+        */
+        oneway void test_any
+        (
+            in any ivalue
+        );
+    };
+};

@@ -22,6 +22,7 @@ require 'zomg/idl/visitors/duhr'
   interface_header
   scoped_name
   string
+  constant
 }.each { |node_type|
   require "zomg/idl/nodes/#{node_type}"
 }

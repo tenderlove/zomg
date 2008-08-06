@@ -1,0 +1,181 @@
+// Description     : Data type tester
+
+typedef long longT;
+typedef short shortT;
+typedef unsigned long ulongT;
+typedef unsigned short ushortT;
+typedef octet octetT;
+typedef char charT;
+typedef float floatT;
+typedef double doubleT;
+typedef boolean boolT;
+typedef string stringT;
+
+interface demoInt1 {
+
+  void     void_op     ();
+
+  longT    long_op     (in longT i,   inout longT io,   out longT o);
+  ulongT   ulong_op    (in ulongT i,  inout ulongT io,  out ulongT o);
+  shortT   short_op    (in shortT i,  inout shortT io,  out shortT o);
+  ushortT  ushort_op   (in ushortT i, inout ushortT io, out ushortT o);
+  octetT   octet_op    (in octetT i,  inout octetT io,  out octetT o);
+  charT    char_op     (in charT i,   inout charT io,   out charT o);
+  floatT   float_op    (in floatT i,  inout floatT io,  out floatT o);
+  doubleT  double_op   (in doubleT i, inout doubleT io, out doubleT o);
+  boolT    boolean_op  (in boolT i,   inout boolT io,   out boolT o);
+  stringT  string_op   (in stringT i, inout stringT io, out stringT o);
+
+};
+
+//
+// demoInt2
+//
+
+struct pstruct {
+  long long_m;
+  unsigned long ulong_m;
+  short short_m;
+  unsigned short ushort_m;
+  octet octet_m;
+  char char_m;
+  float float_m;
+  double double_m;
+  boolean boolean_m;
+  string string_m;
+};
+
+typedef pstruct pstructT;
+
+typedef sequence<long> long_seq;
+typedef sequence<unsigned long> ulong_seq;
+typedef sequence<short> short_seq;
+typedef sequence<unsigned short> ushort_seq;
+typedef sequence<octet> octet_seq;
+typedef sequence<char> char_seq;
+typedef sequence<float> float_seq;
+typedef sequence<double> double_seq;
+typedef sequence<boolean> boolean_seq;
+typedef sequence<string> string_seq;
+
+typedef sequence<pstruct> pstruct_seq;
+
+interface demoInt2 {
+  pstruct pstruct_op(in pstruct i,
+             inout pstruct io,
+             out pstruct o);
+  long_seq long_seq_op(in long_seq i,
+               inout long_seq io,
+               out long_seq o);
+  ulong_seq ulong_seq_op(in ulong_seq i,
+             inout ulong_seq io,
+             out ulong_seq o);
+  short_seq short_seq_op(in short_seq i,
+             inout short_seq io,
+             out short_seq o);
+  ushort_seq ushort_seq_op(in ushort_seq i,
+               inout ushort_seq io,
+               out ushort_seq o);
+  octet_seq octet_seq_op(in octet_seq i,
+             inout octet_seq io,
+             out octet_seq o);
+  char_seq char_seq_op(in char_seq i,
+               inout char_seq io,
+               out char_seq o);
+  float_seq float_seq_op(in float_seq i,
+             inout float_seq io,
+             out float_seq o);
+  double_seq double_seq_op(in double_seq i,
+               inout double_seq io,
+               out double_seq o);
+  boolean_seq boolean_seq_op(in boolean_seq i,
+                 inout boolean_seq io,
+                 out boolean_seq o);
+  string_seq string_seq_op(in string_seq i,
+               inout string_seq io,
+               out string_seq o);
+  pstruct_seq pstruct_seq_op(in pstruct_seq i,
+               inout pstruct_seq io,
+               out pstruct_seq o);
+};
+
+//
+// demoInt3
+//
+
+const longT long_c = 1;
+const shortT short_c = 2;
+const ulongT ulong_c = 3;
+const ushortT ushort_c = 4;
+const charT char_c = 'X';
+const floatT float_c = 7.0;
+const doubleT double_c = 8.0;
+const boolT bool_c = TRUE;
+
+enum penum {
+  zero, one, two, three, four, five
+};
+
+union punion switch (penum) {
+ case zero:
+  longT long_m;
+ case one:
+  doubleT double_m;
+ case two:
+  stringT string_m;
+ case three:
+  pstruct pstruct_m;
+ case four:
+  penum enum_m;
+ default:
+  string_seq seq_m;
+};
+
+typedef longT long_arr[10];
+typedef doubleT double_arr[10];
+typedef stringT string_arr[10];
+typedef pstruct pstruct_arr[10];
+
+struct long_arr_struct {
+  long_arr val;
+};
+
+struct double_arr_struct {
+  double_arr val;
+};
+
+struct string_arr_struct {
+  string_arr val;
+};
+
+struct pstruct_arr_struct {
+  pstruct_arr val;
+};
+
+interface demoInt3 {
+  const longT long_c = 1;
+  const shortT short_c = 2;
+  const ulongT ulong_c = 3;
+  const ushortT ushort_c = 4;
+  const charT char_c = 'X';
+  const floatT float_c = 7.0;
+  const doubleT double_c = 8.0;
+  const boolT bool_c = TRUE;
+
+  penum penum_op(in penum i, inout penum io, out penum o);
+  punion punion_op(in punion i, inout punion io, out punion o);
+
+  long_arr long_arr_op(in long_arr i,
+               inout long_arr io,
+               out long_arr o);
+  double_arr double_arr_op(in double_arr i,
+               inout double_arr io,
+               out double_arr o);
+  string_arr string_arr_op(in string_arr i,
+               inout string_arr io,
+               out string_arr o);
+  pstruct_arr pstruct_arr_op(in pstruct_arr i,
+                 inout pstruct_arr io,
+                 out pstruct_arr o);
+};
+

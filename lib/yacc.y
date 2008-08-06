@@ -300,7 +300,9 @@ init_param_attribute
 
 /*27*/
 const_dcl
-	: T_CONST const_type T_IDENTIFIER T_EQUAL const_exp
+	: T_CONST const_type T_IDENTIFIER T_EQUAL const_exp {
+      result = Constant.new(val[1], val[2], val[4])
+    }
 	;
 
 /*28*/
@@ -385,9 +387,9 @@ literal
 	| T_string_literal
 	| T_CHARACTER_LITERAL { result = CharacterLiteral.new(val.first) }
 	| T_FIXED_PT_LITERAL
-	| T_FLOATING_PT_LITERAL
-	| T_TRUE  /*boolean_literal*/
-	| T_FALSE /*boolean_literal*/
+	| T_FLOATING_PT_LITERAL { result = FloatingPointLiteral.new(val.first) }
+	| T_TRUE  /*boolean_literal*/ { result = BooleanLiteral.new(true) }
+	| T_FALSE /*boolean_literal*/ { result = BooleanLiteral.new(false) }
 	;
 
 /*41*/
@@ -533,7 +535,7 @@ char_type
 
 /*64*/
 wide_char_type
-	: T_WCHAR
+	: T_WCHAR { result = WChar.new }
 	;
 
 /*65*/
@@ -755,17 +757,21 @@ raises_expr
 /*94*/
 context_expr
 	: /*empty*/
-	| T_CONTEXT T_LEFT_PARANTHESIS string_literals T_RIGHT_PARANTHESIS
+	| T_CONTEXT T_LEFT_PARANTHESIS string_literals T_RIGHT_PARANTHESIS {
+      result = Context.new(val[2])
+    }
 	;
 
 string_literals
-	: T_string_literal
-	| T_string_literal T_COMMA string_literals
+	: T_string_literal { result = [StringLiteral.new(val.first)] }
+	| T_string_literal T_COMMA string_literals {
+      result = [StringLiteral.new(val.first), val.last].flatten
+    }
 	;
 
 T_string_literal
-	: T_STRING_LITERAL
-	| T_STRING_LITERAL T_string_literal
+	: T_STRING_LITERAL { result = val }
+	| T_STRING_LITERAL T_string_literal { result = val.flatten }
 	;
 
 /*95*/

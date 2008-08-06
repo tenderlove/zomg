@@ -25,7 +25,8 @@ module ZOMG
       %w{ Boolean Char Double Float Long Octet Short UnsignedLong
         UnsignedShort ElementSpec CaseLabel DefaultLabel IntegerLiteral
         Sequence ArraySize Void In Out InOut CharacterLiteral
-        UnsignedLongLong LongLong Any ForwardDeclaration
+        UnsignedLongLong LongLong Any ForwardDeclaration WChar
+        FloatingPointLiteral BooleanLiteral Context StringLiteral
       }.each { |type| const_set(type.to_sym, Class.new(Node)) }
     end
   end

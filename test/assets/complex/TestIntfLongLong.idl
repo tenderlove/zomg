@@ -1,0 +1,51 @@
+module ORBTest_LongLong
+{
+    exception ExLongLong
+    {
+    long long value;
+    };
+
+    exception ExULongLong
+    {
+    unsigned long long value;
+    };
+
+    interface Intf
+    {
+    attribute long long attrLongLong;
+
+    long long
+    opLongLong(
+        in long long a0,
+        inout long long a1,
+        out long long a2
+    );
+
+    long long
+    opLongLongEx(
+        in long long a0,
+        inout long long a1,
+        out long long a2
+    )
+        raises (ExLongLong);
+
+    // --------------------------------------------------
+
+    attribute unsigned long long attrULongLong;
+
+    unsigned long long
+    opULongLong(
+        in unsigned long long a0,
+        inout unsigned long long a1,
+        out unsigned long long a2
+    );
+
+    unsigned long long
+    opULongLongEx(
+        in unsigned long long a0,
+        inout unsigned long long a1,
+        out unsigned long long a2
+    )
+        raises (ExULongLong); };
+
+}; // module ORBTest_LongLong

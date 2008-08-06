@@ -1,0 +1,52 @@
+module ORBTest_WChar
+{
+    exception ExWChar
+    {
+    wchar value;
+    };
+
+    exception ExWString
+    {
+    wstring value;
+    };
+
+    interface Intf
+    {
+    attribute wchar attrWChar;
+
+    wchar
+    opWChar(
+        in wchar a0,
+        inout wchar a1,
+        out wchar a2
+    );
+
+    wchar
+    opWCharEx(
+        in wchar a0,
+        inout wchar a1,
+        out wchar a2
+    )
+        raises (ExWChar);
+
+    // --------------------------------------------------
+
+    attribute wstring attrWString;
+
+    wstring
+    opWString(
+        in wstring a0,
+        inout wstring a1,
+        out wstring a2
+    );
+
+    wstring
+    opWStringEx(
+        in wstring a0,
+        inout wstring a1,
+        out wstring a2
+    )
+        raises (ExWString);
+    };
+
+}; // module ORBTest_WChar

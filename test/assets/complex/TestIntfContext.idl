@@ -1,0 +1,13 @@
+module ORBTest_Context
+{
+    typedef sequence<string> StringSequence;
+
+    interface Intf
+    {
+    StringSequence
+    opContext(
+        in string pattern
+    )
+        context ("A*", "C*", "X", "Z");
+    };
+}; // module ORBTest_Context

@@ -49,6 +49,13 @@ module ZOMG
           [:sequence, o.children.map { |c| c.accept(self) }]
         end
 
+        def visit_Constant(o)
+          [ :const,
+            o.type.accept(self),
+            o.name,
+            o.value.accept(self) ]
+        end
+
         def visit_Interface(o)
           [ :interface,
             o.header.accept(self),
@@ -63,7 +70,7 @@ module ZOMG
             o.name,
             o.children.map { |c| c.accept(self) },
             o.raises && o.raises.map { |c| c.accept(self) },
-            o.context && o.context.map { |c| c.accept(self) }
+            o.context && o.context.accept(self)
           ]
         end
 
@@ -98,9 +105,25 @@ module ZOMG
           [:exception, o.name, o.children.map { |c| c.accept(self) }]
         end
 
+        def visit_Context(o)
+          [:context, o.children.map { |c| c.accept(self) }]
+        end
+
         # Terminal nodes
+        def visit_StringLiteral(o)
+          [:string_lit, o.children]
+        end
+
         def visit_ForwardDeclaration(o)
           [:forward_decl, o.children]
+        end
+
+        def visit_FloatingPointLiteral(o)
+          [:float, o.children]
+        end
+
+        def visit_BooleanLiteral(o)
+          [:boolean, o.children]
         end
 
         def visit_In(o)
@@ -133,6 +156,10 @@ module ZOMG
 
         def visit_Char(o)
           :char
+        end
+
+        def visit_WChar(o)
+          :wchar
         end
 
         def visit_String(o)

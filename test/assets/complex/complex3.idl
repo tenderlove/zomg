@@ -1,0 +1,181 @@
+// Description        : CORBA IDL containing attributes that causes the
+//                      adapter to perform both one & two-way invocations
+
+/**
+* Module that contains interfaces for complex tests. IDLs contained in
+* this module includes the following:
+* <UL>
+* <LI>Complex data types including structures, sequences, unions, etc.
+* <LI>Interface that contains attributes
+* </UL>
+*/
+module AttributesComplexTest
+{
+    /**
+    * Complex structure consisting of a string value and a
+    * sequence of floating point values
+    */
+    struct ComplexStructure
+    {
+        string string_value;
+        sequence<float> sequence_value;
+    };
+
+    /**
+    * A complex array consisting of 2 elements. Each element is a complex
+    * structure type
+    */
+    typedef ComplexStructure ComplexArray[2];
+
+    /**
+    * A complex unbounded sequence that holds any data types
+    */
+    typedef sequence<any> ComplexSequence;
+
+    /**
+    * An enumeration consisting of 5 elements, E1 to E5. The enumeration
+    * is used to test Union data types, based on a switch case of enum values
+    */
+    enum TestEnum { E1, E2, E3, E4, E5 };
+
+    /**
+    * An array consisting of 5 elements. Each element is a short
+    * data type. The array of 5 shorts is typedef-ed into the name
+    * "short"
+    */
+    typedef short short_array[5];
+
+    /**
+    * An array consisting of 5 elements. Each element is a double
+    * data type. The array of 5 doubled is typedef-ed into the name
+    * "double"
+    */
+    typedef double double_array[5];
+
+    /**
+    * An array consisting of 5 elements. Each element is a string
+    * data type. The array of 5 strings is typedef-ed into the name
+    * "string"
+    */
+    typedef string string_array[5];
+
+    /**
+    * A union that discriminates based on an enumeration, <CODE>TestEnum
+    * </CODE>. The discrimination rules are as follows:
+    * <UL>
+    * <LI>If discriminator is TestEnum::E1, return an array of short values
+    * <LI>If discriminator is TestEnum::E2, return an array of double values
+    * <LI>If discriminator is TestEnum::E3, return a long value
+    * <LI>If discriminator is TestEnum::E4, return a complex structure
+    * <LI>If discriminator is TestEnum::E5, return an array of string values
+    * </UL>
+    */
+    union ComplexUnion switch(TestEnum)
+    {
+    case E1:
+        short_array s;
+    case E2:
+        double_array d;
+    case E3:
+        long l;
+    case E4:
+        ComplexStructure cs;
+    default:
+        string_array str;
+    };
+
+    /**
+    * Attribute interface for complex data types. Clients and servers written
+    * using this interface can be used with all services.
+    */
+    interface comattrcor
+    {
+        /**
+        * Complex structure attribute that tests the adapter's core
+        * functionality.
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this attrib.
+        * For SDK to CORBA, the CORBA server will be written with this attrib.
+        * The attribute gets mapped to get_test_struct and set_test_struct in
+        * the adapter.
+        */
+        attribute ComplexStructure test_struct;
+
+        /**
+        * Complex array attribute that tests the adapter's core
+        * functionality.
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this attrib.
+        * For SDK to CORBA, the CORBA server will be written with this attrib.
+        * The attribute gets mapped to get_test_array and set_test_array in
+        * the adapter.
+        */
+        attribute ComplexArray test_array;
+
+        /**
+        * Complex sequence attribute that tests the adapter's core
+        * functionality.
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this attrib.
+        * For SDK to CORBA, the CORBA server will be written with this attrib.
+        * The attribute gets mapped to get_test_sequence and set_test_sequence
+        * in the adapter.
+        */
+        attribute ComplexSequence test_sequence;
+
+        /**
+        * Complex union attribute that tests the adapter's core
+        * functionality.
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this attrib.
+        * For SDK to CORBA, the CORBA server will be written with this attrib.
+        * The attribute gets mapped to get_test_union and set_test_union in
+        * the adapter.
+        */
+        attribute ComplexUnion test_union;
+
+        /**
+        * Complex enumeration attribute that tests the adapter's core
+        * functionality.
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this attrib.
+        * For SDK to CORBA, the CORBA server will be written with this attrib.
+        * The attribute gets mapped to get_test_enum and set_test_enum in
+        * the adapter.
+        */
+        attribute TestEnum test_enum;
+
+        /**
+        * Complex short attribute that tests the adapter's core
+        * functionality.
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this attrib.
+        * For SDK to CORBA, the CORBA server will be written with this attrib.
+        * The attribute gets mapped to get_test_short and set_test_short in
+       * the adapter.
+        */
+        attribute short test_short;
+
+        /**
+        * Complex double attribute that tests the adapter's core
+        * functionality.
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this attrib.
+        * For SDK to CORBA, the CORBA server will be written with this attrib.
+        * The attribute gets mapped to get_test_double and set_test_double in
+        * the adapter.
+        */
+        attribute double test_double;
+
+        /**
+        * Complex string attribute that tests the adapter's core
+        * functionality.
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this attrib.
+        * For SDK to CORBA, the CORBA server will be written with this attrib.
+        * The attribute gets mapped to get_test_string and set_test_string in
+        * the adapter.
+        */
+        attribute string test_string;
+    };
+};

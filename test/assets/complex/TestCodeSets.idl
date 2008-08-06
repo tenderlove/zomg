@@ -1,0 +1,10 @@
+interface TestCodeSets
+{
+    char testChar(in char c);
+    string testString(in string s);
+
+    wchar testWChar(in wchar wc);
+    wstring testWString(in wstring ws);
+
+    void deactivate();
+};

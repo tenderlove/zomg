@@ -1,0 +1,730 @@
+// Description        : CORBA IDL containing an interface that
+//                      has multiple methods, each testing a complex datatype
+
+/**
+* Module that contains interfaces for complex tests. IDLs contained in
+* this module includes the following:
+* <UL>
+* <LI>Complex data types including structures, sequences, unions, etc.
+* <LI>Interface that contains Two-way operations
+* </UL>
+*/
+module TwoWayComplexTest
+{
+    /**
+    * User exception that can be returned by the CORBA server
+    */
+    exception ComplexEx { };
+
+    /**
+    * Complex structure consisting of a string value and a
+    * sequence of floating point values
+    */
+    struct ComplexStructure
+    {
+        string string_value;
+        sequence<float> sequence_value;
+    };
+
+    /**
+    * A complex array consisting of 2 elements. Each element is a complex
+    * structure type
+    */
+    typedef ComplexStructure ComplexArray[2];
+
+    /**
+    * A complex unbounded sequence that holds any data types
+    */
+    typedef sequence<any> ComplexSequence;
+
+    /**
+    * An enumeration consisting of 5 elements, E1 to E5. The enumeration
+    * is used to test Union data types, based on a switch case of enum values
+    */
+    enum TestEnum { E1, E2, E3, E4, E5 };
+
+    /**
+    * An array consisting of 5 elements. Each element is a short
+    * data type. The array of 5 shorts is typedef-ed into the name
+    * "short"
+    */
+    typedef short short_array[5];
+
+    /**
+    * An array consisting of 5 elements. Each element is a double
+    * data type. The array of 5 doubled is typedef-ed into the name
+    * "double"
+    */
+    typedef double double_array[5];
+
+    /**
+    * An array consisting of 5 elements. Each element is a string
+    * data type. The array of 5 strings is typedef-ed into the name
+    * "string"
+    */
+    typedef string string_array[5];
+
+    /**
+    * A union that discriminates based on an enumeration, <CODE>TestEnum
+    * </CODE>. The discrimination rules are as follows:
+    * <UL>
+    * <LI>If discriminator is TestEnum::E1, return an array of short values
+    * <LI>If discriminator is TestEnum::E2, return an array of double values
+    * <LI>If discriminator is TestEnum::E3, return a long value
+    * <LI>If discriminator is TestEnum::E4, return a complex structure
+    * <LI>If discriminator is TestEnum::E5, return an array of string values
+    * </UL>
+    */
+    union ComplexUnion switch(TestEnum)
+    {
+    case E1:
+        short_array s;
+    case E2:
+        double_array d;
+    case E3:
+        long l;
+    case E4:
+        ComplexStructure cs;
+    default:
+        string_array str;
+    };
+
+    /**
+    * Two-way interface for complex data types. Clients and servers written
+    * using this interface can be used with all services.
+    */
+    interface com2wcor
+    {
+        /**
+        * Two-way method that does nothing. Although this is a test for
+        * complex data types, this method is a good place to start to test
+        * the adapter's core functionality. The method raises a complex
+        * exception when passed the correct parameter <CODE>(Server -ex)
+        * </CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param void
+        * @return void
+        */
+        void test_void() raises(ComplexEx);
+
+        /**
+        * Two-way method that tests the adapter ability to handle short
+        * data types Although this is a test for complex data types, this
+        * method is a good place to start to test the adapter's core
+        * functionality. The method raises a complex exception when
+        * passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param out short ovalue: Takes a reference to a short value. Since
+        * the direction is "out" only, the method only fills the value and
+        * returns it back to the caller. Typically, the value 1 is returned
+        * back
+        * @param inout short value: Takes a reference to a short value. Since
+        * the direction is "inout", the method takes in a value and fills
+        * another value and returns it back to the caller. Typically, the
+        * value 0 is passed into the parameter, and the value 1 is returned
+        * back
+        * @param in short ivalue: Takes a reference to a short value. Since
+        * the direction is "in" only, the method takes in a value and does
+        * not return it back to the caller. Typically, the value 0 is passed
+        * into the parameter
+        * @return short: Returns a short value to the caller. Typically, the
+        * value 1 is returned by this method
+        */
+        short test_short
+        (
+            out short ovalue,
+            inout short value,
+            in short ivalue
+        )
+        raises(ComplexEx);
+
+        /**
+        * Two-way method that tests the adapter ability to handle long
+        * data types Although this is a test for complex data types, this
+        * method is a good place to start to test the adapter's core
+        * functionality. The method raises a complex exception when
+        * passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param out long ovalue: Takes a reference to a long value. Since
+        * the direction is "out" only, the method only fills the value and
+        * returns it back to the caller. Typically, the value 99999999 is
+        * returned
+        * back
+        * @param inout long value: Takes a reference to a long value. Since
+        * the direction is "inout", the method takes in a value and fills
+        * another value and returns it back to the caller. Typically, the
+        * value 0 is passed into the parameter, and the value 99999999 is
+        * returned back
+        * @param in long ivalue: Takes a reference to a long value. Since
+        * the direction is "in" only, the method takes in a value and does
+        * not return it back to the caller. Typically, the value 99999999
+        * is passed into the parameter
+        * @return long: Returns a long value to the caller. Typically, the
+        * value 99999999 is returned by this method
+        */
+        long test_long
+        (
+            out long ovalue,
+            inout long value,
+            in long ivalue
+        )
+        raises(ComplexEx);
+
+        /**
+        * Two-way method that tests the adapter ability to handle long long
+        * data types Although this is a test for complex data types, this
+        * method is a good place to start to test the adapter's core
+        * functionality. The method raises a complex exception when
+        * passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param out long long ovalue: Takes a reference to a long long value.
+        * Since the direction is "out" only, the method only fills the value
+        * and returns it back to the caller. Typically, the value 99999999 is
+        * returned back
+        * @param inout long long value: Takes a reference to a long long
+        * value. Since the direction is "inout", the method takes in a value
+        * and fills another value and returns it back to the caller.
+        * Typically, the value 0 is passed into the parameter, and the value
+        * 99999999 is returned back
+        * @param in long long ivalue: Takes a reference to a long long value.
+        * Since the direction is "in" only, the method takes in a value and
+        * does not return it back to the caller. Typically, the value 99999999
+        * is passed into the parameter
+        * @return long long: Returns a long long value to the caller.
+        * Typically, the value 99999999 is returned by this method
+        */
+        long long test_longlong
+        (
+            out long long ovalue,
+            inout long long value,
+            in long long ivalue
+        )
+        raises(ComplexEx);
+
+        /**
+        * Two-way method that tests the adapter ability to handle unsigned
+        * short (ushort) data types Although this is a test for complex
+        * data types, this method is a good place to start to test the
+        * adapter's core functionality. The method raises a complex exception
+        * when passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param out ushort ovalue: Takes a reference to a ushort value. Since
+        * the direction is "out" only, the method only fills the value and
+        * returns it back to the caller. Typically, the value 1 is returned
+        * back
+        * @param inout ushort value: Takes a reference to a ushort value.
+        * Since the direction is "inout", the method takes in a value and
+        * fills another value and returns it back to the caller. Typically,
+        * the value 0 is passed into the parameter, and the value 1 is
+        * returned =back
+        * @param in ushort ivalue: Takes a reference to a ushort value. Since
+        * the direction is "in" only, the method takes in a value and does
+        * not return it back to the caller. Typically, the value 0 is passed
+        * into the parameter
+        * @return ushort: Returns a ushort value to the caller. Typically, the
+        * value 1 is returned by this method
+        */
+        unsigned short test_ushort
+        (
+            out unsigned short ovalue,
+            inout unsigned short value,
+            in unsigned short ivalue
+        )
+        raises(ComplexEx);
+
+        /**
+        * Two-way method that tests the adapter ability to handle unsigned
+        * long (ulong) data types Although this is a test for complex data
+        * types, this method is a good place to start to test the adapter's
+        * core functionality. The method raises a complex exception when
+        * passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param out ulong ovalue: Takes a reference to a ulong value. Since
+        * the direction is "out" only, the method only fills the value and
+        * returns it back to the caller. Typically, the value 99999999 is
+        * returned back
+        * @param inout ulong value: Takes a reference to a ulong value. Since
+        * the direction is "inout", the method takes in a value and fills
+        * another value and returns it back to the caller. Typically, the
+        * value 0 is passed into the parameter, and the value 99999999 is
+        * returned back
+        * @param in ulong ivalue: Takes a reference to a ulong value. Since
+        * the direction is "in" only, the method takes in a value and does
+        * not return it back to the caller. Typically, the value 99999999
+        * is passed into the parameter
+        * @return ulong: Returns a ulong value to the caller. Typically, the
+        * value 99999999 is returned by this method
+        */
+        unsigned long test_ulong
+        (
+            out unsigned long ovalue,
+            inout unsigned long value,
+            in unsigned long ivalue
+        )
+        raises(ComplexEx);
+
+        /**
+        * Two-way method that tests the adapter ability to handle unsigned
+        * long long (ulonglong) data types Although this is a test for
+        * complex data types, this method is a good place to start to test
+        * the adapter's core functionality. The method raises a complex
+        * exception when passed the correct parameter <CODE>(Server -ex)
+        * </CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param out ulonglong ovalue: Takes a reference to a ulonglong value.
+        * Since the direction is "out" only, the method only fills the value
+        * and returns it back to the caller. Typically, the value 99999999 is
+        * returned back
+        * @param inout ulonglong value: Takes a reference to a ulonglong
+        * value. Since the direction is "inout", the method takes in a value
+        * and fills another value and returns it back to the caller.
+        * Typically, the value 0 is passed into the parameter, and the value
+        * 99999999 is returned back
+        * @param in ulonglong ivalue: Takes a reference to a ulonglong value.
+        * Since the direction is "in" only, the method takes in a value and
+        * does not return it back to the caller. Typically, the value 99999999
+        * is passed into the parameter
+        * @return ulonglong: Returns a ulonglong value to the caller.
+        * Typically, the value 99999999 is returned by this method
+        */
+        unsigned long long test_ulonglong
+        (
+            out unsigned long long ovalue,
+            inout unsigned long long value,
+            in unsigned long long ivalue
+        )
+        raises(ComplexEx);
+
+        /**
+        * Two-way method that tests the adapter ability to handle floating
+        * point (float) data types Although this is a test for complex data
+        * types, this method is a good place to start to test the adapter's
+        * core functionality. The method raises a complex exception when
+        * passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param out float ovalue: Takes a reference to a float value. Since
+        * the direction is "out" only, the method only fills the value and
+        * returns it back to the caller. Typically, the value 1.0 is returned
+        * back
+        * @param inout float value: Takes a reference to a float value. Since
+        * the direction is "inout", the method takes in a value and fills
+        * another value and returns it back to the caller. Typically, the
+        * value 0.0 is passed into the parameter, and the value 1.0 is
+        * returned back
+        * @param in float ivalue: Takes a reference to a float value. Since
+        * the direction is "in" only, the method takes in a value and does
+        * not return it back to the caller. Typically, the value 0.0 is passed
+        * into the parameter
+        * @return float: Returns a float value to the caller. Typically, the
+        * value 1.0 is returned by this method
+        */
+        float test_float
+        (
+            out float ovalue,
+            inout float value,
+            in float ivalue
+        )
+        raises(ComplexEx);
+
+        /**
+        * Two-way method that tests the adapter ability to handle double
+        * data types Although this is a test for complex data types, this
+        * method is a good place to start to test the adapter's core
+        * functionality. The method raises a complex exception when
+        * passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param out double ovalue: Takes a reference to a double value. Since
+        * the direction is "out" only, the method only fills the value and
+        * returns it back to the caller. Typically, the value 9999.9999 is
+        * returned back
+        * @param inout double value: Takes a reference to a double value. Since
+        * the direction is "inout", the method takes in a value and fills
+        * another value and returns it back to the caller. Typically, the
+        * value 0.0 is passed into the parameter, and the value 9999.9999
+        * is returned back
+        * @param in double ivalue: Takes a reference to a double value. Since
+        * the direction is "in" only, the method takes in a value and does
+        * not return it back to the caller. Typically, the value
+        * 9999.9999 is passed into the parameter
+        * @return double: Returns a double value to the caller. Typically, the
+        * value 9999.9999 is returned by this method
+        */
+        double test_double
+        (
+            out double ovalue,
+            inout double value,
+            in double ivalue
+        )
+        raises(ComplexEx);
+
+        /**
+        * Two-way method that tests the adapter ability to handle string
+        * data types Although this is a test for complex data types, this
+        * method is a good place to start to test the adapter's core
+        * functionality. The method raises a complex exception when
+        * passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param out string ovalue: Takes a reference to a string value. Since
+        * the direction is "out" only, the method only fills the value and
+        * returns it back to the caller. Typically, the value "Returning..."
+        * is returned back
+        * @param inout string value: Takes a reference to a string value. Since
+        * the direction is "inout", the method takes in a value and fills
+        * another value and returns it back to the caller. Typically, the
+        * value "Invoking..." is passed into the parameter, and the value
+        * "Returning..." is returned back
+        * @param in string ivalue: Takes a reference to a string value. Since
+        * the direction is "in" only, the method takes in a value and does
+        * not return it back to the caller. Typically, the value
+        * "Invoking..." is passed into the parameter
+        * @return string: Returns a string value to the caller. Typically, the
+        * value "Returning..." is returned by this method
+        */
+        string test_string
+        (
+            out string ovalue,
+            inout string value,
+            in string ivalue
+        )
+        raises(ComplexEx);
+
+        /**
+        * Two-way method that tests the adapter ability to handle character
+        * (char) data types Although this is a test for complex data types,
+        * this method is a good place to start to test the adapter's core
+        * functionality. The method raises a complex exception when passed
+        * the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param out char ovalue: Takes a reference to a  value. Since the
+        * direction is "out" only, the method only fills the value and
+        * returns it back to the caller. Typically, the value 'z' is returned
+        * back
+        * @param inout char value: Takes a reference to a  value. Since the
+        * direction is "inout", the method takes in a value and fills another
+        * value and returns it back to the caller. Typically, the value 'a'
+        * is passed into the parameter, and the value 'z' is returned back
+        * @param in char ivalue: Takes a reference to a  value. Since the
+        * direction is "in" only, the method takes in a value and does not
+        * return it back to the caller. Typically, the value 'a' is passed
+        * into the parameter
+        * @return char: Returns a  value to the caller. Typically, the value
+        * 'z' is returned by this method
+        */
+        char test_char
+        (
+            out char ovalue,
+            inout char value,
+            in char ivalue
+        )
+        raises(ComplexEx);
+
+        /**
+        * Two-way method that tests the adapter ability to handle wide string
+        * (wstring) data types Although this is a test for complex data types,
+        * this method is a good place to start to test the adapter's core
+        * functionality. The method raises a complex exception when
+        * passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param out wstring ovalue: Takes a reference to a wstring value.
+        * Since the direction is "out" only, the method only fills the value
+        * and returns it back to the caller. Typically, the value
+        * "Returning..." is returned back
+        * @param inout wstring value: Takes a reference to a wstring value.
+        * Since the direction is "inout", the method takes in a value and
+        * fills another value and returns it back to the caller. Typically,
+        * the value "Invoking..." is passed into the parameter, and the value
+        * "Returning..." is returned back
+        * @param in wstring ivalue: Takes a reference to a wstring value.
+        * Since the direction is "in" only, the method takes in a value and
+        * does not return it back to the caller. Typically, the value
+        * "Invoking..." is passed into the parameter
+        * @return wstring: Returns a wstring value to the caller. Typically,
+        * the value "Returning..." is returned by this method
+        */
+        wstring test_wstring
+        (
+            out wstring ovalue,
+            inout wstring value,
+            in wstring ivalue
+        )
+        raises(ComplexEx);
+
+        /**
+        * Two-way method that tests the adapter ability to handle wide
+        * character (wchar) data types Although this is a test for complex
+        * data types, this method is a good place to start to test the
+        * adapter's core functionality. The method raises a complex exception
+        * when passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param out wchar ovalue: Takes a reference to a  value. Since the
+        * direction is "out" only, the method only fills the value and
+        * returns it back to the caller. Typically, the value 'z' is returned
+        * back
+        * @param inout wchar value: Takes a reference to a  value. Since the
+        * direction is "inout", the method takes in a value and fills another
+        * value and returns it back to the caller. Typically, the value 'a'
+        * is passed into the parameter, and the value 'z' is returned back
+        * @param in wchar ivalue: Takes a reference to a  value. Since the
+        * direction is "in" only, the method takes in a value and does not
+        * return it back to the caller. Typically, the value 'a' is passed
+        * into the parameter
+        * @return wchar: Returns a  value to the caller. Typically, the value
+        * 'z' is returned by this method
+        */
+        wchar test_wchar
+        (
+            out wchar ovalue,
+            inout wchar value,
+            in wchar ivalue
+        )
+        raises(ComplexEx);
+
+        /**
+        * Two-way method that tests the adapter ability to handle enumerated
+        * (enum) data types Although this is a test for complex data types,
+        * this method is a good place to start to test the adapter's core
+        * functionality. The method raises a complex exception when
+        * passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param out enum ovalue: Takes a reference to a enum value. Since
+        * the direction is "out" only, the method only fills the value and
+        * returns it back to the caller. Typically, the value E2 is returned
+        * back
+        * @param inout enum value: Takes a reference to a enum value. Since
+        * the direction is "inout", the method takes in a value and fills
+        * another value and returns it back to the caller. Typically, the
+        * value E1 is passed into the parameter, and the value E2 is returned
+        * back
+        * @param in enum ivalue: Takes a reference to a enum value. Since
+        * the direction is "in" only, the method takes in a value and does
+        * not return it back to the caller. Typically, the value E1 is passed
+        * into the parameter
+        * @return enum: Returns a enum value to the caller. Typically, the
+        * value E2 is returned by this method
+        */
+        TestEnum test_enum
+        (
+            out TestEnum ovalue,
+            inout TestEnum value,
+            in TestEnum ivalue
+        )
+        raises(ComplexEx);
+
+        /**
+        * Two-way method that tests the adapter ability to handle object
+        * references (objref) as any data types. The method raises a complex
+        * exception when passed the correct parameter <CODE>(Server -ex)
+        * </CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param out objref ovalue: Takes a reference to a objref value, as
+        * an any. Since the direction is "out" only, the method only fills
+        * the value and returns it back to the caller. Typically, the IOR of
+        * the server is returned back
+        * @param inout objref value: Takes a reference to a objref value.
+        * Since the direction is "inout", the method takes in a value and
+        * fills another value and returns it back to the caller. Typically,
+        * the IOR of the client is passed into the parameter, and the IOR of
+        * the server is returned back
+        * @param in objref ivalue: Takes a reference to a objref value.
+        * Since the direction is "in" only, the method takes in a value and
+        * does not return it back to the caller. Typically, the IOR of the
+        * client is passed into the parameter
+        * @return objref: Returns a objref value to the caller. Typically,
+        * the IOR of the server is returned by this method
+        */
+        any test_obj_ref
+        (
+            out any ovalue,
+            inout any value,
+            in any ivalue
+        )
+        raises(ComplexEx);
+
+        /**
+        * Two-way method that tests the adapter ability to handle union data
+        * types. The method raises a complex exception when passed the correct
+        * parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param out ComplexUnion ovalue: Takes a reference to a union value.
+        * Since the direction is "out" only, the method only fills the value
+        * and returns it back to the caller
+        * @param inout ComplexUnion value: Takes a reference to a union value.
+        * Since the direction is "inout", the method takes in a value and
+        * fills another value and returns it back to the caller
+        * @param in ComplexUnion ivalue: Takes a reference to a union value.
+        * Since the direction is "in" only, the method takes in a value and
+        * does not return it back to the caller
+        * @return ComplexUnion: Returns a union value to the caller
+        */
+        ComplexUnion test_union
+        (
+            in ComplexUnion ivalue,
+            inout ComplexUnion value,
+            out ComplexUnion ovalue
+        )
+        raises(ComplexEx);
+
+        /**
+        * Two-way method that tests the adapter ability to handle structure
+        * (struct) data types. The method raises a complex exception when
+        * passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param out ComplexStructure ovalue: Takes a reference to a struct
+        * value. Since the direction is "out" only, the method only fills the
+        * value and returns it back to the caller
+        * @param inout ComplexStructure value: Takes a reference to a struct
+        * value. Since the direction is "inout", the method takes in a value
+        * and fills another value and returns it back to the caller
+        * @param in ComplexStructure ivalue: Takes a reference to a struct
+        * value. Since the direction is "in" only, the method takes in a value
+        * and does not return it back to the caller
+        * @return ComplexStructure: Returns a struct value to the caller
+        */
+        ComplexStructure test_struct
+        (
+            out ComplexStructure ovalue,
+            inout ComplexStructure value,
+            in ComplexStructure ivalue
+        )
+        raises(ComplexEx);
+
+        /**
+        * Two-way method that tests the adapter ability to handle array data
+        * types. The method raises a complex exception when passed the correct
+        * parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param out ComplexArray ovalue: Takes a reference to a array value.
+        * Since the direction is "out" only, the method only fills the value
+        * and returns it back to the caller
+        * @param inout ComplexArray value: Takes a reference to a array value.
+        * Since the direction is "inout", the method takes in a value and
+        * fills another value and returns it back to the caller
+        * @param in ComplexArray ivalue: Takes a reference to a array value.
+        * Since the direction is "in" only, the method takes in a value and
+        * does not return it back to the caller
+        * @return ComplexArray: Returns a array value to the caller
+        */
+        ComplexArray test_array
+        (
+            out ComplexArray ovalue,
+            inout ComplexArray value,
+            in ComplexArray ivalue
+        )
+        raises(ComplexEx);
+
+        /**
+        * Two-way method that tests the adapter ability to handle sequence
+        * data types. The method raises a complex exception when passed the
+        * correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param out ComplexSequence ovalue: Takes a reference to a sequence
+        * value. Since the direction is "out" only, the method only fills the
+        * value and returns it back to the caller
+        * @param inout ComplexSequence value: Takes a reference to a sequence
+        * value. Since the direction is "inout", the method takes in a value
+        * and fills another value and returns it back to the caller
+        * @param in ComplexSequence ivalue: Takes a reference to a sequence
+        * value. Since the direction is "in" only, the method takes in a value
+        * and does not return it back to the caller
+        * @return ComplexSequence: Returns a sequence value to the caller
+        */
+        ComplexSequence test_sequence
+        (
+            out ComplexSequence ovalue,
+            inout ComplexSequence value,
+            in ComplexSequence ivalue
+        )
+        raises(ComplexEx);
+
+        /**
+        * Two-way method that tests the adapter ability to handle any
+        * data types Although this is a test for complex data types, this
+        * method is a good place to start to test the adapter's core
+        * functionality. The method raises a complex exception when
+        * passed the correct parameter <CODE>(Server -ex)</CODE>.<BR>
+        * It is used in both CORBA to SDK and SDK to CORBA two-way scenarios.
+        * For CORBA to SDK, the CORBA client will be written with this method.
+        * For SDK to CORBA, the CORBA server will be written with this method.
+        * @author Kunal Ashar
+        * @param out any ovalue: Takes a reference to an any value. Since
+        * the direction is "out" only, the method only fills the value and
+        * returns it back to the caller. Typically, the value "Returning..."
+        * is returned back
+        * @param inout any value: Takes a reference to an any value. Since
+        * the direction is "inout", the method takes in a value and fills
+        * another value and returns it back to the caller. Typically, the
+        * value "Invoking..." is passed into the parameter, and the value
+        * "Returning..." is returned back
+        * @param in any ivalue: Takes a reference to an any value. Since
+        * the direction is "in" only, the method takes in a value and does
+        * not return it back to the caller. Typically, the value
+        * "Invoking..." is passed into the parameter
+        * @return any: Returns an any value to the caller. Typically, the
+        * value "Returning..." is returned by this method
+        */
+        any test_any
+        (
+            out any ovalue,
+            inout any value,
+            in any ivalue
+        )
+        raises(ComplexEx);
+    };
+};

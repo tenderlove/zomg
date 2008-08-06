@@ -1,0 +1,22 @@
+typedef sequence<any> any_seq;
+
+struct any_struct {
+    long    slot_1;
+    any slot_2;
+    long    slot_3;
+};
+
+interface I {
+    any     op_any       (in    any        a,
+                      inout any        b,
+                      out   any        c);
+    any_seq     op_any_seq   (in    any_seq    a,
+                      inout any_seq    b,
+                      out   any_seq    c);
+    any_struct  op_any_struct(in    any_struct a,
+                      inout any_struct b,
+                      out   any_struct c);
+};
+
+/* End of file. */
+
