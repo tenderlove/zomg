@@ -1,0 +1,19 @@
+// Description     : Orbix's Grid IDL
+// Comments        : Contains 1 read-only attribute, 1 attribute and 1 method
+//****************************************************************************
+
+interface Grid {
+    readonly attribute short height;  // height of the grid
+
+    //readonly attribute short width;   // width of the grid
+
+    attribute short width;   // width of the grid
+
+    // IDL operations
+
+    // set the element [n,m] of the grid, to value:
+    //void set(in short n, in short m, in long value);
+
+    // return element [n,m] of the grid:
+    long get(in short n, in short m);
+};
