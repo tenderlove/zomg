@@ -11,7 +11,15 @@ module ZOMG
       end
 
       def parse_file(filename)
-        @scanner.load_file(filename)
+        contents = File.read(filename)
+        if contents =~ /^\s*#/
+          contents = IO.popen('gcc -E -', 'w+') { |io|
+            io.write(contents)
+            io.close_write
+            io.read
+          }
+        end
+        @scanner.scan_evaluate(contents)
         do_parse
       end
 
@@ -19,6 +27,7 @@ module ZOMG
         token = @scanner.next_token
         return [false, false] unless token
         token = next_token() if token[0] == :T_COMMENT
+        token = next_token() if token[0] == :T_PREPROCESSOR
         token
       end
 
