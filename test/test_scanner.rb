@@ -14,6 +14,38 @@ class ScannerTest < ZOMG::Test
     assert tokens.length > 0
   end
 
+  def test_const_long
+    assert_tokens([
+                  [:T_CONST, "const"],
+                  [:T_LONG, "long"],
+                  [:T_IDENTIFIER, "ConstLong"],
+                  [:T_EQUAL, "="],
+                  [:T_MINUS_SIGN, "-"],
+    ], 'const long ConstLong = -1234;')
+  end
+
+  def test_escaped_string
+    assert_tokens([
+                  [:T_CONST, "const"],
+                  [:T_CHAR, "char"],
+                  [:T_IDENTIFIER, "ConstChar5"],
+                  [:T_EQUAL, "="],
+                  [:T_CHARACTER_LITERAL, "'\\''"],
+    ], 'const char ConstChar5 = \'\\\'\'')
+  end
+
+  def test_vertical_pipe
+    assert_tokens([
+                  [:T_CONST, "const"],
+                  [:T_LONG, "long"],
+                  [:T_IDENTIFIER, "ConstLong"],
+                  [:T_EQUAL, "="],
+                  [:T_LEFT_PARANTHESIS, "("],
+                  [:T_INTEGER_LITERAL, "0xf"],
+                  [:T_VERTICAL_LINE, "|"],
+    ], "const long ConstLong = (0xf | 0xf000) & 0xfffe")
+  end
+
   def test_instr
     assert_tokens([
                   [:T_IN, "in"],
@@ -137,7 +169,7 @@ class ScannerTest < ZOMG::Test
     :solidus      => [:T_SOLIDUS, '/'],
     :percent      => [:T_PERCENT_SIGN, '%'],
     :tilde        => [:T_TILDE, '~'],
-    :pipe         => [:T_VERTICAL_LIN, '|'],
+    :pipe         => [:T_VERTICAL_LINE, '|'],
     :caret        => [:T_CIRCUMFLEX, '^'],
     :ampersand    => [:T_AMPERSAND, '&'],
     :less_than    => [:T_LESS_THAN_SIGN, '<'],

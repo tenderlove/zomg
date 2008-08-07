@@ -10,7 +10,7 @@ macro
   Oct_Literal       0{Oct_Digit}*
   Hex_Literal       0[xX]{Hex_Digit}*
   Comment           \/\*(.|[\r\n])*?\*\/
-  Esc_Sequence1     \\\\\\\\\[ntvbrfa\\\\?\\\\'\"]
+  Esc_Sequence1     \\\\\\\\\[ntvbrfa\\\\?'\\\\\\\\\"]
   Esc_Sequence2     \\\\\\\\\{Oct_Digit}{1,3}
   Esc_Sequence3     \\\\\\\\\[xX]{Hex_Digit}{1,2}
   Esc_Sequence      ({Esc_Sequence1}|{Esc_Sequence2}|{Esc_Sequence3})
@@ -58,7 +58,7 @@ rule
             \/                  { [:T_SOLIDUS,text] }
             %                   { [:T_PERCENT_SIGN,text] }
             ~                   { [:T_TILDE,text] }
-            \|                  { [:T_VERTICAL_LIN,text] };
+            \|                  { [:T_VERTICAL_LINE,text] };
             \^                  { [:T_CIRCUMFLEX,text] }
             &                   { [:T_AMPERSAND,text] }
             <                   { [:T_LESS_THAN_SIGN,text] }
@@ -115,6 +115,8 @@ rule
             Principal           { [:T_PRINCIPAL, text] }
 
 
+            L{String_Literal}   { [:T_WIDE_STRING_LITERAL, text] }
+            L{Char_Literal}     { [:T_WIDE_CHARACTER_LITERAL, text] }
             {CORBA_Identifier}  { [:T_IDENTIFIER, text] }
             {Float_Literal1}    { [:T_FLOATING_PT_LITERAL, text] }
             {Float_Literal2}    {

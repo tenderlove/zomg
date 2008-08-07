@@ -27,6 +27,7 @@ module ZOMG
         Sequence ArraySize Void In Out InOut CharacterLiteral
         UnsignedLongLong LongLong Any ForwardDeclaration WChar
         FloatingPointLiteral BooleanLiteral Context StringLiteral
+        WideStringLiteral WideCharacterLiteral UnaryMinus
       }.each { |type| const_set(type.to_sym, Class.new(Node)) }
     end
   end

@@ -7,15 +7,16 @@ GENERATED_SCANNER = 'lib/zomg/idl/scanner.rb'
 GENERATED_LEXER = 'lib/zomg/idl/lexer.rb'
 
 $LOAD_PATH << File.expand_path(File.join(File.dirname(__FILE__), 'lib'))
-#require 'zomg'
+$DEBUG = ENV['DEBUG']
+require 'zomg/version'
 
-Hoe.new('zomg', '1.0.0') do |p|
+Hoe.new('zomg', ZOMG::VERSION) do |p|
    p.developer('Aaron Patterson', 'aaronp@rubyforge.org')
    p.clean_globs = [GENERATED_LEXER, GENERATED_SCANNER]
 end
 
 file GENERATED_LEXER => 'lib/yacc.y' do |t|
-  sh "racc -g -o #{t.name} #{t.prerequisites.first}"
+  sh "racc #{$DEBUG ? '-g' : ''} -o #{t.name} #{t.prerequisites.first}"
 end
 
 file GENERATED_SCANNER => 'lib/scanner.rex' do |t|

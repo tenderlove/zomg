@@ -1,3 +1,4 @@
+require 'zomg/version'
 require 'zomg/idl/visitable'
 require 'zomg/idl/visitors/sexp'
 require 'zomg/idl/visitors/duhr'
@@ -23,13 +24,10 @@ require 'zomg/idl/visitors/duhr'
   scoped_name
   string
   constant
+  binary
 }.each { |node_type|
   require "zomg/idl/nodes/#{node_type}"
 }
 require 'zomg/idl/scanner'
 require 'zomg/idl/lexer'
 require 'zomg/idl/parser'
-
-module ZOMG
-  VERSION = '1.0.0'
-end

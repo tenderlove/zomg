@@ -109,7 +109,34 @@ module ZOMG
           [:context, o.children.map { |c| c.accept(self) }]
         end
 
+        def visit_UnaryMinus(o)
+          [:uminus, o.children.accept(self)]
+        end
+
+        {
+          'MultiplyExpr'  => :multiply,
+          'ModulusExpr'   => :modulus,
+          'PlusExpr'      => :plus,
+          'ShiftLeftExpr' => :lshift,
+          'MinusExpr'     => :minus,
+          'DivideExpr'    => :divide,
+          'AmpersandExpr' => :ampersand,
+          'OrExpr'        => :or,
+        }.each do |type,sym|
+          define_method(:"visit_#{type}") do |o|
+            [sym, o.left.accept(self), o.right.accept(self)]
+          end
+        end
+
         # Terminal nodes
+        def visit_WideStringLiteral(o)
+          [:wstring_lit, o.children]
+        end
+
+        def visit_WideCharacterLiteral(o)
+          [:wstring_lit, o.children]
+        end
+
         def visit_StringLiteral(o)
           [:string_lit, o.children]
         end

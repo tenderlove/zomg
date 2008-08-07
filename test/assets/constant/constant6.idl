@@ -1,0 +1,144 @@
+
+
+// lower case letters
+
+const char Apple='a';
+const char Lemon='b';
+const char BlackCherry='c';
+const char Lychees='d';
+const char LoganBerry='e';
+const char Parsnip='f';
+const char Celery='g';
+const char WhiteCabbage='h';
+const char Aniseed='i';
+const char Bayleaf='j';
+const char Dill='k';
+const char Oregano='l';
+const char Beansprout='m';
+const char Almonds='n';
+const char Guava='o';
+const char Mushroom='p';
+const char Runnerbean='q';
+const char Tofu='r';
+const char Prunes='s';
+const char Brocoli='t';
+const char GrannySmith='u';
+const char BrazilNut='v';
+const char SweetPotato='w';
+const char Tangarine='x';
+const char Billberries='y';
+const char CantelopeMelon='z';
+
+// upper case letters
+
+
+const char LolloRossa='A';
+const char RowanBerry='B';
+const char Sweetcorn='C';
+const char Onion='D';
+const char Shallots='E';
+const char Plum='F';
+const char KidneyBean='G';
+const char Zucchini='H';
+const char ButterBean='I';
+const char Avocado='J';
+const char GoldenDelicous='K';
+const char Lentil='L';
+const char Fig='M';
+const char CrabApple='N';
+const char RedOnion='O';
+const char HazelNut='P';
+const char Cinnamon='Q';
+const char GooseBerry='R';
+const char EggPlant='S';
+const char JuniperBerries='T';
+const char Cloves='U';
+const char Daikan='V';
+const char Mustard='W';
+const char Strawberry='X';
+const char BreadFruit='Y';
+const char Thyme='Z';
+
+// digits
+
+const char Sweedes='0';
+const char Pomegranate='1';
+const char Tarragon='2';
+const char Lettuce='3';
+const char Mangetout='4';
+const char Cress='5';
+const char BambooShoot='6';
+const char Cassava='7';
+const char Melon='8';
+const char RedGrapes='9';
+
+// graphic characters
+
+const char BeechNut=' ';
+const char Elderberry='!';
+const char Kumquats='#';
+const char Walnuts='$';
+const char Fennell='%';
+const char Uglifruit='&';
+const char Waterchestnut='(';
+const char Chickpea=')';
+const char Beetroot='*';
+const char Okra='+';
+const char Plantain=',';
+const char Blackcurrant='-';
+const char Pineapple='.';
+const char LimaBean='/';
+const char Mangosteen=':';
+const char Pear=';';
+const char RedPepper='<';
+const char BeefTomatoes='=';
+const char FrenchBeans='>';
+const char Sharanfruit='@';
+const char Radish='[';
+const char Cherry=']';
+const char Papaya='^';
+const char Peppercorn='_';
+const char Susander='`';
+const char Raspberry='{';
+const char Grapefruit='|';
+const char PepinoMelon='}';
+const char Damsons='~';
+
+// escape sequences
+
+const char Peanutsquash='\n';
+const char CherryTomatoes='\t';
+const char Artichokes='\v';
+const char GreenGrapes='\b';
+const char Rasin='\r';
+const char CookingApple='\f';
+const char Chives='\a';
+const char Mullberry='\\';
+const char Eddo='\?';
+const char Yam='\'';
+const char GreenChilly='\"';
+
+
+// octal escape sequences
+
+const char Corn='\000';
+const char Peach='\7';
+const char Squash='4';
+const char Parsley='\321';
+const char YellowPepper='\377';
+
+// hex escape sequences
+
+const char Satsuma='\x0';
+const char Peanuts='\xA';
+const char Basil='\xe';
+const char CoxPippin='\x32';
+const char Blueberry='\xAf';
+const char Blackberry='\xff';
+
+
+interface idlServer{
+
+  void  Chervil();
+};
+

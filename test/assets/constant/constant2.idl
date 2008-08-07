@@ -1,0 +1,29 @@
+/**
+ * various const definitions
+ */
+typedef boolean BOOLEAN_type;
+
+const long c1 = 5 + 2;
+const long c2 = 7 + c1;
+const string c3 = "Hallo";
+const char c4 = 'S';
+const float c5 = 3.14159;
+const long c6 = 033;
+const long c7 = 0xaA;
+const BOOLEAN_type c8 = TRUE;
+const unsigned long c9 = c1 + 5;
+
+const short c10 = 10;
+
+const unsigned long ARRAY_SIZE = 10;
+typedef short ArrayShort[ARRAY_SIZE];
+
+interface foo
+{
+  const char c11 = '\n';
+  const char c12 = '\x30';
+
+  typedef string ss[ c2 ];
+};
+
+

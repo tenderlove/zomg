@@ -8,6 +8,7 @@ token T_BOOLEAN
 token T_CASE
 token T_CHAR
 token T_CHARACTER_LITERAL
+token T_WIDE_CHARACTER_LITERAL
 token T_CIRCUMFLEX
 token T_COLON
 token T_COMMA
@@ -56,6 +57,7 @@ token T_SHORT
 token T_SOLIDUS
 token T_STRING
 token T_STRING_LITERAL
+token T_WIDE_STRING_LITERAL
 token T_PRAGMA
 token T_STRUCT
 token T_SWITCH
@@ -183,7 +185,7 @@ interface_name
 /*12*/
 scoped_name
 	: T_IDENTIFIER { result = ScopedName.new(val[0]) }
-  | T_SCOPE T_IDENTIFIER
+  | T_SCOPE T_IDENTIFIER { result = ScopedName.new(val[0]) }
 	| scoped_name T_SCOPE T_IDENTIFIER
 	;
 
@@ -327,49 +329,69 @@ const_exp
 /*30*/
 or_expr
 	: xor_expr
-	| or_expr T_VERTICAL_LINE xor_expr
+	| or_expr T_VERTICAL_LINE xor_expr {
+      result = OrExpr.new(val.first, val.last)
+    }
 	;
 
 /*31*/
 xor_expr
 	: and_expr
-	| xor_expr T_CIRCUMFLEX and_expr
+	| xor_expr T_CIRCUMFLEX and_expr {
+      result = XorExpr.new(val.first, val.last)
+    }
 	;
 
 /*32*/
 and_expr
 	: shift_expr
-	| and_expr T_AMPERSAND shift_expr
+	| and_expr T_AMPERSAND shift_expr {
+      result = AmpersandExpr.new(val.first, val.last)
+    }
 	;
 
 /*33*/
 shift_expr
 	: add_expr
-	| shift_expr T_SHIFTRIGHT add_expr
-	| shift_expr T_SHIFTLEFT add_expr
+	| shift_expr T_SHIFTRIGHT add_expr {
+      result = ShiftRightExpr.new(val.first, val.last)
+    }
+	| shift_expr T_SHIFTLEFT add_expr {
+      result = ShiftLeftExpr.new(val.first, val.last)
+    }
 	;
 
 /*34*/
 add_expr
 	: mult_expr
-	| add_expr T_PLUS_SIGN mult_expr
-	| add_expr T_MINUS_SIGN mult_expr
+	| add_expr T_PLUS_SIGN mult_expr {
+      result = PlusExpr.new(val.first, val.last)
+    }
+	| add_expr T_MINUS_SIGN mult_expr {
+      result = MinusExpr.new(val.first, val.last)
+    }
 	;
 
 /*35*/
 mult_expr
 	: unary_expr
-	| mult_expr T_ASTERISK unary_expr
-	| mult_expr T_SOLIDUS unary_expr
-	| mult_expr T_PERCENT_SIGN unary_expr
+	| mult_expr T_ASTERISK unary_expr {
+      result = MultiplyExpr.new(val.first, val.last)
+    }
+	| mult_expr T_SOLIDUS unary_expr {
+      result = DivideExpr.new(val.first, val.last)
+    }
+	| mult_expr T_PERCENT_SIGN unary_expr {
+      result = ModulusExpr.new(val.first, val.last)
+    }
 	;
 
 /*36*/
 /*37*/
 unary_expr
-	: T_MINUS_SIGN primary_expr
-	| T_PLUS_SIGN primary_expr
-	| T_TILDE primary_expr
+	: T_MINUS_SIGN primary_expr { result = UnaryMinus.new(val[1]) }
+	| T_PLUS_SIGN primary_expr { result = UnaryPlus.new(val[1]) }
+	| T_TILDE primary_expr { result = UnaryNot.new(val[1]) }
 	| primary_expr
 	;
 
@@ -377,16 +399,18 @@ unary_expr
 primary_expr
 	: scoped_name
 	| literal
-	| T_LEFT_PARANTHESIS const_exp T_RIGHT_PARANTHESIS
+	| T_LEFT_PARANTHESIS const_exp T_RIGHT_PARANTHESIS { result = val[1] }
 	;
 
 /*39*/
 /*40*/
 literal
 	: T_INTEGER_LITERAL { result = IntegerLiteral.new(val.first) }
-	| T_string_literal
+	| T_string_literal { result = StringLiteral.new([val.first]) }
+  | T_WIDE_STRING_LITERAL { result = WideStringLiteral.new([val.first]) }
 	| T_CHARACTER_LITERAL { result = CharacterLiteral.new(val.first) }
-	| T_FIXED_PT_LITERAL
+  | T_WIDE_CHARACTER_LITERAL { result = WideCharacterLiteral.new([val.first]) }
+	| T_FIXED_PT_LITERAL { raise }
 	| T_FLOATING_PT_LITERAL { result = FloatingPointLiteral.new(val.first) }
 	| T_TRUE  /*boolean_literal*/ { result = BooleanLiteral.new(true) }
 	| T_FALSE /*boolean_literal*/ { result = BooleanLiteral.new(false) }

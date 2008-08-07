@@ -1,0 +1,30 @@
+
+// test integer literals base 10
+
+const long Apple=0;
+const short Banana=253;
+const long Carrots=94873;
+const unsigned long Lemon=4294967295;
+
+// test integer literals base 8
+
+const long BlackCherry=000;
+const long Starfruit=012;
+const long PassionFruit=01234567;
+const unsigned long Orange=037777777777;
+
+
+// test integer literals base 16
+
+const long Dates=0X12345;
+const long Pumpkin=0xabcdef;
+const long Mango=0xABCDEF;
+const long WaterMelon=0XF43e2;
+const long Lime=0x1E0ab;
+const unsigned long Coconut=0XFFFFFFFF;
+
+interface idlServer{
+
+  void  Lychees();
+};
+
