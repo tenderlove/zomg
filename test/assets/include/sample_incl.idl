@@ -1,0 +1,406 @@
+// Description     : Included by sample.idl
+
+/* NOTES:
+G -> Global
+M -> Module
+I -> Interface
+A -> Alias to primitive or user defined
+A -> Alias to Alias
+*/
+
+typedef short GSTYPE;
+typedef GSTYPE GSTYPEA;
+typedef GSTYPEA GSTYPEAA;
+
+typedef sequence<short> seqShort;
+typedef sequence<short> seqShort1;
+
+
+typedef sequence<octet, 100> seqOctet;
+
+enum Color {red, green, blue, black, mauve, orange};
+typedef sequence<sequence<Color> > mycolor;
+
+typedef long myLong;
+typedef sequence<sequence<octet> >  seq3;
+typedef seq3 seq33;
+
+typedef sequence<sequence<myLong> > seqMyLong;
+typedef sequence<sequence<seqMyLong> >seqseqMyLong;
+typedef long arrGS1[10];
+
+module M1 {
+    interface I1 {
+      typedef sequence<short> seq;
+    };
+};
+
+exception GEXCEPTION11{
+
+   struct GS1234 {
+    struct GS123{
+        short i;
+        struct  S12 {
+            short i;
+        }gs1;
+    }gs2;
+
+   string s;
+   } mi;
+
+};
+
+struct GS2 {
+    struct GS123{
+        short i;
+        struct  S12 {
+            short i;
+        }gs1;
+    }gs22;
+
+};
+
+
+struct GS3 {
+    struct S123{
+        short i;
+        long j;
+        struct  S12 {
+            short i;
+            long ii;
+        }gs1;
+    }gs2;
+};
+
+module M2 {
+    struct TEST1 {
+        short i;
+        struct TEST11 {
+            short i;
+        } gs1;
+    };
+
+    struct TEST2 {
+         short i;
+        struct TEST11 {
+            short i;
+        } gs2;
+    };
+    module M21 {
+        struct TEST1 {
+            long i;
+            struct TEST11 {
+                short i;
+            } gs1;
+        };
+        interface I1 {
+            struct TEST1 {
+                struct TEST11 {
+                    sequence<short> seqS;
+                    struct TEST111  {
+                    short i;
+                    }gs1;
+                } gs2;
+            };
+        };
+    };
+};
+
+
+struct GSTRUCT1 {
+    short s;
+    long l;
+    unsigned short us;
+    unsigned long ul;
+    float f;
+    double d;
+    char c;
+    string str;
+    boolean b;
+    octet o;
+    any a;
+
+    sequence<long> j;           // Creates Anonymous type.
+    sequence <GSTRUCT1> seqGS1; // Legal recursion. Anonymous type
+    sequence <seqShort> seqS;
+    sequence <arrGS1> astr;
+    sequence <seqOctet> seqOct;
+
+    struct GSTRUCT11 {
+        short s;
+        boolean b;
+        // GSTRUCT1 gs; ->  Illegal recursion.
+        // typedef sequence<GSTRUCT1> seq1; -> Illegal
+    } gs11;
+
+
+};
+
+
+typedef GSTRUCT1 arr2GS1[10][20];
+typedef GSTRUCT1 arr3GS1[10][20][30];
+
+exception GEXCEPTION1 {
+   string s;
+   sequence<sequence<GSTRUCT1> >k;
+   sequence<sequence<sequence<long> > > j; // Anonymous type.
+
+};
+
+
+/*
+Illegal:
+exception GEXCEPTION2 {
+    GEXCEPTION1 g;
+};
+typedef sequence <GEXCEPTION1> g; illegal
+*/
+
+
+
+module RVModule1 {
+
+    enum Color {red, green, blue, black, mauve, orange, brown};
+    enum OpType {OP_AND, OP_OR, OP_NOT};
+
+    union ColorCount switch (Color) {
+        case red:
+            union InnerUnion switch (OpType) {
+                case OP_AND:
+                    unsigned short and;
+                case OP_OR:
+                     unsigned short or;
+                case OP_NOT:
+                     unsigned short not;
+
+            } iu;
+        case green:
+        case blue:
+            unsigned long num_in_stock;
+        case black:
+            float discount;
+        case brown:
+            short j;
+        case mauve:
+            struct UnaryOp {
+                OpType op;
+                sequence<ColorCount, 1> child;
+            } uop;
+
+        default:
+            string order_details;
+    };
+
+    struct MSTRUCT1 {
+        GSTRUCT1 gs;
+        arr3GS1 arr;
+        union InnerUnion switch (OpType) {
+                case OP_AND:
+                    string and;
+                case OP_OR:
+                    string or;
+                case OP_NOT:
+                    unsigned short not;
+
+        } iu;
+
+    };
+
+    typedef MSTRUCT1 MS1;
+
+    interface RVInterface0 {
+    };
+
+
+    interface RVInterface1 {
+        typedef sequence<octet, 10000> seqOctet;
+
+        struct GSTRUCT1 {
+            MSTRUCT1 ms;
+        };
+
+        exception GEXCEPTION1 {
+            short i;
+            ::GSTRUCT1 j;
+        };
+
+        exception IEXCEPTION1 {
+            MS1 ms;
+        };
+
+        struct ISTRUCT {
+            GSTRUCT1 gs1;
+            ::GSTRUCT1 gs2;
+
+            MSTRUCT1 ms;
+        };
+        attribute short temparature;
+        readonly attribute GSTRUCT1 info;
+
+        void RVM0();
+
+         short RVM1(in GSTYPEAA p1, out GSTYPEA p2) ;
+         GSTRUCT1 RVM2(in ::GSTRUCT1 p1, out ISTRUCT p2);
+         MS1 RVM3(in seqOctet so, out arr2GS1 ags1) raises (GEXCEPTION1, IEXCEPTION1);
+         ISTRUCT RVM4 (inout ISTRUCT p1) raises (::GEXCEPTION1);
+         void RVM5(inout ColorCount cc);
+         void RVM6(in short i);
+
+
+    };
+
+
+};
+
+
+
+// forward declartion.
+
+module RVModule3 {
+    interface RVInterface0;
+};
+
+
+
+module RVModule2 {
+    struct MSTRUCT {
+        RVModule1::MSTRUCT1 s;
+        RVModule1::RVInterface1::ISTRUCT is;
+    };
+    typedef sequence<octet> seq5;
+    typedef sequence<sequence<octet> >  seq4;
+    typedef sequence<sequence<MSTRUCT> > seq6;
+    interface RVInterface1;
+
+    interface RVInterface0 {
+        RVInterface1 RVM01(in MSTRUCT i);
+    };
+
+    interface RVInterface1 {
+        RVModule3::RVInterface0 RVM11(in short i);
+    };
+
+    interface RVInterface2 :  RVModule1::RVInterface1, RVInterface1, RVInterface0 {
+        void RVM21(out ISTRUCT p1);
+    };
+
+    module RVModule21 {
+        struct MSTRUCT {
+            arr3GS1 gs;
+        };
+        interface RVInterface0 {
+            void RVM01 (in MSTRUCT p1, out RVModule2::MSTRUCT p2);
+        };
+    };
+    struct MSTRUCT1 {
+        short i;
+    };
+    interface RVInterface3 {
+        void RVM31 (in short p1);
+    };
+    enum Color {red, green, blue, black, mauve, orange};
+    enum OpType {OP_AND, OP_OR, OP_NOT};
+
+    union ColorCount switch (Color) {
+        case red:
+        case green:
+        case blue:
+            RVModule2::RVInterface2 rvi;
+        case black:
+            short i;
+        case mauve:
+            struct UnaryOp {
+                OpType op;
+                sequence<ColorCount, 1> child;
+            } uop;
+
+        default:
+            short seq;
+    };
+    typedef ColorCount cca;
+    typedef cca ccaa;
+};
+
+typedef RVModule2::RVInterface2 RVM2RVI2;
+typedef RVM2RVI2 ARVM2RVI2;
+typedef ARVM2RVI2 AARVM2RVI2;
+
+typedef sequence<GSTRUCT1> seqStruct1;
+typedef sequence<sequence<sequence<RVModule2::RVInterface2> > > seqRVMRVI2;
+typedef sequence<sequence<octet> >  seq4; // same as seq3.
+
+typedef seqRVMRVI2 aseqRVMRVI2;
+typedef aseqRVMRVI2 aaseqRVMRVI2;
+typedef seq4 aseq4;
+typedef RVModule2::MSTRUCT ams;
+typedef ams aams;
+typedef aams aaams;
+
+
+module RVModule3 {
+    interface RVInterface0 {
+
+        enum Color {red, green, blue, black, mauve, orange};
+        enum OpType {OP_AND, OP_OR, OP_NOT};
+
+        union ColorCount switch (Color) {
+            case red:
+            case green:
+            case blue:
+                RVModule2::RVInterface2 rvi;
+            case black:
+                RVM2RVI2 arvi;
+            case mauve:
+                struct UnaryOp {
+                    seqStruct1 seq;
+                    OpType op;
+                    sequence<ColorCount, 1> child;
+                } uop;
+
+            default:
+                seqRVMRVI2 seq;
+        };
+        typedef ColorCount cca;
+
+
+        typedef sequence<ColorCount> auseq;
+        typedef auseq aauseq;
+        typedef sequence<RVModule2::MSTRUCT> asseq;
+        typedef asseq aasseq;
+        typedef aasseq aaasseq;
+
+        struct MSTRUCT33 {
+
+            aaams aaamsv;
+            cca ccav;
+            RVModule2::ccaa ccaav;
+            AARVM2RVI2 aav;
+            RVModule2::seq5 seq1;
+            RVModule2::seq4 seq2;
+
+            RVModule2::MSTRUCT rvms;
+            RVModule2::RVInterface2 rvi;
+            RVM2RVI2 arvi;
+            RVModule2::MSTRUCT ms;
+
+            seqRVMRVI2 seq3;
+            aseqRVMRVI2 seq4;
+            aaseqRVMRVI2 seq5;
+            aseq4 seq6;
+            auseq seq7;
+            aauseq seq8;
+            asseq seq9;
+
+            RVModule2::seq6 seq13;
+            aasseq seq10;
+            aaasseq seq11;
+            seq33 seq12;
+        };
+
+
+        RVModule2::RVInterface2 RVM04 ();
+    };
+    interface RVInterface1 : RVModule2::RVModule21::RVInterface0 {
+        void RVM11 ();
+    };
+};

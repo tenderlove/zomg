@@ -1,0 +1,16 @@
+/**
+ * included in a.idl. typedefs and struct
+ */
+
+module B {
+
+  typedef string StringAlias;
+
+  struct S {
+    long x;
+  };
+
+  typedef sequence<S> SSeq;
+
+};
+

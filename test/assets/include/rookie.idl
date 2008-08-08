@@ -1,0 +1,13 @@
+#include <employee.idl>
+
+#ifndef __ROOKIE_IDL__
+#define __ROOKIE_IDL__
+
+interface Rookie: Employee {
+  readonly attribute long workHours;
+  exception ExceptionalRookieException {
+    short reason;
+  };
+};
+
+#endif

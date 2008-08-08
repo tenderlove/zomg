@@ -1,0 +1,17 @@
+// Description     : Tests includes
+// Comments        : Most nested IDL in includes hierarchy
+//****************************************************************************
+
+module M4
+{
+    interface I4
+    {
+        struct S4
+        {
+            short H4;
+            string R4;
+        };
+
+        S4 M4(inout long L4, out S4 s_obj4);
+    };
+};

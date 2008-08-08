@@ -1,0 +1,12 @@
+#ifndef __EMPLOYEE_IDL__
+#define __EMPLOYEE_IDL__
+
+interface Employee {
+  attribute string name;
+  readonly attribute short empId;
+  void delete();
+  exception EmployeeNotFoundException {
+    short empId;
+  };
+};
+#endif

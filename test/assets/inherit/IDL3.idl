@@ -1,0 +1,18 @@
+// Description     : Tests includes
+// Comments        : 3rd most nested IDL in includes hierarchy
+//****************************************************************************
+
+#include <IDL4.idl>
+module M3
+{
+    interface I3
+    {
+        struct S3
+        {
+            short H3;
+            string R3;
+        };
+
+        M4::I4::S4 M3(in long L3, out S3 s_obj3);
+    };
+};

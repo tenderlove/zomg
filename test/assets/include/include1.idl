@@ -1,0 +1,10 @@
+/**
+ * Include file 1
+ */
+typedef char CHAR_type;
+
+module M3 {
+  #pragma prefix "hello"
+  typedef short SHORT_type;
+};
+

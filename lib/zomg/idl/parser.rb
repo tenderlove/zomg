@@ -8,6 +8,7 @@ module ZOMG
       end
       def initialize
         @scanner = Scanner.new
+        @yydebug = false
       end
 
       def parse_file(filename)

@@ -1,0 +1,21 @@
+interface tpztest {
+    typedef octet flypayload[8192];
+    typedef octet lightpayload[16384];
+    typedef octet welterpayload[32768];
+    typedef octet mediumpayload[65536];
+    typedef octet heavypayload[131072];
+    typedef octet superheavypayload[262144];
+
+    flypayload rqst_rspn1();
+    lightpayload rqst_rspn2();
+    welterpayload rqst_rspn3();
+    mediumpayload rqst_rspn4();
+    heavypayload rqst_rspn5();
+    superheavypayload rqst_rspn6();
+
+    oneway void bandwidth(in flypayload pld);
+    superheavypayload bandwidth_pingback(in mediumpayload pld);
+};
+
+/* End of file. */
+

@@ -1,0 +1,58 @@
+#include "sample_incl.idl"
+
+interface OWTEST {
+    oneway void foo(in short x);
+};
+
+module RVModule4 {
+
+    interface RVInterface0  : RVModule2::RVModule21::RVInterface0 {
+        void RVM0(in GSTRUCT1 gs) raises (RVModule1::RVInterface1::IEXCEPTION1);
+    };
+
+    interface RVInterface1 : RVModule1::RVInterface1 {
+    };
+};
+
+module RVModule3 {
+    interface RVInterface2 : RVModule2::RVModule21::RVInterface0 {
+        void RVM21 ();
+    };
+};
+
+
+
+
+// object reference
+
+interface myYetAnotherInterface {
+    struct myStruct {
+        RVModule3::RVInterface2  my_if;
+        string str;
+    } ;
+
+    myStruct myOperation( in RVModule3::RVInterface2 if, out RVModule3::RVInterface2 aif);
+};
+
+// factory. use option -factory myFactoryIF, to generate
+// a schema with the appropriate information.
+
+interface  myFactoryIF {
+    attribute short temp;
+    void  myOperation(in string istr, out string ostr);
+};
+
+// same as above, but within a module.
+// use option -factory M1/myFactoryIF, to generate a
+// schema with the appropriate information.
+
+module M1 {
+        interface  myFactoryIF {
+            attribute short temp;
+            void  myOperation(in string istr, out string ostr);
+        };
+
+        interface myIF {
+            void myOperation( in string istr, out string ostr);
+        };
+};

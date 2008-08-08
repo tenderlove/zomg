@@ -1,0 +1,18 @@
+// Description     : Tests includes
+// Comments        : Top level IDL that includes IDL2.idl
+//****************************************************************************
+
+#include <IDL2.idl>
+module M1
+{
+    interface I1
+    {
+        struct S1
+        {
+            short H1;
+            string R1;
+        };
+
+        M2::I2::S2 M1(in long L1, inout S1 s_obj1);
+    };
+};

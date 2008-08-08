@@ -1,0 +1,31 @@
+interface MainGrid {
+void getofMainGrid(in short n);
+long setofMainGrid(in short n);
+
+readonly attribute short length;  // length of the gridmain
+readonly attribute short breadth;   // breadth of the gridmain
+};
+
+
+interface BaseGrid : MainGrid {
+void getofBaseGrid(in short n);
+long setofBaseGrid(in short n);
+};
+
+
+interface GridBase : MainGrid {
+readonly attribute short base;
+};
+
+interface Grid : BaseGrid, GridBase {
+    readonly attribute short height;  // height of the grid
+    readonly attribute short width;   // width of the grid
+
+    // IDL operations
+
+    // set the element [n,m] of the grid, to value:
+    void set(in short n, in short m, in long value);
+
+    // return element [n,m] of the grid:
+    long get(in short n, in short m);
+};

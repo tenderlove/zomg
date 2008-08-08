@@ -147,7 +147,7 @@ interface
 interface_dcl
 	: interface_header T_LEFT_CURLY_BRACKET interface_body
       T_RIGHT_CURLY_BRACKET {
-        result = Interface.new(val[0], val[2])
+        result = Interface.new(val[0], val[2] || [])
       }
 	;
 

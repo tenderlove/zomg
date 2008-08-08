@@ -1,0 +1,10 @@
+#include "employee.idl"
+#ifndef __MANAGER_IDL__
+#define __MANAGER_IDL__
+
+interface Manager: Employee {
+  attribute double pay;
+  attribute char less;
+};
+
+#endif

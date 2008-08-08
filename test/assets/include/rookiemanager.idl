@@ -1,0 +1,15 @@
+#include <rookie.idl>
+#include <manager.idl>
+
+#ifndef __ROOKIEMANAGER_IDL__
+#define __ROOKIEMANAGER_IDL__
+
+interface RookieManager: Rookie, Manager {
+  struct Work {
+    long workHours;
+    any problem;
+  };
+  oneway void torture(in Work yourXOff);
+};
+
+#endif
