@@ -1,0 +1,16 @@
+typedef sequence <long, 10> long10;
+
+interface math {
+    short addshort(in short a, in short b);
+    short subshort(in short a, in short b);
+    short multshort(in short a, in short b);
+    long addlong(in long a, in long b);
+    long sublong(in long a, in long b);
+    long multlong(in long a, in long b);
+    long addlonglist(in long10 a);
+    long multlonglist(in long10 a);
+};
+
+interface a {
+    char op(in string <100> s);
+};

@@ -1,0 +1,653 @@
+module ORBTest_Basic
+{
+    interface Intf;
+
+    enum TestEnum
+    {
+    TestEnum1,
+    TestEnum2,
+    TestEnum3
+    };
+
+    struct FixedStruct
+    {
+    short s;
+    long l;
+    };
+
+    struct VariableStruct
+    {
+    string s;
+    };
+
+    union FixedUnion switch(unsigned short)
+    {
+    case 0: short s;
+    case 1: long l;
+    case 3: FixedStruct st;
+    default: boolean b;
+    };
+
+    union VariableUnion switch(boolean)
+    {
+    case FALSE: Intf ti;
+    case TRUE: VariableStruct st;
+    };
+
+    typedef sequence<string> StringSequence;
+    typedef short FixedArray[2][3][4];
+    typedef string VariableArray[2][3];
+    typedef sequence<FixedArray> FixedArraySequence;
+    typedef sequence<VariableArray> VariableArraySequence;
+    typedef sequence<FixedArray, 10> FixedArrayBoundSequence;
+    typedef sequence<VariableArray, 10> VariableArrayBoundSequence;
+
+    //struct RecursiveStruct; Not valid per spec
+    typedef sequence<RecursiveStruct> RecursiveStructSeq;
+
+    struct RecursiveStruct
+    {
+    string s;
+    short i;
+    RecursiveStructSeq rs;
+    };
+
+    exception ExVoid
+    {
+    };
+
+    exception ExShort
+    {
+    short value;
+    };
+
+    exception ExLong
+    {
+    long value;
+    };
+
+    exception ExUShort
+    {
+    unsigned short value;
+    };
+
+    exception ExULong
+    {
+    unsigned long value;
+    };
+
+    exception ExFloat
+    {
+    float value;
+    };
+
+    exception ExDouble
+    {
+    double value;
+    };
+
+    exception ExBoolean
+    {
+    boolean value;
+    };
+
+    exception ExChar
+    {
+    char value;
+    };
+
+    exception ExOctet
+    {
+    octet value;
+    };
+
+    exception ExString
+    {
+    string value;
+    };
+
+    exception ExAny
+    {
+    any value;
+    };
+
+    exception ExTestEnum
+    {
+    TestEnum value;
+    };
+
+    exception ExIntf
+    {
+    Intf value;
+    };
+
+    exception ExFixedStruct
+    {
+    FixedStruct value;
+    };
+
+    exception ExVariableStruct
+    {
+    VariableStruct value;
+    };
+
+    exception ExFixedUnion
+    {
+    FixedUnion value;
+    };
+
+    exception ExVariableUnion
+    {
+    VariableUnion value;
+    };
+
+    exception ExStringSequence
+    {
+    StringSequence value;
+    };
+
+    exception ExFixedArray
+    {
+    FixedArray value;
+    };
+
+    exception ExVariableArray
+    {
+    VariableArray value;
+    };
+
+    exception ExFixedArraySequence
+    {
+    FixedArraySequence value;
+    };
+
+    exception ExVariableArraySequence
+    {
+    VariableArraySequence value;
+    };
+
+    exception ExFixedArrayBoundSequence
+    {
+    FixedArrayBoundSequence value;
+    };
+
+    exception ExVariableArrayBoundSequence
+    {
+    VariableArrayBoundSequence value;
+    };
+
+    exception ExRecursiveStruct
+    {
+    unsigned short us;
+    RecursiveStruct rs;
+    };
+
+    interface Intf
+    {
+    void opVoid();
+
+    void
+    opVoidEx()
+        raises (ExVoid);
+
+    // --------------------------------------------------
+
+    attribute short attrShort;
+
+    short
+    opShort(
+        in short a0,
+        inout short a1,
+        out short a2
+    );
+
+    short
+    opShortEx(
+        in short a0,
+        inout short a1,
+        out short a2
+    )
+        raises (ExShort);
+
+    // --------------------------------------------------
+
+    attribute long attrLong;
+
+    long
+    opLong(
+        in long a0,
+        inout long a1,
+        out long a2
+    );
+
+    long
+    opLongEx(
+        in long a0,
+        inout long a1,
+        out long a2
+    )
+        raises (ExLong);
+
+    // --------------------------------------------------
+
+    attribute unsigned short attrUShort;
+
+    unsigned short
+    opUShort(
+        in unsigned short a0,
+        inout unsigned short a1,
+        out unsigned short a2
+    );
+
+    unsigned short opUShortEx(in unsigned short a0,
+                  inout unsigned short a1,
+                  out unsigned short a2)
+        raises (ExUShort);
+
+    // --------------------------------------------------
+
+    attribute unsigned long attrULong;
+
+    unsigned long
+    opULong(
+        in unsigned long a0,
+        inout unsigned long a1,
+        out unsigned long a2
+    );
+
+    unsigned long
+    opULongEx(
+        in unsigned long a0,
+        inout unsigned long a1,
+        out unsigned long a2
+    )
+        raises (ExULong);
+
+    // --------------------------------------------------
+
+    attribute float attrFloat;
+
+    float
+    opFloat(
+        in float a0,
+        inout float a1,
+        out float a2
+    );
+
+    float
+    opFloatEx(
+        in float a0,
+        inout float a1,
+        out float a2
+    )
+        raises (ExFloat);
+
+    // --------------------------------------------------
+
+    attribute double attrDouble;
+
+    double
+    opDouble(
+        in double a0,
+        inout double a1,
+        out double a2
+    );
+
+    double
+    opDoubleEx(
+        in double a0,
+        inout double a1,
+        out double a2
+    )
+        raises (ExDouble);
+
+    // --------------------------------------------------
+
+    attribute boolean attrBoolean;
+
+    boolean
+    opBoolean(
+        in boolean a0,
+        inout boolean a1,
+        out boolean a2
+    );
+
+    boolean
+    opBooleanEx(
+        in boolean a0,
+        inout boolean a1,
+        out boolean a2
+    )
+        raises (ExBoolean);
+
+    // --------------------------------------------------
+
+    attribute char attrChar;
+
+    char
+    opChar(
+        in char a0,
+        inout char a1,
+        out char a2
+    );
+
+    char
+    opCharEx(
+        in char a0,
+        inout char a1,
+        out char a2
+    )
+        raises (ExChar);
+
+    // --------------------------------------------------
+
+    attribute octet attrOctet;
+
+    octet
+    opOctet(
+        in octet a0,
+        inout octet a1,
+        out octet a2
+    );
+
+    octet
+    opOctetEx(
+        in octet a0,
+        inout octet a1,
+        out octet a2
+    )
+        raises (ExOctet);
+
+    // --------------------------------------------------
+
+    attribute string attrString;
+
+    string
+    opString(
+        in string a0,
+        inout string a1,
+        out string a2
+    );
+
+    string
+    opStringEx(
+        in string a0,
+        inout string a1,
+        out string a2
+    )
+        raises (ExString);
+
+    // --------------------------------------------------
+
+    attribute any attrAny;
+
+    any
+    opAny(
+        in any a0,
+        inout any a1,
+        out any a2
+    );
+
+    any
+    opAnyEx(
+        in any a0,
+        inout any a1,
+        out any a2
+    )
+        raises (ExAny);
+
+    // --------------------------------------------------
+
+    attribute TestEnum attrTestEnum;
+
+    TestEnum
+    opTestEnum(
+        in TestEnum a0,
+        inout TestEnum a1,
+        out TestEnum a2
+    );
+
+    TestEnum
+    opTestEnumEx(
+        in TestEnum a0,
+        inout TestEnum a1,
+        out TestEnum a2
+    )
+        raises (ExTestEnum);
+
+    // --------------------------------------------------
+
+    attribute Intf attrIntf;
+
+    Intf
+    opIntf(
+        in Intf a0,
+        inout Intf a1,
+        out Intf a2
+    );
+
+    Intf
+    opIntfEx(
+        in Intf a0,
+        inout Intf a1,
+        out Intf a2
+    )
+        raises (ExIntf);
+
+    // --------------------------------------------------
+
+    attribute FixedStruct attrFixedStruct;
+
+    FixedStruct
+    opFixedStruct(
+        in FixedStruct a0,
+        inout FixedStruct a1,
+        out FixedStruct a2)
+    ;
+
+    FixedStruct
+    opFixedStructEx(
+        in FixedStruct a0,
+        inout FixedStruct a1,
+        out FixedStruct a2
+    )
+        raises (ExFixedStruct);
+
+    // --------------------------------------------------
+
+    attribute VariableStruct attrVariableStruct;
+
+    VariableStruct
+    opVariableStruct(
+        in VariableStruct a0,
+        inout VariableStruct a1,
+        out VariableStruct a2
+    );
+
+    VariableStruct
+    opVariableStructEx(
+        in VariableStruct a0,
+        inout VariableStruct a1,
+        out VariableStruct a2
+    )
+        raises (ExVariableStruct);
+
+    // --------------------------------------------------
+
+    attribute FixedUnion attrFixedUnion;
+
+    FixedUnion
+    opFixedUnion(
+        in FixedUnion a0,
+        inout FixedUnion a1,
+        out FixedUnion a2
+    );
+
+    FixedUnion
+    opFixedUnionEx(
+        in FixedUnion a0,
+        inout FixedUnion a1,
+        out FixedUnion a2
+    )
+        raises (ExFixedUnion);
+
+    // --------------------------------------------------
+
+    attribute VariableUnion attrVariableUnion;
+
+    VariableUnion
+    opVariableUnion(
+        in VariableUnion a0,
+        inout VariableUnion a1,
+        out VariableUnion a2
+    );
+
+    VariableUnion
+    opVariableUnionEx(
+        in VariableUnion a0,
+        inout VariableUnion a1,
+        out VariableUnion a2
+    )
+        raises (ExVariableUnion);
+
+    // --------------------------------------------------
+
+    attribute StringSequence attrStringSequence;
+
+    StringSequence
+    opStringSequence(
+        in StringSequence a0,
+        inout StringSequence a1,
+        out StringSequence a2
+    );
+
+    StringSequence
+    opStringSequenceEx(
+        in StringSequence a0,
+        inout StringSequence a1,
+        out StringSequence a2
+    )
+        raises (ExStringSequence);
+
+    // --------------------------------------------------
+
+    attribute FixedArray attrFixedArray;
+
+    FixedArray
+    opFixedArray(
+        in FixedArray a0,
+        inout FixedArray a1,
+        out FixedArray a2
+    );
+
+    FixedArray
+    opFixedArrayEx(
+        in FixedArray a0,
+        inout FixedArray a1,
+        out FixedArray a2
+    )
+        raises (ExFixedArray);
+
+    // --------------------------------------------------
+
+    attribute VariableArray attrVariableArray;
+
+    VariableArray
+    opVariableArray(
+        in VariableArray a0,
+        inout VariableArray a1,
+        out VariableArray a2
+    );
+
+    VariableArray
+    opVariableArrayEx(
+        in VariableArray a0,
+        inout VariableArray a1,
+        out VariableArray a2
+    )
+        raises (ExVariableArray);
+
+    // --------------------------------------------------
+
+    attribute FixedArraySequence attrFixedArraySequence;
+
+    FixedArraySequence
+    opFixedArraySequence(
+        in FixedArraySequence a0,
+        inout FixedArraySequence a1,
+        out FixedArraySequence a2
+    );
+
+    FixedArraySequence
+    opFixedArraySequenceEx(
+        in FixedArraySequence a0,
+        inout FixedArraySequence a1,
+        out FixedArraySequence a2
+    )
+        raises (ExFixedArraySequence);
+
+    // --------------------------------------------------
+
+    attribute VariableArraySequence attrVariableArraySequence;
+
+    VariableArraySequence
+    opVariableArraySequence(
+        in VariableArraySequence a0,
+        inout VariableArraySequence a1,
+        out VariableArraySequence a2
+    );
+
+    VariableArraySequence
+    opVariableArraySequenceEx(
+        in VariableArraySequence a0,
+        inout VariableArraySequence a1,
+        out VariableArraySequence a2
+    )
+        raises (ExVariableArraySequence);
+
+    // --------------------------------------------------
+
+
+    attribute FixedArrayBoundSequence attrFixedArrayBoundSequence;
+
+    FixedArrayBoundSequence
+    opFixedArrayBoundSequence(
+        in FixedArrayBoundSequence a0,
+        inout FixedArrayBoundSequence a1,
+        out FixedArrayBoundSequence a2
+    );
+
+    FixedArrayBoundSequence
+    opFixedArrayBoundSequenceEx(
+        in FixedArrayBoundSequence a0,
+        inout FixedArrayBoundSequence a1,
+        out FixedArrayBoundSequence a2
+    )
+        raises (ExFixedArrayBoundSequence);
+
+    // --------------------------------------------------
+
+    attribute VariableArrayBoundSequence attrVariableArrayBoundSequence;
+
+    VariableArrayBoundSequence
+    opVariableArrayBoundSequence(
+        in VariableArrayBoundSequence a0,
+        inout VariableArrayBoundSequence a1,
+        out VariableArrayBoundSequence a2
+    );
+
+    VariableArrayBoundSequence
+    opVariableArrayBoundSequenceEx(
+        in VariableArrayBoundSequence a0,
+        inout VariableArrayBoundSequence a1,
+        out VariableArrayBoundSequence a2
+    )
+        raises (ExVariableArrayBoundSequence);
+
+    void
+    opExRecursiveStruct()
+        raises(ExRecursiveStruct);
+
+    };
+
+}; // module ORBTest_2_0_Common

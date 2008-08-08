@@ -1,0 +1,40 @@
+module ORBTest
+{
+    enum ORBType
+    {
+    ORBacus3,
+    ORBacus4,
+    OrbixE,
+    Orbix3,
+    Orbix2000
+    };
+
+
+    struct TestCase
+    {
+        string impl_description;
+    Object impl;
+    };
+
+    typedef sequence<TestCase> TestCaseList;
+
+    interface Intf
+    {
+    //
+    // General operations
+    //
+
+    ORBType
+    get_ORB_type();
+
+    void
+    deactivate();
+
+    boolean
+    concurrent_request_execution();
+
+    TestCaseList
+    get_test_case_list();
+    };
+
+}; // module ORBTest

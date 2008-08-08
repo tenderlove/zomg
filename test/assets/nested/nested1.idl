@@ -1,0 +1,5 @@
+interface I
+{
+    void connect(in I peer);
+    void f();
+};

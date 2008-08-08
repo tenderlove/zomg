@@ -1,0 +1,15 @@
+module mod1
+{
+    module mod2
+    {
+    struct a {
+     short b;
+    };
+    };
+};
+module mod3 {
+ struct a {
+  short b;
+ };
+};
+

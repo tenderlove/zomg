@@ -1,0 +1,111 @@
+enum Enumeration {ONE, TWO};
+
+struct FStruct {
+    short a;
+};
+
+struct VStruct {
+    string a;
+};
+
+union FUnion switch (long) {
+    case 1: long x;
+    default: char z;
+};
+
+union VUnion switch (long) {
+    case 1: string a;
+    default: char z;
+};
+
+typedef long FArray[10];
+typedef string VArray[10];
+
+typedef sequence<long,10> BFSequence;
+typedef sequence<long>    UFSequence;
+
+typedef sequence<string,10> BVSequence;
+typedef sequence<string>    UVSequence;
+
+interface intf {
+  short ShortOperation(in short a,
+          inout short b,
+          out short c);
+  long LongOperation(in long a,
+        inout long b,
+        out long c);
+  long long LongLongOperation(in long long a,
+             inout long long b,
+             out long long c);
+  unsigned short UShortOperation(in unsigned short a,
+            inout unsigned short b,
+            out unsigned short c);
+  unsigned long ULongOperation(in unsigned long a,
+              inout unsigned long b,
+              out unsigned long c);
+  unsigned long long ULongLongOperation(in unsigned long long a,
+                   inout unsigned long long b,
+                   out unsigned long long c);
+  float FloatOperation(in float a,
+          inout float b,
+          out float c);
+  double DoubleOperation(in double a,
+        inout double b,
+        out double c);
+  boolean BooleanOperation(in boolean a,
+          inout boolean b,
+          out boolean c);
+  char CharOperation(in char a,
+        inout char b,
+        out char c);
+  octet OctetOperation(in octet a,
+          inout octet b,
+          out octet c);
+  Enumeration EnumOperation(in Enumeration a,
+               inout Enumeration b,
+               out Enumeration c);
+  intf ObjectRefOperation(in intf a,
+         inout intf b,
+         out intf c);
+  FStruct FixedStructOperation(in FStruct a,
+              inout FStruct b,
+              out FStruct c);
+  VStruct VarStructOperation(in VStruct a,
+            inout VStruct b,
+            out VStruct c);
+  FUnion FixedUnionOperation(in FUnion a,
+                inout FUnion b,
+                out FUnion c);
+  VUnion VarUnionOperation(in VUnion a,
+              inout VUnion b,
+              out VUnion c);
+  string StringOperation(in string a,
+        inout string b,
+        out string c);
+  string<20> BoundStringOperation(in string<20> a,
+             inout string<20> b,
+             out string<20> c);
+  BFSequence BoundedFixedSequenceOperation(in BFSequence a,
+                  inout BFSequence b,
+                  out BFSequence c);
+  BVSequence BoundedVarSequenceOperation(in BVSequence a,
+                inout BVSequence b,
+                out BVSequence c);
+  UFSequence FixedSequenceOperation(in UFSequence a,
+               inout UFSequence b,
+               out UFSequence c);
+  UVSequence VarSequenceOperation(in UVSequence a,
+             inout UVSequence b,
+             out UVSequence c);
+  FArray FixedArrayOperation(in FArray a,
+            inout FArray b,
+            out FArray c);
+  VArray VarArrayOperation(in VArray a,
+          inout VArray b,
+          out VArray c);
+};
+
+
+
+
+

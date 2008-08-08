@@ -1,0 +1,34 @@
+/**
+ * Scope resolution with forward declarations
+ */
+module M1 {
+  typedef char A1;
+};
+
+module M2 {
+  typedef M1::A1 A2;
+};
+
+module M1 {
+  typedef M2::A2 A3;
+};
+
+// Here comes a nasty test with forward declarations
+
+module M3 {
+  interface A;
+};
+
+module M4 {
+  struct S {
+    M3::A a;
+  };
+//typedef M3::A X;
+};
+
+module M3 {
+  interface A {
+    attribute M4::S s;
+  };
+};
+

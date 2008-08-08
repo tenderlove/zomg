@@ -37,7 +37,7 @@ module ZOMG
       def on_error(error_token_id, error_value, value_stack)
         puts token_to_str(error_token_id)
         puts error_value
-        p value_stack
+        p value_stack.last
       end
     end
   end

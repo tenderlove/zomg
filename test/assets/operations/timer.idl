@@ -1,0 +1,104 @@
+// Description     : Orbix's Performance IDL
+//
+//
+//  The original form of this timer benchmark came from:
+//
+//  Prasad Mokkapati
+//  Post Modern Computing
+//  1897 Landing Drive
+//  Mountain View
+//  Ca - 94043
+//
+//  email: prasad@promoco.com
+//
+//
+// to whom all credit is ascribed.
+//
+//  This code is reproduced with permission from Post Modern Computing.
+//
+
+
+#ifndef _perf_idl_
+#define _perf_idl_
+
+// IDLs to do performance testing of oneway and req/reply interfaces
+// These tests also include arguments of various types
+
+
+
+typedef sequence<short>     shortSeq;
+typedef sequence<long>      longSeq;
+typedef sequence<float>     floatSeq;
+typedef sequence<double>    doubleSeq;
+typedef sequence<string>    stringSeq;
+typedef sequence<char>      charSeq;
+
+struct PerfStruct {
+    short       shortVal;
+    long        longVal;
+    float       floatVal;
+    double      doubleVal;
+    char        charVal;
+    string      stringVal;
+};
+
+typedef sequence<PerfStruct>    structSeq;
+typedef PerfStruct      structArray[100];
+
+interface TestOneway
+{
+    oneway void test_no_param();
+
+    oneway void test_prim_args(in short shortVal, in long longVal,
+            in float floatVal, in double doubleVal,
+            in char charVal, in string stringVal);
+
+    oneway void test_struct(in PerfStruct structVal);
+
+    oneway void test_prim_seq(in shortSeq shortVal, in longSeq longVal,
+            in floatSeq floatVal, in doubleSeq doubleVal,
+            in charSeq charVal, in stringSeq stringVal);
+
+    oneway void test_struct_seq(in structSeq structVal);
+
+    oneway void test_struct_array(in structArray arrayVal);
+};
+
+interface TestReqReply
+{
+    long test_prim_args(in short shortVal, in long longVal,
+        in float floatVal, in double doubleVal,
+        in char charVal, in string stringVal,
+        inout short inoutShort, inout long inoutLong,
+        inout float inoutFloat, inout double inoutDouble,
+        inout char inoutChar, inout string inoutString,
+        out short outShort, out long outLong,
+        out float outFloat, out double outDouble,
+        out char outChar, out string outString);
+
+
+    long test_struct_args(in PerfStruct structVal,
+        inout PerfStruct inoutStruct,
+        out PerfStruct outStruct);
+
+    long test_prim_seq(in shortSeq shortVal, in longSeq longVal,
+        in floatSeq floatVal, in doubleSeq doubleVal,
+        in charSeq charVal, in stringSeq stringVal,
+        inout shortSeq inoutShort, inout longSeq inoutLong,
+        inout floatSeq inoutFloat, inout doubleSeq inoutDouble,
+        inout charSeq inoutChar, inout stringSeq inoutString,
+        out shortSeq outShort, out longSeq outLong,
+        out floatSeq outFloat, out doubleSeq outDouble,
+        out charSeq outChar, out stringSeq outString);
+
+    long test_struct_seq(in structSeq structVal,
+        inout structSeq inoutStruct,
+        out structSeq outStruct);
+
+    long test_struct_array(in structArray structVal,
+        inout structArray inoutStruct,
+        out structArray outStruct);
+};
+
+
+#endif

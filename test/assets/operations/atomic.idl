@@ -1,0 +1,40 @@
+module Atomic {
+    const short SS = 1;
+    const long LL = 1;
+    const unsigned short US = 1;
+    const unsigned long UL = 1;
+    const float FF = 1.1;
+    const double DD = 1.2;
+    const char CC = 'a';
+    const boolean BB = TRUE;
+
+    interface test {
+      short ShortOperation(in short a,
+              inout short b,
+              out short c);
+      long LongOperation(in long a,
+            inout long b,
+            out long c);
+      unsigned short UShortOperation(in unsigned short a,
+                   inout unsigned short b,
+                   out unsigned short c);
+      unsigned long ULongOperation(in unsigned long a,
+                  inout unsigned long b,
+                  out unsigned long c);
+      float FloatOperation(in float a,
+              inout float b,
+              out float c);
+      double DoubleOperation(in double a,
+              inout double b,
+              out double c);
+      boolean BooleanOperation(in boolean a,
+              inout boolean b,
+              out boolean c);
+      char CharOperation(in char a,
+            inout char b,
+            out char c);
+      octet OctetOperation(in octet a,
+              inout octet b,
+              out octet c);
+    };
+};

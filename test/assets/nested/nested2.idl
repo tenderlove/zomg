@@ -1,0 +1,11 @@
+typedef sequence<octet>     OctetSequence;
+typedef OctetSequence       ReferenceData;
+
+interface test
+{
+    attribute ReferenceData     id;
+    attribute OctetSequence     info;
+};
+
+/* End of file. */
+

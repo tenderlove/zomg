@@ -1,0 +1,331 @@
+//
+// User defined types
+//
+
+module UserTypes
+{
+
+enum discrim1 { e1, e2, e3 };
+enum discrim2 { e4, e5, e6, e7, e8, e9, e10, e11, e12, e13, e14, e15 };
+
+//
+// Unions
+//
+union u1
+switch (discrim1)
+{
+    case e1: short s;
+    case e2: long  l;
+    case e3: char  c;
+};
+
+union u2
+switch (discrim2)
+{
+    case e4: long long ll;
+    case e5: unsigned short us;
+    case e6: unsigned long ul;
+    case e7: unsigned long long ull;
+    case e8: double d;
+    case e10: wchar wc;
+    case e11: string s;
+    case e13: boolean b;
+    case e14: octet o;
+    case e15: any a;
+    default: float f;
+};
+
+struct s1
+{
+    short s;
+};
+
+struct s2
+{
+     short s;
+     long l;
+     long long ll;
+     unsigned short us;
+     unsigned long ul;
+     float f;
+     double d;
+     char c;
+     wchar wc;
+     string st;
+     wstring ws;
+     boolean b;
+     octet o;
+     any a;
+};
+
+
+//
+// User defined interface will test exchange of object references.
+//
+interface I
+{
+    void foo();
+    short bar (in short s);
+    double d ();
+};
+
+}; // End module UserTypes
+
+
+module Benchmark
+{
+
+
+//
+// CORBA IDL Basic Types
+//
+interface BasicTester
+{
+    void ping                   ();
+
+    void short_in_t                         (in short s);
+    void short_out_t                        (out short s);
+    void short_inout_t                      (inout short s);
+    short short_ret_t                       ();
+
+    void long_in_t                          (in long l);
+    void long_out_t                         (out long l);
+    void long_inout_t                       (inout long l);
+    long long_ret_t                         ();
+
+    void longlong_in_t                      (in long long ll);
+    void longlong_out_t                     (out long long ll);
+    void longlong_inout_t                   (inout long long ll);
+    long long longlong_ret_t                ();
+
+    void ushort_in_t                        (in unsigned short us);
+    void ushort_out_t                       (out unsigned short us);
+    void ushort_inout_t                     (inout unsigned short us);
+    unsigned short ushort_ret_t ();
+
+    void ulong_in_t                         (in unsigned long ul);
+    void ulong_out_t                        (out unsigned long ul);
+    void ulong_inout_t                      (inout unsigned long ul);
+    unsigned long ulong_ret_t               ();
+
+    void ulonglong_in_t                     (in unsigned long long ull);
+    void ulonglong_out_t                    (out unsigned long long ull);
+    void ulonglong_inout_t                  (inout unsigned long long ull);
+    unsigned long long ulonglong_ret_t      ();
+
+    void float_in_t                         (in float f);
+    void float_out_t                        (out float f);
+    void float_inout_t                      (inout float f);
+    float float_ret_t                       ();
+
+    void double_in_t                        (in double d);
+    void double_out_t                       (out double d);
+    void double_inout_t                     (inout double d);
+    double double_ret_t                     ();
+
+/*
+    void longdouble_in_t                    (in long double d);
+    void longdouble_out_t                   (out long double d);
+    void longdouble_inout_t                 (inout long double d);
+    long double longdouble_ret_t                 ();
+*/
+
+    void char_in_t                          (in char c);
+    void char_out_t                         (out char c);
+    void char_inout_t                       (inout char c);
+    char char_ret_t                         ();
+
+    void wchar_in_t                         (in wchar wc);
+    void wchar_out_t                        (out wchar wc);
+    void wchar_inout_t                      (inout wchar wc);
+    wchar wchar_ret_t                       ();
+
+    void string_in_t                        (in string s);
+    void string_out_t                       (out string s);
+    void string_inout_t                     (inout string s);
+    string string_ret_t                     ();
+
+    void wstring_in_t                        (in wstring s);
+    void wstring_out_t                       (out wstring s);
+    void wstring_inout_t                     (inout wstring s);
+    wstring wstring_ret_t                     ();
+
+    void boolean_in_t                       (in boolean b);
+    void boolean_out_t                      (out boolean b);
+    void boolean_inout_t                    (inout boolean b);
+    boolean boolean_ret_t                   ();
+
+    void octet_in_t                         (in octet o);
+    void octet_out_t                        (out octet o);
+    void octet_inout_t                      (inout octet o);
+    octet octet_ret_t                       ();
+
+    void any_in_t                           (in any a);
+    void any_out_t                          (out any a);
+    void any_inout_t                        (inout any a);
+    any any_ret_t                           ();
+};
+
+
+interface UserTypeTester
+{
+    void u1_in_t                            (in UserTypes::u1 u);
+    void u1_out_t                           (out UserTypes::u1 u);
+    void u1_inout_t                         (inout UserTypes::u1 u);
+    UserTypes::u1 u1_ret_t                  ();
+
+    void u2_in_t                            (in UserTypes::u2 u);
+    void u2_out_t                           (out UserTypes::u2 u);
+    void u2_inout_t                         (inout UserTypes::u2 u);
+    UserTypes::u2 u2_ret_t                  ();
+
+    void s1_in_t                            (in UserTypes::s1 s);
+    void s1_out_t                           (out UserTypes::s1 s);
+    void s1_inout_t                         (inout UserTypes::s1 s);
+    UserTypes::s1 s1_ret_t                  ();
+
+    void s2_in_t                            (in UserTypes::s2 s);
+    void s2_out_t                           (out UserTypes::s2 s);
+    void s2_inout_t                         (inout UserTypes::s2 s);
+    UserTypes::s2 s2_ret_t                  ();
+
+    void interface_in_t                     (in UserTypes::I interf);
+    void interface_out_t                    (out UserTypes::I interf);
+    void interface_inout_t                  (inout UserTypes::I interf);
+    UserTypes::I interface_ret_t            ();
+};
+
+
+interface SequenceTester
+{
+    //
+    // Note of course that bounded sequences can be of any length up to
+    // their bound. In the benchmark code bounded sequences will be
+    // populated to their maximum length.
+    //
+
+    //
+    // typedefs : standard types
+    //
+    typedef sequence<short>                         ShortSeq_UB;
+    typedef sequence<short, 4>                      ShortSeq_4;
+    typedef sequence<short, 65536>                  ShortSeq_64K;
+
+    typedef sequence<long>                          LongSeq_UB;
+    typedef sequence<long, 4>                       LongSeq_4;
+    typedef sequence<long, 65536>                   LongSeq_64K;
+
+    typedef sequence<long long>                     LongLongSeq_UB;
+    typedef sequence<long long, 4>                  LongLongSeq_4;
+    typedef sequence<long long, 65536>              LongLongSeq_64K;
+
+    typedef sequence<unsigned short>                UShortSeq_UB;
+    typedef sequence<unsigned short, 4>             UShortSeq_4;
+    typedef sequence<unsigned short, 65536>         UShortSeq_64K;
+
+    typedef sequence<unsigned long>                 ULongSeq_UB;
+    typedef sequence<unsigned long, 4>              ULongSeq_4;
+    typedef sequence<unsigned long, 65536>          ULongSeq_64K;
+
+    typedef sequence<unsigned long long>            ULongLongSeq_UB;
+    typedef sequence<unsigned long long, 4>         ULongLongSeq_4;
+    typedef sequence<unsigned long long, 65536>     ULongLongSeq_64K;
+
+    typedef sequence<float>                         FloatSeq_UB;
+    typedef sequence<float, 4>                      FloatSeq_4;
+    typedef sequence<float, 65536>                  FloatSeq_64K;
+
+    typedef sequence<double>                        DoubleSeq_UB;
+    typedef sequence<double, 4>                     DoubleSeq_4;
+    typedef sequence<double, 65536>                 DoubleSeq_64K;
+
+    typedef sequence<char>                          CharSeq_UB;
+    typedef sequence<char, 4>                       CharSeq_4;
+    typedef sequence<char, 65536>                   CharSeq_64K;
+
+    typedef sequence<wchar>                         WCharSeq_UB;
+    typedef sequence<wchar, 4>                      WCharSeq_4;
+    typedef sequence<wchar, 65536>                  WCharSeq_64K;
+
+    typedef sequence<string>                        StringSeq_UB;
+    typedef sequence<string, 4>                     StringSeq_4;
+    typedef sequence<string, 65536>                 StringSeq_64K;
+
+    typedef sequence<boolean>                       BooleanSeq_UB;
+    typedef sequence<boolean, 4>                    BooleanSeq_4;
+    typedef sequence<boolean, 65536>                BooleanSeq_64K;
+
+    typedef sequence<octet>                         OctetSeq_UB;
+    typedef sequence<octet, 4>                      OctetSeq_4;
+    typedef sequence<octet, 65536>                  OctetSeq_64K;
+    typedef sequence<octet, 1048576>                OctetSeq_1M;
+
+    typedef sequence<any>                           AnySeq_UB;
+    typedef sequence<any, 4>                        AnySeq_4;
+    typedef sequence<any, 65536>                    AnySeq_64K;
+
+    //
+    // typedefs: user-defined types (just unbounded for now, phew!)
+    //
+    typedef sequence<UserTypes::u1>                 U1Seq_UB;
+    typedef sequence<UserTypes::u2>                 U2Seq_UB;
+
+    typedef sequence<UserTypes::s1>                 S1Seq_UB;
+    typedef sequence<UserTypes::s2>                 S2Seq_UB;
+
+    typedef sequence<UserTypes::I>                  InterfaceSeq;
+
+    //
+    // Sequences of basic types
+    //
+    void ShortSeq_UB_in_t                           (in ShortSeq_UB s_seq);
+    void ShortSeq_UB_out_t                          (out ShortSeq_UB s_seq);
+    void ShortSeq_UB_inout_t                        (inout ShortSeq_UB s_seq);
+    ShortSeq_UB ShortSeq_UB_ret_t                   ();
+
+    void FloatSeq_64K_in_t                          (in FloatSeq_64K f_seq);
+    void FloatSeq_64K_out_t                         (out FloatSeq_64K f_seq);
+    void FloatSeq_64K_inout_t                       (inout FloatSeq_64K f_seq);
+    FloatSeq_64K FloatSeq_64K_ret_t                 ();
+
+    void StringSeq_UB_in_t                          (in StringSeq_UB s_seq);
+    void StringSeq_UB_out_t                         (out StringSeq_UB s_seq);
+    void StringSeq_UB_inout_t                       (inout StringSeq_UB s_seq);
+    StringSeq_UB StringSeq_UB_ret_t                 ();
+
+    void OctetSeq_1M_in_t                           (in OctetSeq_1M o_seq);
+    void OctetSeq_1M_out_t                          (out OctetSeq_1M o_seq);
+    void OctetSeq_1M_inout_t                        (inout OctetSeq_1M o_seq);
+    OctetSeq_1M OctetSeq_1M_ret_t                   ();
+
+    void AnySeq_UB_in_t                             (in AnySeq_UB a_seq);
+    void AnySeq_UB_out_t                            (out AnySeq_UB a_seq);
+    void AnySeq_UB_inout_t                          (inout AnySeq_UB a_seq);
+    AnySeq_UB AnySeq_UB_ret_t                       ();
+
+    //
+    // Sequences of user-defined types
+    //
+    void U2Seq_UB_in_t                              (in U2Seq_UB u2_seq);
+    void U2Seq_UB_out_t                             (out U2Seq_UB u2_seq);
+    void U2Seq_UB_inout_t                           (inout U2Seq_UB u2_seq);
+    U2Seq_UB U2Seq_UB_ret_t                         ();
+
+    void S2Seq_UB_in_t                              (in S2Seq_UB s2_seq);
+    void S2Seq_UB_out_t                             (out S2Seq_UB s2_seq);
+    void S2Seq_UB_inout_t                           (inout S2Seq_UB s2_seq);
+    S2Seq_UB S2Seq_UB_ret_t                         ();
+
+    //
+    // Sequence of interfaces (passing object references...)
+    //
+    void InterfaceSeq_in_t                          (in InterfaceSeq i_seq);
+    void InterfaceSeq_out_t                         (out InterfaceSeq i_seq);
+    void InterfaceSeq_inout_t                       (inout InterfaceSeq i_seq);
+    InterfaceSeq InterfaceSeq_ret_t                 ();
+
+};
+
+}; // End module Benchmark
+
+

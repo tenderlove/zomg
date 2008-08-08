@@ -1,0 +1,29 @@
+/**
+ * Scope resolution
+ */
+module M {
+
+interface foo {
+
+  enum E {
+    A,
+    B,
+    C
+  };
+
+  void bar( in E e_obj );
+};
+
+};
+
+
+module M2
+{
+
+interface foo
+{
+  void bar( in M::foo::E e_obj );
+};
+
+};
+
