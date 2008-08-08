@@ -1,0 +1,74 @@
+struct ta {
+    struct tb {
+        long a;
+        double b;
+        short c;
+    } a;
+
+    struct tc {
+        char a;
+        string b;
+#ifndef OPENORB
+        sequence<tc> c;
+#endif
+    } b;
+    struct td {
+        tb a;
+        struct te {
+            char a;
+            char b;
+            char c;
+            char d;
+#ifndef OPENORB
+            tdSeq e;
+#endif
+        } b;
+    } c;
+    sequence<ta> next;
+    tb d;
+    tc e;
+    td f;
+};
+
+struct tb {
+    ta::tb a;
+    ta::td b;
+    sequence<ta::td> c;
+    sequence<tb> d;
+};
+
+enum tc_enum { NORTH, EAST, WEST, SOUTH, DOWN };
+
+union td_union switch (long) {
+ case 1:
+     ta one;
+ case 2:
+     tb two;
+ case 3:
+     union te switch (tc_enum) {
+     case NORTH: long x;
+     case EAST: double y;
+     case WEST: boolean z;
+     case SOUTH: tb s;
+#ifndef OPENORB
+     case DOWN:
+         union tu switch (boolean) {
+           case TRUE: sequence<td,1> next;
+         } u;
+#endif
+     } three;
+  default:sequence<td_union> again;
+};
+
+interface obj {
+
+    attribute long my_attr;
+
+    typedef obj my_obj;
+
+    my_obj get_server();
+    void   set_server(in my_obj srvr);
+
+    td_union convert(inout ta a1, in tb b1, out tc_enum c1);
+
+};

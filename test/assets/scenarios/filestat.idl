@@ -1,0 +1,69 @@
+#define _my_ST_FSTYPSZ 16
+
+typedef unsigned long my_ulong_t;
+
+typedef my_ulong_t my_dev_t;
+typedef my_ulong_t my_ino_t;
+typedef my_ulong_t my_mode_t;
+typedef my_ulong_t my_nlink_t;
+typedef long my_uid_t;
+typedef my_uid_t my_gid_t;
+typedef long my_off_t;
+typedef long my_time_t;
+
+struct  my_timespec {           /* definition per POSIX.4 */
+        my_time_t       my_tv_sec;  /* seconds */
+        long        my_tv_nsec;     /* and nanoseconds */
+};
+
+typedef my_timespec my_timestruc_t;     /* definition per SVr4 */
+
+interface test {
+    struct my_stat {
+        my_dev_t   st_dev;
+        long    st_pad1[3];     /* reserve for dev expansion, */
+        /* sysid definition */
+        my_ino_t   st_ino;
+        my_mode_t  st_mode;
+        my_nlink_t st_nlink;
+        my_uid_t   st_uid;
+        my_gid_t   st_gid;
+        my_dev_t   st_rdev;
+        long    st_pad2[2];
+        my_off_t   st_size;
+        long    st_pad3;        /* reserve pad for future off_t expansion */
+        my_timestruc_t st_atime;
+        my_timestruc_t st_mtime;
+        my_timestruc_t st_ctime;
+        long    st_blksize;
+        long    st_blocks;
+        char    st_fstype[_my_ST_FSTYPSZ];
+        long    st_pad4[8];     /* expansion area */
+    };
+
+    struct entry {
+        string<255> filename;
+        my_stat     info;
+    };
+
+    struct inner {
+        long a;
+        long b;
+    };
+
+    struct outer {
+        inner a;
+        inner b;
+    };
+
+    typedef sequence<entry> directory;
+    typedef sequence<long>  longlist;
+    typedef sequence<outer> structlist;
+
+    long dir(in directory entries);
+    long lng(in longlist entries);
+    long strct(in structlist entries);
+};
+
+/* End of file. */
+

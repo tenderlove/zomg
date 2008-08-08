@@ -1,0 +1,18 @@
+// Description     : Test typedefs of structs
+// Comments        : Struct is declared outside a module
+//****************************************************************************
+
+struct SA
+{
+    unsigned short USA;
+    string SSA;
+};
+typedef SA mySA;
+
+module MA
+{
+    interface IA
+    {
+        SA MethodMAIA(in long LA, out mySA objSA);
+    };
+};

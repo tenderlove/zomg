@@ -113,6 +113,10 @@ module ZOMG
           [:uminus, o.children.accept(self)]
         end
 
+        def visit_UnaryPlus(o)
+          [:uplus, o.children.accept(self)]
+        end
+
         {
           'MultiplyExpr'  => :multiply,
           'ModulusExpr'   => :modulus,

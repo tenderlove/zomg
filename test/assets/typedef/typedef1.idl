@@ -1,0 +1,8 @@
+typedef short a;
+typedef char c;
+typedef string<256> d;
+typedef sequence<short> e;
+typedef float f;
+typedef short g[5];
+typedef sequence<short, 5> h;
+

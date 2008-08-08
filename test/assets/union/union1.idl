@@ -1,0 +1,31 @@
+union Foo switch (long) {
+case 1: long x;
+case 2: short y;
+default: char z;
+};
+
+union Foo2 switch (char) {
+ case 'a': long x;
+ case 'b': short y;
+ case 'c': char z;
+};
+
+union Foo3 switch (short) {
+ case -1: short a;
+ case 50: long b;
+ default: char c;
+};
+
+union Foo4 switch (long) {
+ case 1: string a;
+ case 2: sequence<long,10>b;
+ default: long c;
+};
+
+interface un {
+    Foo one(in Foo a, inout Foo b, out Foo c);
+    Foo2 two(in Foo2 a, inout Foo2 b, out Foo2 c);
+    Foo3 three(in Foo3 a, inout Foo3 b, out Foo3 c);
+    Foo4 four(in Foo4 a, inout Foo4 b, out Foo4 c);
+};
+

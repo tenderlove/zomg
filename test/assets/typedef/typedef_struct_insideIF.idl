@@ -1,0 +1,18 @@
+// Description     : Test typedefs of structs
+// Comments        : Struct is inside an module and interface
+//****************************************************************************
+
+module MA
+{
+    interface IA
+    {
+        struct SA
+        {
+            unsigned short USA;
+            string SSA;
+        };
+        typedef SA mySA;
+
+        SA MethodMAIA(in long LA, out mySA objSA);
+    };
+};

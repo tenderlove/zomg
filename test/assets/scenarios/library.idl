@@ -1,0 +1,20 @@
+struct BookInfo
+{
+    string title;
+    string author;
+    string isbn;
+};
+typedef sequence<BookInfo> BookInfoSeq;
+
+interface Book
+{
+    readonly attribute BookInfo info;
+};
+
+typedef sequence<string> BookTitles;
+
+interface Library
+{
+    Book get_book(in string title);
+    BookTitles get_titles();
+};

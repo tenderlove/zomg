@@ -1,0 +1,24 @@
+module data {
+    typedef string<200> name;
+    typedef string<20> phone;
+
+    struct entry {
+            name    n;
+            phone   p;
+    };
+
+    exception duplicate {
+        phone p;
+    };
+
+    exception notfound {};
+
+    interface phonebook {
+        void add(in entry e) raises (duplicate);
+        void remove(in name n) raises (notfound);
+        phone find(in name n) raises (notfound);
+        };
+};
+
+/* End of file. */
+

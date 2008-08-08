@@ -1,0 +1,28 @@
+module foo {
+ struct a {
+    long b;
+ };
+ module bar {
+    struct a {
+        long b;
+    };
+ };
+};
+
+module bar {
+ struct a {
+    long b;
+ };
+};
+
+module foo {
+ struct b {
+    a c; // This refs foo::a
+ };
+ module bar {
+    struct b {
+        a q; // This refs foo::bar::a
+    };
+ };
+};
+

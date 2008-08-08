@@ -1,0 +1,22 @@
+/**
+ * typedef string, struct - long form, in parameters
+ */
+
+typedef string S1;
+
+typedef struct SS_ {
+          octet a, b;
+        } SS;
+
+interface foo {
+  typedef long L;
+  struct S {
+    long a;
+    char b;
+  };
+
+  void bar1( in string s );
+  void bar2( in L l_obj );
+  void bar3( in S s_obj );
+};
+

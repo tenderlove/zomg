@@ -1,0 +1,118 @@
+// Description     : Sample SR handling IDL
+
+module myTroubleTicket
+{
+    struct ErrorStruct
+    {
+        long code;
+        string description;
+    };
+    enum TicketStatus { New, Open, Resolved, Closed };
+
+    // Timestamp is a number that measures time by the number of
+    // milliseconds from 1/1/1970 GMT. The number is encoded into
+    // a character string.
+    typedef string Timestamp;
+
+    enum ServiceType {ATM, FR};
+
+    enum TicketType {Autodetect, Chronic, Informational, Release, Vendor,
+                     Customer, Network, NetworkComplexServices };
+
+    enum ForeignLogType { CustomerLog, EmployeeLog };
+
+    struct TroubleTicketSummary
+    {
+        string troubleTicketId;
+        string circuitId;
+        string circuitSegmentId;
+        string billingAccountNumber;
+        TicketStatus status;
+        Timestamp createDatetime;
+        Timestamp closeDatetime;
+        ServiceType svcType;
+        string customerName;
+        string enterpriseId;
+        TicketType type;
+    };
+
+    struct TroubleTicket
+    {
+        string troubleTicketId;
+        string circuitId;
+        string circuitSegmentId;
+        string billingAccountNumber;
+        TicketStatus status;
+        Timestamp createDatetime;
+        Timestamp closeDatetime;
+        ServiceType svcType;
+        string customerName;
+        string enterpriseId;
+        TicketType type;
+        string reportByName;
+        string reportByPhone;
+        string reportByEmail;
+        string secondaryContactName;
+        string secondaryContactPhone;
+        string secondaryContactEmail;
+        string problemDescription;
+        string submittedBy;
+        string ticketClient;
+    };
+
+    typedef sequence<TroubleTicketSummary> TroubleTicketSummaryList;
+
+    struct TimestampRange
+    {
+        Timestamp startTime;
+        Timestamp endTime;
+    };
+
+    struct TroubleTicketQuery
+    {
+        sequence<string> circuitId;
+        sequence<string> circuitSegmentId;
+        sequence<string> billingAccountNumber;
+        sequence<string> enterpriseId;
+        sequence<string> customerName;
+        TimestampRange   createDatetime;
+        TimestampRange   closeDatetime;
+        sequence<TicketStatus> status;
+        sequence<ServiceType> svcType;
+    };
+    typedef sequence<TroubleTicketQuery> TTQuerySeq;
+
+    struct SortCriteria
+    {
+        string sortByField;
+        boolean sortAscending;
+    };
+    typedef sequence<SortCriteria> SortSeq;
+
+    interface TicketService
+    {
+
+        void createTicket(
+                inout TroubleTicket inTroubleTicket,
+                out ErrorStruct error );
+
+        void findTicketByTicketId(
+                in string troubleTicketId,
+                out TroubleTicket outTroubleTicket,
+                out ErrorStruct error );
+
+        void findTicketsByTicketQuery(
+                in TTQuerySeq ticketQueryList,
+                in SortSeq    sortList,
+                in long       fetchLimit,
+                out TroubleTicketSummaryList tickets,
+                out ErrorStruct              error );
+
+        // simple oneway method to test passing sequences of structs
+        // to the CORBA adapter
+        oneway void simpleTicketMethod(
+                in TTQuerySeq ticketQueryList );
+    };
+
+};
+

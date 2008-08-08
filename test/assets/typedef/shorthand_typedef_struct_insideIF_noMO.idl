@@ -1,0 +1,16 @@
+// Description     : Test typedefs of structs
+// Comments        : Shorthand struct is inside an interface with no module
+//****************************************************************************
+
+//Tests the idl2repo tool's ability to generate AESchema when a struct
+//is embedded in a interface
+interface IA
+{
+    typedef struct SA
+    {
+        unsigned short USA;
+        string SSA;
+    } mySA;
+
+    SA MethodMAIA(in long LA, out mySA objSA);
+};

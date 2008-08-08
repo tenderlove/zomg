@@ -1,0 +1,20 @@
+/**
+ * Struct with long, char, struct - in, out, return
+ */
+struct S {
+  long a, b;
+  char c;
+};
+
+struct S2 {
+  long a;
+  S x;
+};
+
+
+interface foo {
+  void bar( in S s1, out S s2 );
+  void bar2( in S2 s );
+  S2 bar3();
+};
+

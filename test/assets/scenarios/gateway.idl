@@ -1,0 +1,176 @@
+module TOR
+{
+
+// Status flag
+
+enum GWStatus
+{
+  GWOK,
+  GWNotOK
+};
+
+//------------------
+// Gateway messages |
+//------------------
+
+// Format of the messages
+
+enum GWMsgContentType
+{
+  Parameters,
+    // Used by request-related msg with parameters
+  IsVoid,
+    // Used by request-related msg without parameter
+  ReturnValue,
+    // Used by reply-related msg with only return result (incl. void)
+  ReturnAndParameters,
+    // Used by reply-related msg with return result (incl. void) and parameters
+  IsException
+    // Used by raise-related msg with exception
+};
+
+typedef any GWElem;
+
+typedef sequence<GWElem> GWParamList;
+
+struct GWMsgContent
+{
+  GWParamList paramList;
+  GWElem returnValue;
+  GWElem except;
+};
+
+struct GWMessage
+{
+  string objectName;
+  string operationName;
+  GWMsgContentType cntType;
+  GWMsgContent content;
+};
+
+
+// Flag for messages
+
+enum GWMsgFlag
+{
+  MsgReady,
+  MsgNotReady
+};
+
+// Message queue
+
+struct GWQElem
+{
+  GWMsgFlag flag;
+  GWMessage message;
+};
+
+typedef sequence<GWQElem> GWMsgQueue;
+
+//---------------------------------
+// Test configuration information  |
+//---------------------------------
+
+// Type of connection via PCO or CP
+
+enum GWConnType
+{
+  PCOtoSUTServer,
+  PCOtoSUTClient,
+  CPtoTestComponent
+};
+
+// Information about an object
+
+struct GWObjInfo
+{
+  string objName;
+    // Object name
+  Object objRef;
+    // Object reference if available
+};
+
+// Information about a connection
+
+struct GWConnInfo
+{
+  GWConnType connType;
+    // Type of connection via PCO or CP
+  string pName;
+    // PCO or CP name
+  GWObjInfo objInfo;
+    // Information of the object
+};
+
+typedef sequence<GWConnInfo> GWConnections;
+
+// Configuration information of a test component
+
+struct GWComponentConfig
+{
+  string componentID;
+    // ID of the test component
+  GWConnections connections;
+    // Information about the connections
+};
+
+//-------------------------
+// Interface GatewayClient |
+//-------------------------
+
+interface GatewayClient
+{
+  GWStatus sendOutMsg(in GWMessage msg);
+  GWMsgFlag getInMsg(out GWMessage msg);
+
+}; // End of interface GatewayClient
+
+//-------------------------
+// Interface GatewayServer |
+//-------------------------
+
+interface GatewayServer
+{
+  GWStatus sendOutMsg(in GWMessage msg);
+  GWMsgFlag getInMsg(out GWMessage msg);
+
+}; // End of interface GatewayServer
+
+//------------------------
+// Interface GatewayMain  |
+//------------------------
+
+interface GatewayMain
+{
+  //
+  // Operations public for TTCN-based test systems
+  //
+
+  // Initialization
+  GWStatus GWInit();
+
+  // Destroy the current instance.
+  void GWDestroy();
+
+  // Pre-configuration for the associated test component.
+  GWStatus GWConfigure (in boolean concurrent, in GWComponentConfig config);
+
+  // Add an individual connection for the associated test component.
+  GWStatus GWAddConnection (in GWConnInfo connInfo);
+
+  // Dispatch a message to the SUT or another test component
+  GWStatus GWSend (in string pcoID, in GWMessage msg);
+
+  // Poll for an incoming message from the SUT or another test component
+  GWMsgFlag GWReceive (out string pcoID, out GWMessage msg);
+
+  //
+  // Operation used by GatewayMain objects to exchange CMs
+  //
+
+  oneway void here_is_a_CM(in GWMessage msg);
+
+}; // End of interface GatewayMain
+
+}; // End of module TOR
+

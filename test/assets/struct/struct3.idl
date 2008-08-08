@@ -1,0 +1,42 @@
+struct a {
+    struct b {
+        short c;
+        char d;
+        struct q {
+            boolean c;
+            long d;
+        } e;
+        short f;
+        q g;
+    } e;
+    struct q {
+        short a;
+        double b;
+    } h;
+    struct z {
+        struct zz {
+            q a;
+        } b;
+        q m;
+    } j;
+    float f;
+    b g;
+    q i;
+};
+
+struct b {
+    a::b c;
+    char d;
+};
+
+struct c {
+    a::b::q q;
+    a::z::zz z;
+    string s;
+};
+
+interface test {
+    a op1(in a s1, inout a s2, out a s3);
+    b op2(in b s1, inout b s2, out b s3);
+    c op3(in c s1, inout c s2, out c s3);
+};

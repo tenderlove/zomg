@@ -1,0 +1,17 @@
+// Description     : Test typedefs of structs
+// Comments        : Shorthand struct is inside a module & outside an interface
+//****************************************************************************
+
+module MA
+{
+    typedef struct SA
+    {
+        unsigned short USA;
+        string SSA;
+    } mySA;
+
+    interface IA
+    {
+        SA MethodMAIA(in long LA, out mySA objSA);
+    };
+};

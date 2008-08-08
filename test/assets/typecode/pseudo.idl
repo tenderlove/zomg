@@ -1,0 +1,25 @@
+/**
+ * TypeCode and Any as in, inout, out and return
+ */
+#include <orb.idl>
+
+struct S1 {
+  long x;
+  char c;
+};
+
+struct S2 {
+  string str;
+};
+
+struct S3 {
+  char c;
+  any  a;
+  CORBA::TypeCode tc;
+};
+
+interface foo {
+  any bar( in any a1, out any a2, inout any a3 );
+  CORBA::TypeCode bar1( in CORBA::TypeCode tc1, out CORBA::TypeCode tc2, inout CORBA::TypeCode tc3 );
+};
+

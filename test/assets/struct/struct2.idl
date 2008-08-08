@@ -1,0 +1,21 @@
+/**
+ * Fixed & Variable length structs - in, out, inout, return
+ */
+/* Fixed length struct */
+struct S {
+  long a, b;
+  char c;
+};
+
+/* Variable length struct */
+struct S2 {
+  string a;
+  S      x;
+};
+
+
+interface foo {
+  S bar( in S s1, out S s2, inout S s3 );
+  S2 bar1( in S2 s1, out S2 s2_obj, inout S2 s3_obj );
+};
+
