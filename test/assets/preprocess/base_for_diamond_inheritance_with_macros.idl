@@ -1,0 +1,17 @@
+
+struct mystruct
+{
+  short     x;
+  long      y;
+  string    z;
+};
+
+typedef mystruct struct_long_form;
+
+
+typedef struct mystruct1
+{
+  short     x;
+  long      y;
+  string    z;
+} struct_short_form;

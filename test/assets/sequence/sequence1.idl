@@ -1,0 +1,24 @@
+/**
+ * Sequences as in, inout, out and return
+ */
+
+struct S {
+    long x;
+    sequence<long> seq;
+};
+
+typedef sequence<S> SSeq;
+
+typedef sequence<string> StringSeq;
+
+struct S2 {
+    sequence<char,10> seq;
+};
+
+
+interface foo {
+  S bar( in S s1, inout S s2, out S s3 );
+  SSeq bar2( in SSeq s1, inout SSeq s2, out SSeq s3 );
+  void bar3( in StringSeq s );
+};
+

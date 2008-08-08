@@ -1,0 +1,54 @@
+// TEST     basic marshaling tests for all IDL primitive types, modes
+//
+// This test omits constructed types (struct, union, enum, sequence, and
+// array types), and only tests very simple user defined exceptions.
+//
+// Values returned are well defined functions of the input values:
+//
+//  * For numeric types (octet, short, long, longlong, float, double,
+//    longdouble, and unsigned variants) the value is cubed.
+//  * For Boolean, it's the negation.
+//  * For Any, TypeCode, Principal, Object, char and wchar,
+//    string and wstring, it's the input value.
+//
+// The "return" and "out" parameter is the function of the "in" parameter;
+// the "inout" parameter is the function of its original value.
+//
+
+#define DECL_TEST(type) \
+    type test_ ## type ( in type a1, out type a2, inout type a3)
+
+#pragma prefix  "Eng.SUN.COM"   // only for Sun-defined interfaces
+
+interface test1 {
+    void    test_void ();
+
+    typedef unsigned short ushort;
+    typedef unsigned long ulong;
+
+    DECL_TEST (short);
+    DECL_TEST (long);
+    DECL_TEST (ushort);
+    DECL_TEST (ulong);
+    DECL_TEST (float);
+    DECL_TEST (double);
+    DECL_TEST (boolean);
+    DECL_TEST (char);
+    DECL_TEST (octet);
+    DECL_TEST (string);     // unbounded string
+    DECL_TEST (Object);
+    // All cases, "case_num" in the exception is the same as the 'in' param
+    //  * negative or zero, throws x1
+    //  * positive even cases, throws x2 with obj = null objref
+    //  * positive odd cases, throws x2 with obj = target objref
+    //
+    exception x1 { long case_num; };
+    exception x2 { Object obj; long value;};
+    void test_throw (in long case_num) raises (x1, x2);
+
+    //
+    // Aid for test cleanup in case server's not told to quit after
+    // being idle for some time period
+    //
+    oneway void please_exit ();
+};

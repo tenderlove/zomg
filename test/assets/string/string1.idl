@@ -1,0 +1,11 @@
+/**
+ * String - in, inout, out, return
+ */
+interface StringTest {
+    void m1( in string s );
+    void m2( out string s );
+
+    void m3( in string<5+2> s );
+    string m4( inout string s );
+    string<3+4-2> m5( out string<3+4-2> s );
+};

@@ -1,0 +1,9 @@
+typedef sequence<long,10> vec10;
+
+exception puke {
+    long reason;
+};
+
+interface TestSeq {
+    vec10 op(in vec10 iv, out vec10 ov, inout vec10 iov) raises (puke);
+};

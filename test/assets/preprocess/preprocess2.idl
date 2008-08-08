@@ -1,0 +1,3 @@
+typedef short int8_t;
+typedef unsigned short uint16_t;
+typedef long int32_t;

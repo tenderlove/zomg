@@ -1,0 +1,29 @@
+struct str {
+    string<10>  s10;
+    long        a;
+    string      sx;
+    short       b;
+};
+
+typedef string longstr;
+typedef string<25> shortstr;
+
+interface test {
+  string StringOperation(in string a,
+        inout string b,
+        out string c);
+  longstr LongStringOperation(in longstr a,
+           inout longstr b,
+           out longstr c);
+  shortstr ShortStringOperation(in shortstr a,
+           inout shortstr b,
+           out shortstr c);
+  str StructOperation(in str a,
+         inout str b,
+             out str c);
+};
+
+
+
+
+
