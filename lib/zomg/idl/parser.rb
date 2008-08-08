@@ -6,9 +6,16 @@ module ZOMG
           new.parse_file(filename)
         end
       end
+
       def initialize
         @scanner = Scanner.new
         @yydebug = false
+      end
+
+      # Parse an IDL string
+      def parse(contents)
+        @scanner.scan_evaluate(contents)
+        do_parse
       end
 
       def parse_file(filename)
@@ -21,8 +28,7 @@ module ZOMG
             io.read
           }
         end
-        @scanner.scan_evaluate(contents)
-        do_parse
+        parse(contents)
       end
 
       def next_token

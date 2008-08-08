@@ -109,6 +109,10 @@ module ZOMG
           [:context, o.children.map { |c| c.accept(self) }]
         end
 
+        def visit_ValueBoxDcl(o)
+          [:valuebox, o.name, o.children.accept(self)]
+        end
+
         def visit_UnaryMinus(o)
           [:uminus, o.children.accept(self)]
         end

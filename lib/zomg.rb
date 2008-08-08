@@ -25,6 +25,7 @@ require 'zomg/idl/visitors/duhr'
   string
   constant
   binary
+  value_box_dcl
 }.each { |node_type|
   require "zomg/idl/nodes/#{node_type}"
 }
