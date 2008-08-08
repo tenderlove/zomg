@@ -9,7 +9,7 @@ module ZOMG
         def visit_Module(o)
           [ :module,
             o.name.upcase.to_sym,
-            [:scope] + o.children.map { |c| c.accept(self) }
+            [:scope, [:block] + o.children.map { |c| c.accept(self) }]
           ]
         end
 

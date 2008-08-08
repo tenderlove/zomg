@@ -13,7 +13,7 @@ class RubySexpText < ZOMG::Test
       };
     eoidl
     assert_equal(
-            [[:module, :DOM, [:scope, [:cdecl, :INDEX_SIZE_ERR, [:lit, 1]]]]],
+            [[:module, :DOM, [:scope, [:block, [:cdecl, :INDEX_SIZE_ERR, [:lit, 1]]]]]],
             tree.to_ruby_sexp
     )
   end
