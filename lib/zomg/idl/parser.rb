@@ -5,6 +5,10 @@ module ZOMG
         def parse_file(filename)
           new.parse_file(filename)
         end
+
+        def parse(string)
+          new.parse(string)
+        end
       end
 
       def initialize
