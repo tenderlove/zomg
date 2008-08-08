@@ -1,0 +1,13 @@
+/**
+ * enum as in parameter
+ */
+enum E {
+  A,
+  B,
+  C
+};
+
+interface foo {
+  void bar( in E e_obj );
+};
+
