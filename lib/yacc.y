@@ -603,7 +603,7 @@ any_type
 
 /*68*/
 object_type
-	: T_OBJECT
+	: T_OBJECT { result = Object.new }
 	;
 
 /*69*/

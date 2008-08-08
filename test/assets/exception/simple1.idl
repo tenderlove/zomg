@@ -5,7 +5,7 @@ exception simple_error {
 };
 
 interface simple {
-    long op(in long a, out simple b, inout long c);
+    long op(in long a, out simple b, inout long c)
         raises (simple_error);
 };
 
@@ -13,6 +13,6 @@ interface simple2 : simple {
     exception simple2_error {
     long    reason2;
     };
-    long op2(in long a, in simple b, out simple2 c);
+    long op2(in long a, in simple b, out simple2 c)
         raises (simple2_error);
 };

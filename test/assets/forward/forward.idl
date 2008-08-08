@@ -1,0 +1,15 @@
+#include "fwd_incl1.idl"
+#include "fwd_incl2.idl"
+
+interface fwd_A;
+
+interface forward : fwd_incl1, fwd_incl2
+{
+    void method(in fwd_A object_A);
+};
+
+
+interface fwd_A
+{
+    readonly attribute long lfA;
+};

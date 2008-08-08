@@ -129,6 +129,10 @@ module ZOMG
         end
 
         # Terminal nodes
+        def visit_Object(o)
+          :object
+        end
+
         def visit_WideStringLiteral(o)
           [:wstring_lit, o.children]
         end

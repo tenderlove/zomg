@@ -1,0 +1,7 @@
+interface fwd_A;
+
+interface fwd_incl2
+{
+    typedef fwd_A myFwd_A;
+    void op(inout myFwd_A object_myFwd_A);
+};

@@ -1,0 +1,6 @@
+interface fwd_A;
+
+interface fwd_incl1
+{
+    attribute fwd_A afA;
+};

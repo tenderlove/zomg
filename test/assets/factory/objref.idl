@@ -1,0 +1,25 @@
+/**
+ * Objects as in parameters - Factory Pattern
+ */
+
+interface foo {
+  void hello( in string name );
+};
+
+struct S {
+  long x;
+  foo obj;
+};
+
+typedef sequence<foo> fooSeq;
+
+typedef Object ObjectAlias;
+typedef sequence<Object> Objects;
+
+interface bar {
+  foo run( in foo obj );
+  void run1( in ObjectAlias obj );
+  void run2( in S s_obj );
+  void run3( in fooSeq s );
+};
+

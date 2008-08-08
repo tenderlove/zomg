@@ -1,0 +1,13 @@
+/**
+ * Forward declaration
+ */
+interface A;
+
+interface B {
+  void op( in A a_obj );
+};
+
+interface A {
+  void op( in B b_obj );
+};
+

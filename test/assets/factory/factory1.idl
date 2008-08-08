@@ -1,0 +1,77 @@
+/**
+ *
+ * This interface represents a record in a database.
+ *
+ **/
+interface DBRecord
+{
+    /**
+     *
+     * The database key
+     *
+     **/
+    readonly attribute long key;
+
+    /**
+     *
+     * Some data in the database
+     *
+     **/
+    attribute string data;
+};
+
+/**
+ *
+ * This interface represents a factory to create and retrieve database
+ * records.
+ *
+ **/
+interface DBFactory
+{
+    exception NoRecord { };
+
+    /** An alias for a sequence of record keys */
+    typedef sequence<long> DBRecordKeySeq;
+
+    /**
+     *
+     * Create a db record.
+     *
+     * @return record The new record.
+     *
+     **/
+    DBRecord createRecord();
+
+    /**
+     *
+     * Destroy a db record.  Throws NoRecord exception if the
+     * record doesn't exist in the database.
+     *
+     * @param key The key of the record.
+     *
+     **/
+    void destroyByKey(in long key)
+    raises(NoRecord);
+
+    /**
+     *
+     * Get a db record by id.  Throws NoRecord exception if the
+     * record doesn't exist in the database.
+     *
+     * @param key The database key.
+     *
+     * @return record The record.
+     *
+     **/
+    DBRecord getByKey(in long key)
+    raises(NoRecord);
+
+    /**
+     *
+     * Return a sequence of all record keys in the database.
+     *
+     * @param records Sequence of records.
+     *
+     **/
+    DBRecordKeySeq getAllKeys();
+};

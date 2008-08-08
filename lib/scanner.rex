@@ -135,7 +135,7 @@ rule
             raises(?!{IDENT})     { [:T_RAISES, text] }
             context(?!{IDENT})    { [:T_CONTEXT, text] }
 
-            Object              { [:T_OBJECT, text] }
+            Object(?!{IDENT})     { [:T_OBJECT, text] }
             Principal           { [:T_PRINCIPAL, text] }
 
 

@@ -14,6 +14,14 @@ class ScannerTest < ZOMG::Test
     assert tokens.length > 0
   end
 
+  def test_typedef_object
+    assert_tokens([
+                  [:T_TYPEDEF, "typedef"],
+                  [:T_OBJECT, "Object"],
+                  [:T_IDENTIFIER, "ObjectAlias"],
+    ], 'typedef Object ObjectAlias;')
+  end
+
   def test_const_long
     assert_tokens([
                   [:T_CONST, "const"],
