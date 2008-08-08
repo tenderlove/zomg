@@ -21,6 +21,15 @@ module ZOMG
         def to_sexp
           Sexp.new.accept(self)
         end
+
+        def to_ruby_sexp
+          RubySexp.new.accept(self)
+        end
+
+        def to_ruby
+          r2r = Ruby2Ruby.new
+          r2r.process(to_ruby_sexp.first)
+        end
       end
       %w{ Boolean Char Double Float Long Octet Short UnsignedLong
         UnsignedShort ElementSpec CaseLabel DefaultLabel IntegerLiteral
