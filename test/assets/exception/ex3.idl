@@ -1,0 +1,10 @@
+interface A {
+        exception B {
+        short a;
+                string<20> d;
+        };
+        short op(in short b_obj) raises(B);
+};
+
+/* End of file. */
+

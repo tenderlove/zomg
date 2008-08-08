@@ -1,0 +1,20 @@
+/**
+ * Raising user exceptiong with string msg
+ */
+interface Calc {
+
+  exception ex1 {
+    string msg;
+  };
+
+  exception ex2 {
+  };
+
+  exception ex3 {
+    string msg;
+    long   err;
+    Calc   iface;
+  };
+
+  void m() raises( ex1 );
+};

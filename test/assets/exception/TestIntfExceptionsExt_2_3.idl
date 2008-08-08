@@ -1,0 +1,24 @@
+module ORBTest_ExceptionsExt_2_3
+{
+    interface Intf
+    {
+    void
+    op_CODESET_INCOMPATIBLE_Ex();
+
+    void
+    op_REBIND_Ex();
+
+    void
+    op_TIMEOUT_Ex();
+
+    void
+    op_TRANSACTION_UNAVAILABLE_Ex();
+
+    void
+    op_TRANSACTION_MODE_Ex();
+
+    void
+    op_BAD_QOS_Ex();
+    };
+
+}; // module ORBTest_ExceptionsExt_2_3

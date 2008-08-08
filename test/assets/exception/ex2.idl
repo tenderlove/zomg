@@ -1,0 +1,18 @@
+#include "sc.idl"
+
+module sc {
+  typedef string UserId_second;
+
+  interface SecurityInfoSupplier_second : LoginInfo {
+    void setUserId(in UserId_second uid);
+    UserId_second getUserId();
+    SrvId_changed getSimulatedSrvId();
+  };
+
+  interface GenSrv_second {
+    boolean ping();
+    void connect(in SecurityInfoSupplier_second logInfSup) raises (SecurityException );
+    oneway void pushKpiMessage(in KpiMessage message);
+  };
+
+};

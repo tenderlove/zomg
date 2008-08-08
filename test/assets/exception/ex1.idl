@@ -1,0 +1,6 @@
+module sc {
+  interface GenSrv {
+    boolean ping();
+    void connect(in string logInfSup) ;
+  };
+};

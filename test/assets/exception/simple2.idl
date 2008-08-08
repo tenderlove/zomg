@@ -1,0 +1,25 @@
+#include "simple1.idl"
+
+
+interface simple3 : simple2 {
+    exception OVERFLOW {
+    long    a;
+    string  msg;
+    };
+    exception UNDERFLOW {
+    long    b;
+    string  msg;
+    };
+    exception BADNUM {
+    vec10   c;
+    };
+    exception USERERROR {
+    string reason;
+    };
+    long    op3(in long a, out simple3 b, out simple2 c, out simple d)
+         raises (OVERFLOW, UNDERFLOW, BADNUM);
+    string  op4(in string x, inout string y, out string z)
+        raises(UNDERFLOW);
+    void    op5()
+        raises(USERERROR);
+};

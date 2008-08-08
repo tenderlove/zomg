@@ -1,0 +1,69 @@
+module ORBTest_Exceptions
+{
+    interface Intf
+    {
+    void
+    op_UNKNOWN_Ex();
+
+    void
+    op_BAD_PARAM_Ex();
+
+    void
+    op_NO_MEMORY_Ex();
+
+    void
+    op_IMP_LIMIT_Ex();
+
+    void
+    op_COMM_FAILURE_Ex();
+
+    void
+    op_INV_OBJREF_Ex();
+
+    void
+    op_NO_PERMISSION_Ex();
+
+    void
+    op_INTERNAL_Ex();
+
+    void
+    op_MARSHAL_Ex();
+
+    void
+    op_INITIALIZE_Ex();
+
+    void
+    op_NO_IMPLEMENT_Ex();
+
+    void
+    op_BAD_TYPECODE_Ex();
+
+    void
+    op_BAD_OPERATION_Ex();
+
+    void
+    op_NO_RESOURCES_Ex();
+
+    void
+    op_NO_RESPONSE_Ex();
+
+    void
+    op_BAD_INV_ORDER_Ex();
+
+    void
+    op_TRANSIENT_Ex();
+
+    void
+    op_OBJ_ADAPTER_Ex();
+
+    void
+    op_DATA_CONVERSION_Ex();
+
+    void
+    op_OBJECT_NOT_EXIST_Ex();
+
+    void
+    op_INV_POLICY_Ex();
+    };
+
+}; // module ORBTest_Exceptions

@@ -1,0 +1,34 @@
+module ORBTest_ExceptionsExt_2_0
+{
+
+    interface Intf
+    {
+    void
+    op_PERSIST_STORE_Ex();
+
+    void
+    op_FREE_MEM_Ex();
+
+    void
+    op_INV_IDENT_Ex();
+
+    void
+    op_INV_FLAG_Ex();
+
+    void
+    op_INTF_REPOS_Ex();
+
+    void
+    op_BAD_CONTEXT_Ex();
+
+    void
+    op_TRANSACTION_REQUIRED_Ex();
+
+    void
+    op_TRANSACTION_ROLLEDBACK_Ex();
+
+    void
+    op_INVALID_TRANSACTION_Ex();
+    };
+
+}; // module ORBTest_ExceptionsExt_2_0
