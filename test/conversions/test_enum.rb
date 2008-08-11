@@ -2,20 +2,19 @@ require 'helper'
 
 module ZOMG
   module Conversions
-    class UnionTest < ZOMG::Test
+    class EnumTest < ZOMG::Test
       def setup
         @tree = ZOMG::IDL.parse(<<-eoidl)
-          union Foo switch(long) {
-            case 10: string a;
-            case 20: short  b;
-            default: char   c;
+          enum Foo {
+            a,
+            b
           };
         eoidl
       end
-    
+
       def test_to_ruby_sexp
         sexp = nil
-        ruby_sexp = [[:cdecl, :Foo, [:call, [:const, :Struct], :new, [:array, [:lit, :a], [:lit, :b], [:lit, :c]]]]]
+        ruby_sexp = [[:cdecl, :Foo, [:hash, [:lit, :a], [:lit, :a], [:lit, :b], [:lit, :b]]]]
         assert_nothing_raised {
           sexp = @tree.to_ruby_sexp
         }

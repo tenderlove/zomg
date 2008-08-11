@@ -17,6 +17,15 @@ module ZOMG
           [:cdecl, o.name.upcase.to_sym, o.value.accept(self)]
         end
 
+        def visit_Enum(o)
+          [ :cdecl,
+            o.name.to_sym,
+            [:hash] + o.children.inject([]) { |m,c| 
+              m += [[:lit, c.to_sym], [:lit, c.to_sym]]
+            }
+          ]
+        end
+
         def visit_IntegerLiteral(o)
           [:lit, o.to_i]
         end
