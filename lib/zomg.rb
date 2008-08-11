@@ -1,9 +1,5 @@
 require 'zomg/version'
-require 'zomg/idl/visitable'
-require 'zomg/idl/visitors/sexp'
-require 'zomg/idl/visitors/ruby_sexp'
-require 'zomg/idl/visitors/duhr'
-
+require 'zomg/idl'
 %w{
   node
   specification

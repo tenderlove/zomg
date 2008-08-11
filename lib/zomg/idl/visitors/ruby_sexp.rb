@@ -21,6 +21,46 @@ module ZOMG
           [:lit, o.to_i]
         end
 
+        def visit_Struct(o)
+          [ :cdecl,
+            o.name.to_sym,
+            [ :call, [:const, :Struct],
+              :new,
+              [:array] + o.children.map { |c|
+                c.accept(self)
+              }.inject([]) { |memo, obj| memo += obj }
+            ]
+          ]
+        end
+
+        def visit_Union(o)
+          [ :cdecl,
+            o.name.to_sym,
+            [ :call, [:const, :Struct],
+              :new,
+              [:array] + o.children.map { |c|
+                c.accept(self)
+              }
+            ]
+          ]
+        end
+
+        def visit_Case(o)
+          o.spec.accept(self)
+        end
+
+        def visit_ElementSpec(o)
+          o.children[1].accept(self)
+        end
+
+        def visit_Member(o)
+          o.children.map { |c| c.accept(self) }
+        end
+
+        def visit_SimpleDeclarator(o)
+          [:lit, o.name.to_sym]
+        end
+
         def accept(target)
           target.accept(self)
         end
