@@ -2,20 +2,16 @@ require 'helper'
 
 module ZOMG
   module Conversions
-    class UnionTest < ZOMG::Test
+    class TypedefTest < ZOMG::Test
       def setup
         @tree = ZOMG::IDL.parse(<<-eoidl)
-          union Foo switch(long) {
-            case 10: string a;
-            case 20: short  b;
-            default: char   c;
-          };
+          typedef long IntSequence[10];
         eoidl
       end
-    
+
       def test_to_ruby_sexp
         sexp = nil
-        ruby_sexp = [:block, [:cdecl, :Foo, [:call, [:const, :Struct], :new, [:array, [:lit, :a], [:lit, :b], [:lit, :c]]]]]
+        ruby_sexp = [:block, nil]
         assert_nothing_raised {
           sexp = @tree.to_ruby_sexp
         }

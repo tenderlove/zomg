@@ -3,7 +3,7 @@ module ZOMG
     module Visitors
       class RubySexp
         def visit_Specification(o)
-          o.children.map { |c| c.accept(self) }
+          [:block] + o.children.map { |c| c.accept(self) }
         end
 
         def visit_Module(o)
@@ -68,6 +68,9 @@ module ZOMG
 
         def visit_SimpleDeclarator(o)
           [:lit, o.name.to_sym]
+        end
+
+        def visit_Typedef(o)
         end
 
         def accept(target)

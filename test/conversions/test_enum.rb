@@ -14,7 +14,7 @@ module ZOMG
 
       def test_to_ruby_sexp
         sexp = nil
-        ruby_sexp = [[:cdecl, :Foo, [:hash, [:lit, :a], [:lit, :a], [:lit, :b], [:lit, :b]]]]
+        ruby_sexp = [:block, [:cdecl, :Foo, [:hash, [:lit, :a], [:lit, :a], [:lit, :b], [:lit, :b]]]]
         assert_nothing_raised {
           sexp = @tree.to_ruby_sexp
         }
