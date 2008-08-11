@@ -13,6 +13,47 @@ module ZOMG
           ]
         end
 
+        def visit_Interface(o)
+          [ :module,
+            o.header.name.to_sym,
+            [:scope,
+              [:block, o.header.accept(self)] +
+                o.children.map { |c| c.accept(self) }
+            ]
+          ]
+        end
+
+        def visit_InterfaceHeader(o)
+          if o.children.length > 0
+            [:fcall, :include,
+              [:array] + o.children.map { |c| [:const, c.accept(self)]} ]
+          else
+            nil
+          end
+        end
+
+        def visit_ScopedName(o)
+          o.name.to_sym
+        end
+
+        def visit_Operation(o)
+          [ :defn,
+            o.name.to_sym,
+            [:scope,
+              [:block,
+                [:args] + o.children.map { |c| c.accept(self) },
+                [:fcall, :raise, [:array,
+                  [:call, [:const, :NotImplementedError], :new]]
+                ]
+              ]
+            ]
+          ]
+        end
+
+        def visit_Parameter(o)
+          o.declarator.accept(self)
+        end
+
         def visit_Constant(o)
           [:cdecl, o.name.upcase.to_sym, o.value.accept(self)]
         end
@@ -37,7 +78,7 @@ module ZOMG
               :new,
               [:array] + o.children.map { |c|
                 c.accept(self)
-              }.inject([]) { |memo, obj| memo += obj }
+              }.flatten.map { |lit| [:lit, lit] }
             ]
           ]
         end
@@ -48,7 +89,7 @@ module ZOMG
             [ :call, [:const, :Struct],
               :new,
               [:array] + o.children.map { |c|
-                c.accept(self)
+                [:lit, c.accept(self)]
               }
             ]
           ]
@@ -67,7 +108,7 @@ module ZOMG
         end
 
         def visit_SimpleDeclarator(o)
-          [:lit, o.name.to_sym]
+          o.name.to_sym
         end
 
         def visit_Typedef(o)
