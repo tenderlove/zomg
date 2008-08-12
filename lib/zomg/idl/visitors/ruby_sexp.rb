@@ -66,7 +66,7 @@ module ZOMG
             o.name.to_sym,
             [:scope,
               [:block,
-                [:args] + o.children.map { |c| c.accept(self).to_s.downcase.to_sym },
+                [:args] + o.children.map { |c| paramify(c.accept(self)) },
                 [:fcall, :raise, [:array,
                   [:call, [:const, :NotImplementedError], :new]]
                 ]
@@ -161,6 +161,11 @@ module ZOMG
         def classify(string)
           s = string.to_s
           :"#{s.slice(0,1).upcase}#{s[1..-1]}"
+        end
+
+        def paramify(string)
+          s = string.to_s
+          :"#{s.slice(0,1).downcase}#{s[1..-1]}"
         end
       end
     end
