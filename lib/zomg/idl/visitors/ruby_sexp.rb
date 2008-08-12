@@ -45,6 +45,14 @@ module ZOMG
           [:class, o.name.capitalize.to_sym, [:const, :Exception], attributes]
         end
 
+        def visit_Attribute(o)
+          [:fcall,
+            o.readonly ? :attr_reader : :attr_accessor,
+            [:array] +
+              o.children.map { |c| [:lit, c.accept(self)] }
+          ]
+        end
+
         def visit_ScopedName(o)
           o.name.to_sym
         end
