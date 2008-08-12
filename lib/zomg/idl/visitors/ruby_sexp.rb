@@ -28,7 +28,9 @@ module ZOMG
         def visit_InterfaceHeader(o)
           if o.children.length > 0
             [:fcall, :include,
-              [:array] + o.children.map { |c| [:const, c.accept(self)]} ]
+              [:array] + o.children.map { |c|
+                [:const, c.accept(self).to_s.capitalize.to_sym]
+            } ]
           else
             nil
           end
@@ -64,7 +66,7 @@ module ZOMG
             o.name.to_sym,
             [:scope,
               [:block,
-                [:args] + o.children.map { |c| c.accept(self) },
+                [:args] + o.children.map { |c| c.accept(self).to_s.downcase.to_sym },
                 [:fcall, :raise, [:array,
                   [:call, [:const, :NotImplementedError], :new]]
                 ]
@@ -96,7 +98,7 @@ module ZOMG
 
         def visit_Struct(o)
           [ :cdecl,
-            o.name.to_sym,
+            o.name.capitalize.to_sym,
             [ :call, [:const, :Struct],
               :new,
               [:array] + o.children.map { |c|
