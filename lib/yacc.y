@@ -647,13 +647,13 @@ switch_type_spec
 
 /*74*/
 switch_body
-	: case { result = val }
+	: case { result = val.flatten }
 	| case switch_body { result = val.flatten }
 	;
 
 /*75*/
-case	
-	: case_label case
+case
+	: case_label case { result = val }
 	| case_label element_spec T_SEMICOLON { result = Case.new(val[0], val[1]) }
 	| case_label T_PRAGMA element_spec T_SEMICOLON   /* New */
 	;

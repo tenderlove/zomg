@@ -7,6 +7,7 @@ module ZOMG
         @tree = ZOMG::IDL.parse(<<-eoidl)
           union Foo switch(long) {
             case 10: string a;
+            case 15:
             case 20: short  b;
             default: char   c;
           };

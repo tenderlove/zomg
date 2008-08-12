@@ -8,7 +8,7 @@ module ZOMG
 
         def visit_Module(o)
           [ :module,
-            o.name.upcase.to_sym,
+            o.name.capitalize.to_sym,
             [:scope, [:block] + o.children.map { |c| c.accept(self) }]
           ]
         end
@@ -17,7 +17,7 @@ module ZOMG
           header = o.header.accept(self)
           header = header ? [:block, header] : [:block]
           [ :module,
-            o.header.name.to_sym,
+            o.header.name.capitalize.to_sym,
             [:scope,
               header +
                 o.children.map { |c| c.accept(self) }
@@ -112,10 +112,14 @@ module ZOMG
             [ :call, [:const, :Struct],
               :new,
               [:array] + o.children.map { |c|
-                [:lit, c.accept(self)]
-              }
+                val = c.accept(self)
+                val && [:lit, val]
+              }.compact
             ]
           ]
+        end
+
+        def visit_CaseLabel(o)
         end
 
         def visit_Case(o)

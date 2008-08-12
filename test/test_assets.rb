@@ -20,11 +20,12 @@ Dir[File.join(ZOMG::Test::ASSETS, '*')].each do |dir|
         }
       end
 
-      #define_method(:"test_#{name.gsub('.', '_')}_to_ruby") do
-      #  assert_nothing_raised {
-      #    @tree.to_ruby
-      #  }
-      #end
+      define_method(:"test_#{name.gsub('.', '_')}_to_ruby") do
+        ruby = nil
+        assert_nothing_raised { ruby = @tree.to_ruby }
+        #x = Module.new
+        #assert_nothing_raised { x.module_eval(ruby) }
+      end
     end
   }
   test_name = File.basename(dir)
