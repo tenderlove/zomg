@@ -96,6 +96,9 @@ module ZOMG
           [:lit, o.to_i]
         end
 
+        def visit_ValueBoxDcl(o)
+        end
+
         def visit_Struct(o)
           [ :cdecl,
             o.name.capitalize.to_sym,
