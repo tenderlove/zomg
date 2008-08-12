@@ -20,7 +20,7 @@ module ZOMG
         ruby_sexp =
           [:block,
             [:module, :Foo,
-              [:scope, [:block, nil,
+              [:scope, [:block,
                 [:fcall, :attr_accessor, [:array, [:lit, :awesome]]]
         ]]]]
         assert_equal(ruby_sexp, sexp)

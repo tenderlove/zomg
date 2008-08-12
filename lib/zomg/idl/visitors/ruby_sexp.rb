@@ -14,10 +14,12 @@ module ZOMG
         end
 
         def visit_Interface(o)
+          header = o.header.accept(self)
+          header = header ? [:block, header] : [:block]
           [ :module,
             o.header.name.to_sym,
             [:scope,
-              [:block, o.header.accept(self)] +
+              header +
                 o.children.map { |c| c.accept(self) }
             ]
           ]
