@@ -17,7 +17,7 @@ module ZOMG
         assert_nothing_raised {
           sexp = @tree.to_ruby_sexp
         }
-        assert_equal([:block, [:class, :Not_implemented, [:const, :Exception], [:scope]], [:class, :Avocadoexcpt, [:const, :Exception], [:scope, [:fcall, :attr_accessor, [:array, [:lit, :ex1]]]]]], sexp)
+        assert_equal([:block, [:class, :Not_implemented, [:const, :Exception], [:scope]], [:class, :AvocadoExcpt, [:const, :Exception], [:scope, [:fcall, :attr_accessor, [:array, [:lit, :ex1]]]]]], sexp)
       end
     end
   end

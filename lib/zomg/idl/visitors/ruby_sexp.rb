@@ -8,7 +8,7 @@ module ZOMG
 
         def visit_Module(o)
           [ :module,
-            o.name.capitalize.to_sym,
+            classify(o.name),
             [:scope, [:block] + o.children.map { |c| c.accept(self) }]
           ]
         end
@@ -17,7 +17,7 @@ module ZOMG
           header = o.header.accept(self)
           header = header ? [:block, header] : [:block]
           [ :module,
-            o.header.name.capitalize.to_sym,
+            classify(o.header.name),
             [:scope,
               header +
                 o.children.map { |c| c.accept(self) }
@@ -29,7 +29,7 @@ module ZOMG
           if o.children.length > 0
             [:fcall, :include,
               [:array] + o.children.map { |c|
-                [:const, c.accept(self).to_s.capitalize.to_sym]
+                [:const, classify(c.accept(self))]
             } ]
           else
             nil
@@ -46,7 +46,7 @@ module ZOMG
                 }.flatten.map { |att| [:lit, att] }
             ]] : [:scope]
 
-          [:class, o.name.capitalize.to_sym, [:const, :Exception], attributes]
+          [:class, classify(o.name), [:const, :Exception], attributes]
         end
 
         def visit_Attribute(o)
@@ -101,7 +101,7 @@ module ZOMG
 
         def visit_Struct(o)
           [ :cdecl,
-            o.name.capitalize.to_sym,
+            classify(o.name),
             [ :call, [:const, :Struct],
               :new,
               [:array] + o.children.map { |c|
@@ -155,6 +155,12 @@ module ZOMG
 
         def accept(target)
           target.accept(self)
+        end
+
+        private
+        def classify(string)
+          s = string.to_s
+          :"#{s.slice(0,1).upcase}#{s[1..-1]}"
         end
       end
     end
