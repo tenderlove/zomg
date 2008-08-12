@@ -1,5 +1,7 @@
+require 'ruby2ruby'
 require 'zomg/version'
 require 'zomg/idl'
+
 %w{
   node
   specification

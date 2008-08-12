@@ -32,6 +32,19 @@ module ZOMG
           end
         end
 
+        def visit_Exception(o)
+          attributes = o.children.length > 0 ?
+            [:scope, [:fcall,
+              :attr_accessor,
+              [:array] +
+                o.children.map { |c|
+                  c.accept(self)
+                }.flatten.map { |att| [:lit, att] }
+            ]] : [:scope]
+
+          [:class, o.name.capitalize.to_sym, [:const, :Exception], attributes]
+        end
+
         def visit_ScopedName(o)
           o.name.to_sym
         end
