@@ -134,7 +134,14 @@ module ZOMG
           o.name.to_sym
         end
 
+        def visit_ArrayDeclarator(o)
+          o.name.to_sym
+        end
+
         def visit_Typedef(o)
+        end
+
+        def visit_ForwardDeclaration(o)
         end
 
         def accept(target)
