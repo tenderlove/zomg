@@ -2,9 +2,11 @@ History.txt
 Manifest.txt
 README.txt
 Rakefile
+bin/omfg
 lib/scanner.rex
 lib/yacc.y
 lib/zomg.rb
+lib/zomg/idl.rb
 lib/zomg/idl/lexer.rb
 lib/zomg/idl/nodes/array_declarator.rb
 lib/zomg/idl/nodes/attribute.rb
@@ -27,10 +29,12 @@ lib/zomg/idl/nodes/string.rb
 lib/zomg/idl/nodes/struct.rb
 lib/zomg/idl/nodes/typedef.rb
 lib/zomg/idl/nodes/union.rb
+lib/zomg/idl/nodes/value_box_dcl.rb
 lib/zomg/idl/parser.rb
 lib/zomg/idl/scanner.rb
 lib/zomg/idl/visitable.rb
 lib/zomg/idl/visitors/duhr.rb
+lib/zomg/idl/visitors/ruby_sexp.rb
 lib/zomg/idl/visitors/sexp.rb
 lib/zomg/version.rb
 test/assets/array/array1.idl
@@ -216,6 +220,16 @@ test/assets/typedef/typedef_struct_outsideMO.idl
 test/assets/union/union1.idl
 test/assets/union/union2.idl
 test/assets/union/union3.idl
+test/conversions/test_attribute.rb
+test/conversions/test_enum.rb
+test/conversions/test_exception.rb
+test/conversions/test_forward_declaration.rb
+test/conversions/test_interface.rb
+test/conversions/test_module.rb
+test/conversions/test_struct.rb
+test/conversions/test_typedef.rb
+test/conversions/test_union.rb
+test/conversions/test_value_box_dcl.rb
 test/helper.rb
 test/simple/test_basictypes1.rb
 test/simple/test_basictypes2.rb
@@ -229,4 +243,5 @@ test/simple/test_simple3.rb
 test/test_array.rb
 test/test_assets.rb
 test/test_complex.rb
+test/test_parser.rb
 test/test_scanner.rb
