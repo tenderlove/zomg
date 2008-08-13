@@ -1,22 +1,33 @@
 = zomg
 
-* FIX (url)
+* http://zomg.rubyforge.org/
+* http://tenderlovemaking.com/
 
 == DESCRIPTION:
 
-FIX (describe your package)
+ZOMG is an OMG IDL parser.  ZOMG will generate a Ruby AST from an IDL AST,
+and will even generate ruby (by means of Ruby2Ruby).
 
 == FEATURES/PROBLEMS:
 
-* FIX (list of features or problems)
+* Parses IDL, generates Ruby
+* Ships with OMFG the Object Management File Generator
+* Ignores nested structs/unions
+* Treats out/inout parameters are DIY
 
 == SYNOPSIS:
 
-  FIX (code sample of usage)
+In code:
+
+  ZOMG::IDL.parse(File.read(ARGV[0])).to_ruby
+
+Command line:
+
+  $ omfg awesome.idl
 
 == REQUIREMENTS:
 
-* FIX (list of requirements)
+* ruby2ruby
 
 == INSTALL:
 

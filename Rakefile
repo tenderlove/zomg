@@ -13,6 +13,7 @@ require 'zomg/version'
 Hoe.new('zomg', ZOMG::VERSION) do |p|
    p.developer('Aaron Patterson', 'aaronp@rubyforge.org')
    p.clean_globs = [GENERATED_LEXER, GENERATED_SCANNER]
+   p.description = p.paragraphs_of('README.txt', 3..10).join("\n\n")
    p.extra_deps = ['ruby2ruby']
 end
 
