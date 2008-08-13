@@ -39,7 +39,7 @@ module ZOMG
         FloatingPointLiteral BooleanLiteral Context StringLiteral
         WideStringLiteral WideCharacterLiteral UnaryMinus Object
         UnaryPlus WString String Case Enum Exception ValueBoxDcl
-        Struct ScopedName Module
+        Struct ScopedName Module ArrayDeclarator
       }.each { |type| const_set(type.to_sym, Class.new(Node)) }
     end
   end

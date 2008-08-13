@@ -12,7 +12,6 @@ require 'zomg/idl'
   simple_declarator
   member
   union
-  array_declarator
   typedef
   interface_header
   constant

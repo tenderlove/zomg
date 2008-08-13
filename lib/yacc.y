@@ -717,7 +717,7 @@ wide_string_type
 /*83*/
 array_declarator
 	: T_IDENTIFIER fixed_array_sizes {
-      result = ArrayDeclarator.new(val[0], val[1])
+      result = ArrayDeclarator.new(val[1], :name => val[0])
     }
 	;
 
