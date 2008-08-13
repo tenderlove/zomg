@@ -21,7 +21,6 @@ require 'zomg/idl'
   typedef
   interface_header
   scoped_name
-  string
   constant
   binary
   value_box_dcl

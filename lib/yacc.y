@@ -699,7 +699,7 @@ sequence_type
 /*81*/
 string_type
 	: T_STRING T_LESS_THAN_SIGN positive_int_const T_GREATER_THAN_SIGN {
-      result = String.new(val[2])
+      result = String.new([val[2]])
     }
 	| T_STRING { result = String.new }
 	;

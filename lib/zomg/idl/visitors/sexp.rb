@@ -202,11 +202,11 @@ module ZOMG
         end
 
         def visit_String(o)
-          [:string, o.size && o.size.accept(self)]
+          [:string, o.children.map { |c| c.accept(self)}]
         end
 
         def visit_WString(o)
-          [:string, o.size && o.size.accept(self)]
+          [:wstring, o.children.map { |c| c.accept(self)}]
         end
 
         def visit_Short(o)

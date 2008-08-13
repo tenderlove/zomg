@@ -37,7 +37,7 @@ module ZOMG
         UnsignedLongLong LongLong Any ForwardDeclaration WChar
         FloatingPointLiteral BooleanLiteral Context StringLiteral
         WideStringLiteral WideCharacterLiteral UnaryMinus Object
-        UnaryPlus
+        UnaryPlus WString String
       }.each { |type| const_set(type.to_sym, Class.new(Node)) }
     end
   end

@@ -7,7 +7,7 @@ class BasicTypes4Test < ZOMG::Test
 
   def test_module_to_sexp
     assert_sexp(
-                [:typedef, [:string, [:int, 10]], [[:decl, "BndString"]]],
+                [:typedef, [:string, [[:int, 10]]], [[:decl, "BndString"]]],
                 @tree.duhr.Module[0].Interface[0].Typedef[0]
                )
   end
