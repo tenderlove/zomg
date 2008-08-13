@@ -611,7 +611,7 @@ object_type
 /*69*/
 struct_type
 	: T_STRUCT T_IDENTIFIER T_LEFT_CURLY_BRACKET member_list 
-      T_RIGHT_CURLY_BRACKET { result = Struct.new(val[1], val[3]) }
+      T_RIGHT_CURLY_BRACKET { result = Struct.new(val[3], :name => val[1]) }
 	;
 
 /*70*/

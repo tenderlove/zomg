@@ -10,7 +10,6 @@ require 'zomg/idl'
   operation
   parameter
   attribute
-  struct
   simple_declarator
   member
   union
