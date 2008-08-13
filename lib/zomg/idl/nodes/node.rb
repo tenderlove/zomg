@@ -40,6 +40,7 @@ module ZOMG
         WideStringLiteral WideCharacterLiteral UnaryMinus Object
         UnaryPlus WString String Case Enum Exception ValueBoxDcl
         Struct ScopedName Module ArrayDeclarator SimpleDeclarator
+        Specification
       }.each { |type| const_set(type.to_sym, Class.new(Node)) }
     end
   end

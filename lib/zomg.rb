@@ -4,7 +4,6 @@ require 'zomg/idl'
 
 %w{
   node
-  specification
   interface
   operation
   parameter
