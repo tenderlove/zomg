@@ -654,7 +654,7 @@ switch_body
 /*75*/
 case
 	: case_label case { result = val }
-	| case_label element_spec T_SEMICOLON { result = Case.new(val[0], val[1]) }
+	| case_label element_spec T_SEMICOLON { result = Case.new([val[0], val[1]]) }
 	| case_label T_PRAGMA element_spec T_SEMICOLON   /* New */
 	;
 

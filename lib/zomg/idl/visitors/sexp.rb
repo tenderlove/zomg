@@ -23,7 +23,7 @@ module ZOMG
         end
 
         def visit_Case(o)
-          [:case, o.label.accept(self), o.spec.accept(self)]
+          [:case, o.children.map { |c| c.accept(self) }]
         end
 
         def visit_CaseLabel(o)

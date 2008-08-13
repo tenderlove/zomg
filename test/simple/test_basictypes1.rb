@@ -43,11 +43,11 @@ class BasicTypes1Test < ZOMG::Test
       CaseLabel,
       CaseLabel,
       DefaultLabel ].each_with_index { |l,i|
-        assert_instance_of(l, union.children[i].label)
+        assert_instance_of(l, union.children[i].children[0])
     }
     assert_equal([10, 20, 50, 60], union.children.find_all { |child|
-      child.label.is_a?(CaseLabel)
-    }.map { |cl| cl.label.to_i })
+      child.children[0].is_a?(CaseLabel)
+    }.map { |cl| cl.children[0].to_i })
   end
 
   def test_enum

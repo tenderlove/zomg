@@ -16,7 +16,6 @@ require 'zomg/idl'
   member
   enum
   union
-  case
   array_declarator
   typedef
   interface_header

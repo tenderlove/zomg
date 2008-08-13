@@ -128,7 +128,7 @@ module ZOMG
         end
 
         def visit_Case(o)
-          o.spec.accept(self)
+          o.children.last.accept(self)
         end
 
         def visit_ElementSpec(o)
