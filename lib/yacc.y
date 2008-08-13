@@ -210,7 +210,9 @@ interface_name
 scoped_name
 	: T_IDENTIFIER { result = ScopedName.new([], :name => val[0]) }
   | T_SCOPE T_IDENTIFIER { result = ScopedName.new([], :name => val[0]) }
-	| scoped_name T_SCOPE T_IDENTIFIER
+	| scoped_name T_SCOPE T_IDENTIFIER {
+      ScopedName.new([val[0]].flatten, :name => val[2])
+    }
 	;
 
 /*13*/
