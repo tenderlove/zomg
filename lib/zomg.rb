@@ -9,7 +9,6 @@ require 'zomg/idl'
   operation
   parameter
   attribute
-  simple_declarator
   member
   union
   typedef

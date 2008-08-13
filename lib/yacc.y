@@ -517,7 +517,7 @@ declarator
 
 /*51*/
 simple_declarator
-	: T_IDENTIFIER { result = SimpleDeclarator.new(val[0]) }
+	: T_IDENTIFIER { result = SimpleDeclarator.new([], :name => val[0]) }
 	;
 
 /*52*/
