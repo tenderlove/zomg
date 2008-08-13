@@ -16,7 +16,6 @@ require 'zomg/idl'
   array_declarator
   typedef
   interface_header
-  scoped_name
   constant
   binary
 }.each { |node_type|
