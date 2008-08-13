@@ -20,7 +20,6 @@ require 'zomg/idl'
   scoped_name
   constant
   binary
-  value_box_dcl
 }.each { |node_type|
   require "zomg/idl/nodes/#{node_type}"
 }

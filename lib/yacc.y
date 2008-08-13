@@ -230,7 +230,7 @@ value_forward_dcl
 /*15*/
 value_box_dcl
 	: T_VALUETYPE T_IDENTIFIER type_spec {
-      result = ValueBoxDcl.new(val[1], val[2])
+      result = ValueBoxDcl.new(val[2], :name => val[1])
     }
 	;
 
