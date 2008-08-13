@@ -4,16 +4,16 @@ require 'zomg/idl'
 
 %w{
   node
+  attribute
+  binary
+  constant
   interface
+  interface_header
+  member
   operation
   parameter
-  attribute
-  member
-  union
   typedef
-  interface_header
-  constant
-  binary
+  union
 }.each { |node_type|
   require "zomg/idl/nodes/#{node_type}"
 }
