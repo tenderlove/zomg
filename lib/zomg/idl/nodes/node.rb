@@ -38,7 +38,7 @@ module ZOMG
         UnsignedLongLong LongLong Any ForwardDeclaration WChar
         FloatingPointLiteral BooleanLiteral Context StringLiteral
         WideStringLiteral WideCharacterLiteral UnaryMinus Object
-        UnaryPlus WString String Case Enum
+        UnaryPlus WString String Case Enum Exception
       }.each { |type| const_set(type.to_sym, Class.new(Node)) }
     end
   end

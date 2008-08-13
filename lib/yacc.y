@@ -747,7 +747,7 @@ simple_declarators
 /*86*/
 except_dcl
 	: T_EXCEPTION T_IDENTIFIER T_LEFT_CURLY_BRACKET members
-      T_RIGHT_CURLY_BRACKET { result = Exception.new(val[1], val[3]) }
+      T_RIGHT_CURLY_BRACKET { result = Exception.new(val[3], :name => val[1]) }
 	;
 
 members

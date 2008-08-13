@@ -9,7 +9,6 @@ require 'zomg/idl'
   interface
   operation
   parameter
-  exception
   attribute
   struct
   simple_declarator
