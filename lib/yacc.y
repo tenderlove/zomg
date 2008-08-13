@@ -134,7 +134,9 @@ definition
 /*3*/
 module
 	: T_MODULE T_IDENTIFIER T_LEFT_CURLY_BRACKET
-       definitions T_RIGHT_CURLY_BRACKET { result = Module.new(val[1], val[3]) }
+       definitions T_RIGHT_CURLY_BRACKET {
+        result = Module.new(val[3], :name => val[1])
+    }
 	;
 
 /*4*/
