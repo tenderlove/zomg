@@ -672,7 +672,7 @@ element_spec
 /*78*/
 enum_type
 	: T_ENUM T_IDENTIFIER T_LEFT_CURLY_BRACKET enumerators
-      T_RIGHT_CURLY_BRACKET { result = Enum.new(val[1], val[3]) }
+      T_RIGHT_CURLY_BRACKET { result = Enum.new(val[3], :name => val[1]) }
 	;
 
 enumerators

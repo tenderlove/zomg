@@ -14,7 +14,6 @@ require 'zomg/idl'
   struct
   simple_declarator
   member
-  enum
   union
   array_declarator
   typedef

@@ -5,9 +5,10 @@ module ZOMG
         include Visitable
         include Visitors
 
-        attr_accessor :children
-        def initialize(children = [])
+        attr_accessor :children, :name
+        def initialize(children = [], options = {})
           @children = children
+          options.each { |k,v| send(:"#{k}=", v) }
         end
 
         def to_i
@@ -37,7 +38,7 @@ module ZOMG
         UnsignedLongLong LongLong Any ForwardDeclaration WChar
         FloatingPointLiteral BooleanLiteral Context StringLiteral
         WideStringLiteral WideCharacterLiteral UnaryMinus Object
-        UnaryPlus WString String Case
+        UnaryPlus WString String Case Enum
       }.each { |type| const_set(type.to_sym, Class.new(Node)) }
     end
   end
