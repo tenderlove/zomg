@@ -23,7 +23,7 @@ In code:
 
 Command line:
 
-  $ omfg lol.idl > roflol.rb
+  $ omfg lol.idl > roflmao.rb
 
 == REQUIREMENTS:
 
