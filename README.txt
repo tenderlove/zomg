@@ -1,4 +1,4 @@
-= zomg
+= ZOMG
 
 * http://zomg.rubyforge.org/
 * http://tenderlovemaking.com/
@@ -23,7 +23,7 @@ In code:
 
 Command line:
 
-  $ omfg awesome.idl
+  $ omfg lol.idl > roflol.rb
 
 == REQUIREMENTS:
 
