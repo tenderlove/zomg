@@ -232,5 +232,6 @@ test/simple/test_simple3.rb
 test/test_array.rb
 test/test_assets.rb
 test/test_complex.rb
+test/test_node.rb
 test/test_parser.rb
 test/test_scanner.rb
