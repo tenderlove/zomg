@@ -1,9 +1,48 @@
 #!/usr/bin/env ruby
+# == Synopsis
+#
+# omfg: generate ruby code given an OMG IDL file
+#
+# == Usage
+#
+# omfg [OPTION] ... FILE
+#
+# -h, --help:
+#   show help
+#
+# -o [file]
+#   output to file [file]
+#
+# --prefix [module]
+#   module prefix the output with [module]
 
+require 'getoptlong'
+require 'rdoc/usage'
 require 'rubygems'
 require 'zomg'
+
+opts = GetoptLong.new(
+                      ['--prefix', GetoptLong::OPTIONAL_ARGUMENT],
+                      ['-o', GetoptLong::OPTIONAL_ARGUMENT],
+                      ['--help', '-h', GetoptLong::OPTIONAL_ARGUMENT]
+                     )
+
+prefix = nil
+outfile = ARGV[1]
+opts.each do |opt, arg|
+  case opt
+  when '--prefix'
+    prefix = arg
+  when '--help'
+    RDoc::usage
+  when '-o'
+    outfile = arg
+  end
+end
 
 tree = ARGV[0] ?
   ZOMG::IDL.parse(File.read(ARGV[0])) : ZOMG::IDL.parse($stdin.read)
 
-puts tree.to_ruby
+rubycode = tree.to_ruby(prefix)
+outfile ? File.open(outfile, 'wb') { |f| f.write(rubycode) } : puts(rubycode)
+

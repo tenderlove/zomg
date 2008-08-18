@@ -27,9 +27,14 @@ module ZOMG
           RubySexp.new.accept(self)
         end
 
-        def to_ruby
+        def to_ruby(prefix = nil)
           r2r = Ruby2Ruby.new
-          r2r.process(to_ruby_sexp)
+          ruby_code = r2r.process(to_ruby_sexp)
+          if prefix
+            "module #{prefix}\n#{ruby_code}\nend"
+          else
+            ruby_code
+          end
         end
       end
       %w{ Boolean Char Double Float Long Octet Short UnsignedLong
