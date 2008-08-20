@@ -10,6 +10,7 @@ class NodeTest < ZOMG::Test
       @tree.to_ruby
     }
     ruby_with_prefix = @tree.to_ruby('A::B')
-    assert_match(/module A::B/, ruby_with_prefix)
+    assert_match(/module A/, ruby_with_prefix)
+    assert_match(/module B/, ruby_with_prefix)
   end
 end

@@ -31,7 +31,9 @@ module ZOMG
           r2r = Ruby2Ruby.new
           ruby_code = r2r.process(to_ruby_sexp)
           if prefix
-            "module #{prefix}\n#{ruby_code}\nend"
+            modules = prefix.split(/::/).map { |m| "module #{m}\n" }
+            ends = modules.map { |m| "end" }.join("\n")
+            "#{modules}#{ruby_code}\n#{ends}"
           else
             ruby_code
           end
