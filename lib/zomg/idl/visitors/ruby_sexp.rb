@@ -16,11 +16,20 @@ module ZOMG
         def visit_Interface(o)
           header = o.header.accept(self)
           header = header ? [:block, header] : [:block]
+          o.children.each { |c|
+            list = c.accept(self)
+            if list
+              if list.first.is_a?(Symbol)
+                header << list
+              else
+                header += list
+              end
+            end
+          }
           [ :module,
             classify(o.header.name),
             [:scope,
-              header +
-                o.children.map { |c| c.accept(self) }
+              header
             ]
           ]
         end
@@ -50,11 +59,31 @@ module ZOMG
         end
 
         def visit_Attribute(o)
-          [:fcall,
-            o.readonly ? :attr_reader : :attr_accessor,
-            [:array] +
-              o.children.map { |c| [:lit, c.accept(self)] }
-          ]
+          attributes = []
+          o.children.each { |name|
+            name = name.accept(self)
+
+            # Reader
+            attributes <<
+              [:defn, name.to_sym,
+                [:scope, [:block, [:args],
+                  [:fcall, :raise, [:array,
+                    [:call, [:const, :NotImplementedError], :new]]
+                  ]
+                ]]
+              ]
+            unless o.readonly
+              attributes <<
+                [:defn, :"#{name}=",
+                  [:scope, [:block, [:args, :_],
+                    [:fcall, :raise, [:array,
+                      [:call, [:const, :NotImplementedError], :new]]
+                    ]
+                  ]]
+                ]
+            end
+          }
+          attributes
         end
 
         def visit_ScopedName(o)

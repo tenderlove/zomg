@@ -19,10 +19,26 @@ module ZOMG
         assert sexp
         ruby_sexp =
           [:block,
-            [:module, :Foo,
-              [:scope, [:block,
-                [:fcall, :attr_accessor, [:array, [:lit, :awesome]]]
-        ]]]]
+           [:module,
+            :Foo,
+            [:scope,
+             [:block,
+              [:defn,
+               :awesome,
+               [:scope,
+                [:block,
+                 [:args],
+                 [:fcall,
+                  :raise,
+                  [:array, [:call, [:const, :NotImplementedError], :new]]]]]],
+              [:defn,
+               :awesome=,
+               [:scope,
+                [:block,
+                 [:args, :_],
+                 [:fcall,
+                  :raise,
+                  [:array, [:call, [:const, :NotImplementedError], :new]]]]]]]]]]
         assert_equal(ruby_sexp, sexp)
       end
     end
