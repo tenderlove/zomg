@@ -1,8 +1,9 @@
 === 1.0.2
 
-* 1 bugfix
+* 2 bugfixes
 
   * Generating attribute functions that raise rather than attr_accessors
+  * Removed extra "do not modify" comments
 
 === 1.0.1
 
