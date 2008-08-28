@@ -67,7 +67,7 @@ module ZOMG
 
             # Reader
             attributes <<
-              [:defn, name.to_sym,
+              [:defn, :"get#{name.to_s.capitalize}",
                 [:scope, [:block, [:args],
                   [:fcall, :raise, [:array,
                     [:call, [:const, :NotImplementedError], :new]]
@@ -76,7 +76,7 @@ module ZOMG
               ]
             unless o.readonly
               attributes <<
-                [:defn, :"#{name}=",
+                [:defn, :"set#{name.to_s.capitalize}",
                   [:scope, [:block, [:args, :_],
                     [:fcall, :raise, [:array,
                       [:call, [:const, :NotImplementedError], :new]]
