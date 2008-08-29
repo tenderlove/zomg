@@ -63,11 +63,11 @@ module ZOMG
         def visit_Attribute(o)
           attributes = []
           o.children.each { |name|
-            name = name.accept(self)
+            name = name.accept(self).to_s
 
             # Reader
             attributes <<
-              [:defn, :"get#{name.to_s.capitalize}",
+              [:defn, :"get#{classify(name)}",
                 [:scope, [:block, [:args],
                   [:fcall, :raise, [:array,
                     [:call, [:const, :NotImplementedError], :new]]
@@ -76,7 +76,7 @@ module ZOMG
               ]
             unless o.readonly
               attributes <<
-                [:defn, :"set#{name.to_s.capitalize}",
+                [:defn, :"set#{classify(name)}",
                   [:scope, [:block, [:args, :_],
                     [:fcall, :raise, [:array,
                       [:call, [:const, :NotImplementedError], :new]]
