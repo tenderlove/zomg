@@ -1,10 +1,10 @@
 Gem::Specification.new do |s|
   s.name = %q{zomg}
-  s.version = "1.0.2.20080828210656"
+  s.version = "1.0.2.20080830162937"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Aaron Patterson"]
-  s.date = %q{2008-08-28}
+  s.date = %q{2008-08-30}
   s.default_executable = %q{omfg}
   s.description = %q{ZOMG is an OMG IDL parser.  ZOMG will generate a Ruby AST from an IDL AST, and will even generate ruby (by means of Ruby2Ruby).  == FEATURES/PROBLEMS:  * Parses IDL, generates Ruby * Ships with OMFG the Object Management File Generator * Ignores nested structs/unions * Treats out/inout parameters are DIY  == SYNOPSIS:  In code:  ZOMG::IDL.parse(File.read(ARGV[0])).to_ruby  Command line:  $ omfg lol.idl > roflmao.rb}
   s.email = ["aaronp@rubyforge.org"]
