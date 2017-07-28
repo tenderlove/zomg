@@ -1,3 +1,6 @@
 .*.swp
 lib/zomg/idl/scanner.rb
 lib/zomg/idl/lexer.rb
+vendor
+.bundle
+Gemfile.lock
