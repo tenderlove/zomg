@@ -10,11 +10,11 @@ $LOAD_PATH << File.expand_path(File.join(File.dirname(__FILE__), 'lib'))
 $DEBUG = ENV['DEBUG']
 require 'zomg/version'
 
-HOE = Hoe.new('zomg', ZOMG::VERSION) do |p|
+HOE = Hoe.spec('zomg') do |p|
    p.developer('Aaron Patterson', 'aaronp@rubyforge.org')
    p.clean_globs = [GENERATED_LEXER, GENERATED_SCANNER]
    p.description = p.paragraphs_of('README.txt', 3..10).join("\n\n")
-   p.extra_deps = ['ruby2ruby']
+   p.extra_deps = [['ruby2ruby', '~> 2.0']]
 end
 
 file GENERATED_LEXER => 'lib/yacc.y' do |t|
