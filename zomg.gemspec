@@ -26,13 +26,25 @@ Gem::Specification.new do |s|
 
     if current_version >= 3 then
       s.add_runtime_dependency(%q<ruby2ruby>, [">= 0"])
+      s.add_runtime_dependency(%q<tenderlove-frex>, [">= 0"])
+      s.add_runtime_dependency(%q<racc>, [">= 0"])
       s.add_development_dependency(%q<hoe>, [">= 1.7.0"])
+      s.add_development_dependency(%q<minitest>, [">= 0"])
+      s.add_development_dependency(%q<test-unit>, [">= 0"])
     else
       s.add_dependency(%q<ruby2ruby>, [">= 0"])
+      s.add_dependency(%q<tenderlove-frex>, [">= 0"])
+      s.add_runtime_dependency(%q<racc>, [">= 0"])
       s.add_dependency(%q<hoe>, [">= 1.7.0"])
+      s.add_development_dependency(%q<minitest>, [">= 0"])
+      s.add_development_dependency(%q<test-unit>, [">= 0"])
     end
   else
     s.add_dependency(%q<ruby2ruby>, [">= 0"])
+    s.add_dependency(%q<tenderlove-frex>, [">= 0"])
+    s.add_runtime_dependency(%q<racc>, [">= 0"])
     s.add_dependency(%q<hoe>, [">= 1.7.0"])
+    s.add_development_dependency(%q<minitest>, [">= 0"])
+    s.add_development_dependency(%q<test-unit>, [">= 0"])
   end
 end
