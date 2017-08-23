@@ -22,41 +22,33 @@ module ZOMG
         ruby_sexp =
           [:block,
            [:module, :Foo,
-            [:scope,
-             [:block,
-              [:defn, :a,
-               [:scope,
-                [:block,
-                 [:args],
-                 [:fcall, :raise,
-                  [:array,
-                   [:call, [:const, :NotImplementedError], :new]
-                  ]
-                 ]
+            [:block,
+             [:defn, :a,
+              [:block,
+               [:args],
+               [:fcall, :raise,
+                [:array,
+                 [:call, [:const, :NotImplementedError], :new]
                 ]
                ]
-              ],
-              [:defn, :b,
-               [:scope,
-                [:block,
-                 [:args, :a],
-                 [:fcall, :raise,
-                  [:array,
-                   [:call, [:const, :NotImplementedError], :new]
-                  ]
-                 ]
+              ]
+             ],
+             [:defn, :b,
+              [:block,
+               [:args, :a],
+               [:fcall, :raise,
+                [:array,
+                 [:call, [:const, :NotImplementedError], :new]
                 ]
                ]
-              ],
-              [:defn, :c,
-               [:scope,
-                [:block,
-                 [:args, :a, :b, :c],
-                 [:fcall, :raise,
-                  [:array,
-                   [:call, [:const, :NotImplementedError], :new]
-                  ]
-                 ]
+              ]
+             ],
+             [:defn, :c,
+              [:block,
+               [:args, :a, :b, :c],
+               [:fcall, :raise,
+                [:array,
+                 [:call, [:const, :NotImplementedError], :new]
                 ]
                ]
               ]
@@ -64,23 +56,19 @@ module ZOMG
             ]
            ],
            [:module, :Bar,
-            [:scope,
-             [:block,
-              [:fcall, :include,
-               [:array,
-                [:const, :Foo],
-                [:const, :Baz]
-               ]
-              ],
-              [:defn, :d,
-               [:scope,
-                [:block,
-                 [:args],
-                 [:fcall, :raise,
-                  [:array,
-                   [:call, [:const, :NotImplementedError], :new]
-                  ]
-                 ]
+            [:block,
+             [:fcall, :include,
+              [:array,
+               [:const, :Foo],
+               [:const, :Baz]
+              ]
+             ],
+             [:defn, :d,
+              [:block,
+               [:args],
+               [:fcall, :raise,
+                [:array,
+                 [:call, [:const, :NotImplementedError], :new]
                 ]
                ]
               ]

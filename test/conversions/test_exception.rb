@@ -19,14 +19,11 @@ module ZOMG
         }
         assert_equal([:block,
                       [:class, :Not_implemented,
-                       [:const, :Exception],
-                       [:scope]
+                       [:const, :Exception]
                       ],
                       [:class, :AvocadoExcpt,
                        [:const, :Exception],
-                       [:scope,
-                        [:fcall, :attr_accessor, [:array, [:lit, :ex1]]]
-                       ]
+                       [:fcall, :attr_accessor, [:array, [:lit, :ex1]]]
                       ]
                      ],
                      sexp)

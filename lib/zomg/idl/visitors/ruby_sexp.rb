@@ -9,9 +9,7 @@ module ZOMG
         def visit_Module(o)
           [ :module,
             classify(o.name),
-            [:scope, [:block] +
-              o.children.map { |c| c.accept(self) }.compact
-          ]
+            [:block] + o.children.map { |c| c.accept(self) }.compact
           ]
         end
 
@@ -30,9 +28,7 @@ module ZOMG
           }
           [ :module,
             classify(o.header.name),
-            [:scope,
-              header
-            ]
+            header
           ]
         end
 
@@ -49,13 +45,13 @@ module ZOMG
 
         def visit_Exception(o)
           attributes = o.children.length > 0 ?
-            [:scope, [:fcall,
+            [:fcall,
               :attr_accessor,
               [:array] +
                 o.children.map { |c|
                   c.accept(self)
                 }.flatten.map { |att| [:lit, att] }
-            ]] : [:scope]
+            ] : []
 
           [:class, classify(o.name), [:const, :Exception], attributes]
         end
@@ -68,20 +64,20 @@ module ZOMG
             # Reader
             attributes <<
               [:defn, name,
-                [:scope, [:block, [:args],
+                [:block, [:args],
                   [:fcall, :raise, [:array,
                     [:call, [:const, :NotImplementedError], :new]]
                   ]
-                ]]
+                ]
               ]
             unless o.readonly
               attributes <<
                 [:defn, :"#{name}=",
-                  [:scope, [:block, [:args, :_],
+                  [:block, [:args, :_],
                     [:fcall, :raise, [:array,
                       [:call, [:const, :NotImplementedError], :new]]
                     ]
-                  ]]
+                  ]
                 ]
             end
           }
@@ -95,12 +91,10 @@ module ZOMG
         def visit_Operation(o)
           [ :defn,
             o.name.to_sym,
-            [:scope,
-              [:block,
-                [:args] + o.children.map { |c| paramify(c.accept(self)) },
-                [:fcall, :raise, [:array,
-                  [:call, [:const, :NotImplementedError], :new]]
-                ]
+            [:block,
+              [:args] + o.children.map { |c| paramify(c.accept(self)) },
+              [:fcall, :raise, [:array,
+                [:call, [:const, :NotImplementedError], :new]]
               ]
             ]
           ]
