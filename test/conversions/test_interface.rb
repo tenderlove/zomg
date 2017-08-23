@@ -19,7 +19,76 @@ module ZOMG
 
       def test_to_ruby_sexp
         sexp = nil
-        ruby_sexp = [:block, [:module, :Foo, [:scope, [:block, [:defn, :a, [:scope, [:block, [:args], [:fcall, :raise, [:array, [:call, [:const, :NotImplementedError], :new]]]]]], [:defn, :b, [:scope, [:block, [:args, :a], [:fcall, :raise, [:array, [:call, [:const, :NotImplementedError], :new]]]]]], [:defn, :c, [:scope, [:block, [:args, :a, :b, :c], [:fcall, :raise, [:array, [:call, [:const, :NotImplementedError], :new]]]]]]]]], [:module, :Bar, [:scope, [:block, [:fcall, :include, [:array, [:const, :Foo], [:const, :Baz]]], [:defn, :d, [:scope, [:block, [:args], [:fcall, :raise, [:array, [:call, [:const, :NotImplementedError], :new]]]]]]]]]]
+        ruby_sexp =
+          [:block,
+           [:module, :Foo,
+            [:scope,
+             [:block,
+              [:defn, :a,
+               [:scope,
+                [:block,
+                 [:args],
+                 [:fcall, :raise,
+                  [:array,
+                   [:call, [:const, :NotImplementedError], :new]
+                  ]
+                 ]
+                ]
+               ]
+              ],
+              [:defn, :b,
+               [:scope,
+                [:block,
+                 [:args, :a],
+                 [:fcall, :raise,
+                  [:array,
+                   [:call, [:const, :NotImplementedError], :new]
+                  ]
+                 ]
+                ]
+               ]
+              ],
+              [:defn, :c,
+               [:scope,
+                [:block,
+                 [:args, :a, :b, :c],
+                 [:fcall, :raise,
+                  [:array,
+                   [:call, [:const, :NotImplementedError], :new]
+                  ]
+                 ]
+                ]
+               ]
+              ]
+             ]
+            ]
+           ],
+           [:module, :Bar,
+            [:scope,
+             [:block,
+              [:fcall, :include,
+               [:array,
+                [:const, :Foo],
+                [:const, :Baz]
+               ]
+              ],
+              [:defn, :d,
+               [:scope,
+                [:block,
+                 [:args],
+                 [:fcall, :raise,
+                  [:array,
+                   [:call, [:const, :NotImplementedError], :new]
+                  ]
+                 ]
+                ]
+               ]
+              ]
+             ]
+            ]
+           ]
+          ]
+
         assert_nothing_raised {
           sexp = @tree.to_ruby_sexp
         }
