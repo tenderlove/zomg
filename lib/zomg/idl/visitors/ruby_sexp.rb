@@ -44,16 +44,17 @@ module ZOMG
         end
 
         def visit_Exception(o)
-          attributes = o.children.length > 0 ?
-            [:fcall,
-              :attr_accessor,
-              [:array] +
-                o.children.map { |c|
-                  c.accept(self)
-                }.flatten.map { |att| [:lit, att] }
-            ] : []
-
-          [:class, classify(o.name), [:const, :Exception], attributes]
+          result = [:class, classify(o.name), [:const, :Exception]]
+          if o.children.length > 0
+            result << [:fcall,
+                        :attr_accessor,
+                        [:array] +
+                          o.children.map { |c|
+                            c.accept(self)
+                          }.flatten.map { |att| [:lit, att] }
+                      ]
+          end
+          result
         end
 
         def visit_Attribute(o)
