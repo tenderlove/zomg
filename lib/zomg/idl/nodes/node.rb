@@ -24,7 +24,8 @@ module ZOMG
         end
 
         def to_ruby_sexp
-          RubySexp.new.accept(self)
+          # note that ::Sexp != Sexp from ZOMG!
+          ::Sexp.from_array(RubySexp.new.accept(self))
         end
 
         def to_ruby(prefix = nil)
