@@ -23,7 +23,7 @@ module ZOMG
                       ],
                       [:class, :AvocadoExcpt,
                        [:const, :Exception],
-                       [:fcall, :attr_accessor, [:array, [:lit, :ex1]]]
+                       [:call, nil, :attr_accessor, [:array, [:lit, :ex1]]]
                       ]
                      ],
                      sexp)

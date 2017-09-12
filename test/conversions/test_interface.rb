@@ -26,7 +26,7 @@ module ZOMG
              [:defn, :a,
               [:block,
                [:args],
-               [:fcall, :raise,
+               [:call, nil, :raise,
                 [:array,
                  [:call, [:const, :NotImplementedError], :new]
                 ]
@@ -36,7 +36,7 @@ module ZOMG
              [:defn, :b,
               [:block,
                [:args, :a],
-               [:fcall, :raise,
+               [:call, nil, :raise,
                 [:array,
                  [:call, [:const, :NotImplementedError], :new]
                 ]
@@ -46,7 +46,7 @@ module ZOMG
              [:defn, :c,
               [:block,
                [:args, :a, :b, :c],
-               [:fcall, :raise,
+               [:call, nil, :raise,
                 [:array,
                  [:call, [:const, :NotImplementedError], :new]
                 ]
@@ -57,7 +57,7 @@ module ZOMG
            ],
            [:module, :Bar,
             [:block,
-             [:fcall, :include,
+             [:call, nil, :include,
               [:array,
                [:const, :Foo],
                [:const, :Baz]
@@ -66,7 +66,7 @@ module ZOMG
              [:defn, :d,
               [:block,
                [:args],
-               [:fcall, :raise,
+               [:call, nil, :raise,
                 [:array,
                  [:call, [:const, :NotImplementedError], :new]
                 ]

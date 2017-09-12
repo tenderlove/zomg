@@ -34,7 +34,7 @@ module ZOMG
 
         def visit_InterfaceHeader(o)
           if o.children.length > 0
-            [:fcall, :include,
+            [:call, nil, :include,
               [:array] + o.children.map { |c|
                 [:const, classify(c.accept(self))]
             } ]
@@ -46,7 +46,7 @@ module ZOMG
         def visit_Exception(o)
           result = [:class, classify(o.name), [:const, :Exception]]
           if o.children.length > 0
-            result << [:fcall,
+            result << [:call, nil,
                         :attr_accessor,
                         [:array] +
                           o.children.map { |c|
@@ -66,7 +66,7 @@ module ZOMG
             attributes <<
               [:defn, name,
                 [:block, [:args],
-                  [:fcall, :raise, [:array,
+                  [:call, nil, :raise, [:array,
                     [:call, [:const, :NotImplementedError], :new]]
                   ]
                 ]
@@ -75,7 +75,7 @@ module ZOMG
               attributes <<
                 [:defn, :"#{name}=",
                   [:block, [:args, :_],
-                    [:fcall, :raise, [:array,
+                    [:call, nil, :raise, [:array,
                       [:call, [:const, :NotImplementedError], :new]]
                     ]
                   ]
@@ -94,7 +94,7 @@ module ZOMG
             o.name.to_sym,
             [:block,
               [:args] + o.children.map { |c| paramify(c.accept(self)) },
-              [:fcall, :raise, [:array,
+              [:call, nil, :raise, [:array,
                 [:call, [:const, :NotImplementedError], :new]]
               ]
             ]
