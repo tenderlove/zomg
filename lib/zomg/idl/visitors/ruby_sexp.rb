@@ -48,8 +48,7 @@ module ZOMG
           if o.children.length > 0
             result << [:call, nil,
                         :attr_accessor,
-                        [:array] +
-                          o.children.map { |c|
+                          *o.children.map { |c|
                             c.accept(self)
                           }.flatten.map { |att| [:lit, att] }
                       ]
