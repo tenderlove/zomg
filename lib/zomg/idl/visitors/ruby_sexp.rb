@@ -130,7 +130,7 @@ module ZOMG
             classify(o.name),
             [ :call, [:const, :Struct],
               :new,
-              [:array] + o.children.map { |c|
+              *o.children.map { |c|
                 c.accept(self)
               }.flatten.map { |lit| [:lit, lit] }
             ]
@@ -142,7 +142,7 @@ module ZOMG
             o.name.to_sym,
             [ :call, [:const, :Struct],
               :new,
-              [:array] + o.children.map { |c|
+              *o.children.map { |c|
                 val = c.accept(self)
                 val && [:lit, val]
               }.compact
