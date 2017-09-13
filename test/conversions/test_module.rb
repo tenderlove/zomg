@@ -16,13 +16,9 @@ module ZOMG
         eoidl
         assert_equal(
                 [:block,
-                 [:module, :Dom,
-                  [:block,
-                   [:cdecl, :INDEX_SIZE_ERR,
-                    [:lit, 1]
-                   ]
+                  [:module, :Dom,
+                    [:block, [:cdecl, :INDEX_SIZE_ERR, [:lit, 1]]]
                   ]
-                 ]
                 ],
                 tree.to_ruby_sexp)
       end

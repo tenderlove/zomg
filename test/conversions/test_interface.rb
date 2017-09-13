@@ -21,50 +21,47 @@ module ZOMG
         sexp = nil
         ruby_sexp =
           [:block,
-           [:module, :Foo,
-            [:block,
-             [:defn, :a,
+            [:module, :Foo,
               [:block,
-               [:args],
-               [:call, nil, :raise,
-                [:call, [:const, :NotImplementedError], :new]
-               ]
+                [:defn, :a,
+                  [:block,
+                    [:args],
+                    [:call, nil, :raise,
+                      [:call, [:const, :NotImplementedError], :new]
+                    ]
+                  ]
+                ],
+                [:defn, :b,
+                  [:block,
+                    [:args, :a],
+                    [:call, nil, :raise,
+                      [:call, [:const, :NotImplementedError], :new]
+                    ]
+                  ]
+                ],
+                [:defn, :c,
+                  [:block,
+                    [:args, :a, :b, :c],
+                    [:call, nil, :raise,
+                      [:call, [:const, :NotImplementedError], :new]
+                    ]
+                  ]
+                ]
               ]
-             ],
-             [:defn, :b,
+            ],
+            [:module, :Bar,
               [:block,
-               [:args, :a],
-               [:call, nil, :raise,
-                [:call, [:const, :NotImplementedError], :new]
-               ]
+                [:call, nil, :include, [:const, :Foo], [:const, :Baz]],
+                [:defn, :d,
+                  [:block,
+                    [:args],
+                    [:call, nil, :raise,
+                      [:call, [:const, :NotImplementedError], :new]
+                    ]
+                  ]
+                ]
               ]
-             ],
-             [:defn, :c,
-              [:block,
-               [:args, :a, :b, :c],
-               [:call, nil, :raise,
-                [:call, [:const, :NotImplementedError], :new]
-               ]
-              ]
-             ]
             ]
-           ],
-           [:module, :Bar,
-            [:block,
-             [:call, nil, :include,
-              [:const, :Foo],
-              [:const, :Baz]
-             ],
-             [:defn, :d,
-              [:block,
-               [:args],
-               [:call, nil, :raise,
-                [:call, [:const, :NotImplementedError], :new]
-               ]
-              ]
-             ]
-            ]
-           ]
           ]
 
         assert_nothing_raised {

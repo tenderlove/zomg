@@ -24,7 +24,8 @@ module ZOMG
         end
 
         def to_ruby_sexp
-          # note that ::Sexp != Sexp from ZOMG!
+          # note that ::Sexp is from sexp_processor;
+          # not to be confused with ZOMG::IDL::Visitors::Sexp
           ::Sexp.from_array(RubySexp.new.accept(self))
         end
 

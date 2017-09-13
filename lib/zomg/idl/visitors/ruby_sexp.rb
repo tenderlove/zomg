@@ -9,7 +9,8 @@ module ZOMG
         def visit_Module(o)
           [ :module,
             classify(o.name),
-            [:block] + o.children.map { |c| c.accept(self) }.compact
+            [:block] +
+              o.children.map { |c| c.accept(self) }.compact
           ]
         end
 

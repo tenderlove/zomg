@@ -18,13 +18,11 @@ module ZOMG
           sexp = @tree.to_ruby_sexp
         }
         assert_equal([:block,
-                      [:class, :Not_implemented,
-                       [:const, :Exception]
-                      ],
-                      [:class, :AvocadoExcpt,
-                       [:const, :Exception],
-                       [:call, nil, :attr_accessor, [:lit, :ex1]]
-                      ]
+                       [:class, :Not_implemented, [:const, :Exception]],
+                       [:class, :AvocadoExcpt,
+                         [:const, :Exception],
+                         [:call, nil, :attr_accessor, [:lit, :ex1]]
+                       ]
                      ],
                      sexp)
       end
