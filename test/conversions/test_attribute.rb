@@ -28,14 +28,14 @@ module ZOMG
                [:args],
                [:call, nil,
                 :raise,
-                [:array, [:call, [:const, :NotImplementedError], :new]]]]],
+                [:call, [:const, :NotImplementedError], :new]]]],
              [:defn,
               :awesome=,
               [:block,
                [:args, :_],
                [:call, nil,
                 :raise,
-                [:array, [:call, [:const, :NotImplementedError], :new]]]]]]]]
+                [:call, [:const, :NotImplementedError], :new]]]]]]]
         assert_equal(ruby_sexp, sexp)
       end
     end

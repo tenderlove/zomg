@@ -34,10 +34,11 @@ module ZOMG
 
         def visit_InterfaceHeader(o)
           if o.children.length > 0
-            [:call, nil, :include,
-              [:array] + o.children.map { |c|
+            [ :call, nil, :include,
+              *o.children.map { |c|
                 [:const, classify(c.accept(self))]
-            } ]
+              }
+            ]
           else
             nil
           end
@@ -65,8 +66,8 @@ module ZOMG
             attributes <<
               [:defn, name,
                 [:block, [:args],
-                  [:call, nil, :raise, [:array,
-                    [:call, [:const, :NotImplementedError], :new]]
+                  [:call, nil, :raise,
+                    [:call, [:const, :NotImplementedError], :new]
                   ]
                 ]
               ]
@@ -74,8 +75,8 @@ module ZOMG
               attributes <<
                 [:defn, :"#{name}=",
                   [:block, [:args, :_],
-                    [:call, nil, :raise, [:array,
-                      [:call, [:const, :NotImplementedError], :new]]
+                    [:call, nil, :raise,
+                      [:call, [:const, :NotImplementedError], :new]
                     ]
                   ]
                 ]
@@ -93,8 +94,8 @@ module ZOMG
             o.name.to_sym,
             [:block,
               [:args] + o.children.map { |c| paramify(c.accept(self)) },
-              [:call, nil, :raise, [:array,
-                [:call, [:const, :NotImplementedError], :new]]
+              [:call, nil, :raise,
+                [:call, [:const, :NotImplementedError], :new]
               ]
             ]
           ]
