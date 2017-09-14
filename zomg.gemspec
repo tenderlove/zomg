@@ -1,13 +1,34 @@
 Gem::Specification.new do |s|
   s.name = "zomg"
-  s.version = "1.0.2.20080830162937"
+  s.version = "1.0.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Aaron Patterson"]
-  s.date = "2008-08-30"
+  s.authors = ["Aaron Patterson", "Dave Aronson"]
+  s.date = "2017-09-13"
   s.default_executable = "omfg"
-  s.description = %q{ZOMG is an OMG IDL parser.  ZOMG will generate a Ruby AST from an IDL AST, and will even generate ruby (by means of Ruby2Ruby).  == FEATURES/PROBLEMS:  * Parses IDL, generates Ruby * Ships with OMFG the Object Management File Generator * Ignores nested structs/unions * Treats out/inout parameters are DIY  == SYNOPSIS:  In code:  ZOMG::IDL.parse(File.read(ARGV[0])).to_ruby  Command line:  $ omfg lol.idl > roflmao.rb}
-  s.email = ["aaronp@rubyforge.org"]
+  s.description = <<~END_OF_TEXT
+    ZOMG is an OMG IDL parser.
+    ZOMG will generate a Ruby AST from an IDL AST,
+    and will even generate ruby (by means of Ruby2Ruby).
+
+    == FEATURES/PROBLEMS:
+
+    * Parses IDL, generates Ruby
+    * Ships with OMFG the Object Management File Generator
+    * Ignores nested structs/unions
+    * Treats out/inout parameters are DIY
+
+    == SYNOPSIS:
+
+    In code:
+
+        ZOMG::IDL.parse(File.read(ARGV[0])).to_ruby
+
+    Command line:
+
+        $ omfg lol.idl > roflmao.rb
+  END_OF_TEXT
+  s.email = ["tenderlove@github.com", "davearonson@github.com"]
   s.executables = ["omfg"]
   s.extra_rdoc_files = ["History.txt", "Manifest.txt", "README.txt"]
   s.files = ["History.txt",
@@ -249,12 +270,12 @@ Gem::Specification.new do |s|
              "test/test_scanner.rb",
              "zomg.gemspec"]
   s.has_rdoc = true
-  s.homepage = "http://zomg.rubyforge.org/"
+  s.homepage = "https://github.com/tenderlove/zomg"
   s.rdoc_options = ["--main", "README.txt"]
   s.require_paths = ["lib"]
   s.rubyforge_project = "zomg"
   s.rubygems_version = "1.2.0"
-  s.summary = %q{ZOMG is an OMG IDL parser}
+  s.summary = "ZOMG is an OMG IDL parser"
   s.test_files = ["test/conversions/test_attribute.rb",
                   "test/conversions/test_enum.rb",
                   "test/conversions/test_exception.rb",
