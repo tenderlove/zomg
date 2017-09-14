@@ -19,11 +19,11 @@ and will even generate ruby (by means of Ruby2Ruby).
 
 In code:
 
-  ZOMG::IDL.parse(File.read(ARGV[0])).to_ruby
+    ZOMG::IDL.parse(File.read(ARGV[0])).to_ruby
 
 Command line:
 
-  $ omfg lol.idl > roflmao.rb
+    $ omfg lol.idl > roflmao.rb
 
 ## REQUIREMENTS:
 
@@ -31,7 +31,22 @@ Command line:
 
 ## INSTALL:
 
-* sudo gem install zomg
+First do the usual:
+
+    sudo gem install zomg
+
+But then you _may_ have more to do.
+If you try to use it and see
+a NoMethodError message
+about there being no such method as
+`collect` for a `String`,
+you need to fix a simple bug.
+ZOMG depends on the gem tenderlove-frex.
+Find your source code for that gem.
+In the file lib/frex/rexcmd.rb,
+line 18 says: `OPTIONS  =  <<-EOT`.
+Simply append `.split("\n")` to that line and you'll be good to go.
+(I _would_ fix this as an open source contribution but the repo is gone.)
 
 ## LICENSE:
 
@@ -57,3 +72,4 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
