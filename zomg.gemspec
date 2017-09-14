@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
 
         $ omfg lol.idl > roflmao.rb
   END_OF_TEXT
-  s.email = ["tenderlove@github.com", "davearonson@github.com"]
+  s.email = ["tenderlove@ruby-lang.org"]
   s.executables = ["omfg"]
   s.extra_rdoc_files = ["History.txt", "Manifest.txt", "README.txt"]
   s.files = ["History.txt",
