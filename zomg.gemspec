@@ -30,10 +30,10 @@ Gem::Specification.new do |s|
   END_OF_TEXT
   s.email = ["tenderlove@ruby-lang.org"]
   s.executables = ["omfg"]
-  s.extra_rdoc_files = ["History.txt", "Manifest.txt", "README.txt"]
+  s.extra_rdoc_files = ["History.txt", "Manifest.txt", "README.md"]
   s.files = ["History.txt",
              "Manifest.txt",
-             "README.txt",
+             "README.md",
              "Rakefile",
              "bin/omfg",
              "lib/scanner.rex",
@@ -271,7 +271,7 @@ Gem::Specification.new do |s|
              "zomg.gemspec"]
   s.has_rdoc = true
   s.homepage = "https://github.com/tenderlove/zomg"
-  s.rdoc_options = ["--main", "README.txt"]
+  s.rdoc_options = ["--main", "README.md"]
   s.require_paths = ["lib"]
   s.rubyforge_project = "zomg"
   s.rubygems_version = "1.2.0"

@@ -49,12 +49,6 @@ line 18 says: `OPTIONS  =  <<-EOT`.
 Simply append `.split("\n")` to that line and you'll be good to go.
 (I _would_ fix this as an open source contribution but the repo is gone.)
 
-Also if you see
-`Errno::ENOENT: No such file or directory @ rb_sysopen - README.txt`,
-just do `touch README.txt`
-(or create it however you like).
-I'm trying to figure out a workaround for this now.
-
 ## LICENSE:
 
 (The MIT License)
