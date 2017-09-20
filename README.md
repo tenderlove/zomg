@@ -5,12 +5,13 @@
 
 ## DESCRIPTION:
 
-ZOMG is an OMG IDL parser.  ZOMG will generate a Ruby AST from an IDL AST,
+ZOMG is an OMG IDL parser.  ZOMG will generate a Ruby AST or a hash
+from an IDL AST,
 and will even generate ruby (by means of Ruby2Ruby).
 
 ## FEATURES/PROBLEMS:
 
-* Parses IDL, generates Ruby
+* Parses IDL, generates Ruby or a hash
 * Ships with OMFG the Object Management File Generator
 * Ignores nested structs/unions
 * Treats out/inout parameters are DIY
@@ -21,9 +22,16 @@ In code:
 
     ZOMG::IDL.parse(File.read(ARGV[0])).to_ruby
 
+or
+
+    ZOMG::IDL.parse(File.read(ARGV[0])).to_hash
+
 Command line:
 
     $ omfg lol.idl > roflmao.rb
+
+(Sorry, no command-line for to_hash yet,
+but you can cobble that together yourself easily.)
 
 ## REQUIREMENTS:
 
