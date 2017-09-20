@@ -19,8 +19,12 @@ module ZOMG
           Duhr.new(self)
         end
 
+        def to_hash
+          HashMaker.new.accept(self)
+        end
+
         def to_sexp
-          Sexp.new.accept(self)
+          ::Sexp.from_array(Sexp.new.accept(self))
         end
 
         def to_ruby_sexp
@@ -40,6 +44,7 @@ module ZOMG
             ruby_code
           end
         end
+
       end
       %w{ Boolean Char Double Float Long Octet Short UnsignedLong
         UnsignedShort ElementSpec CaseLabel DefaultLabel IntegerLiteral
@@ -51,6 +56,15 @@ module ZOMG
         Struct ScopedName Module ArrayDeclarator SimpleDeclarator
         Specification
       }.each { |type| const_set(type.to_sym, Class.new(Node)) }
+
+      # TODO: there's probably a better way to do this, like messing
+      # with the parsing definitions so foo::bar::baz comes out as
+      # one scoped name, but i don't grok that well enough yet.  -dja
+      def ScopedName.new(*args)
+        children, opts = args
+        children.first.name += "::#{opts[:name]}" if children.count == 1
+        super
+      end
     end
   end
 end

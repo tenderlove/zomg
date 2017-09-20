@@ -58,6 +58,7 @@ Gem::Specification.new do |s|
              "lib/zomg/idl/visitors/duhr.rb",
              "lib/zomg/idl/visitors/ruby_sexp.rb",
              "lib/zomg/idl/visitors/sexp.rb",
+             "lib/zomg/idl/visitors/hash_maker.rb",
              "lib/zomg/version.rb",
              "test/assets/array/array1.idl",
              "test/assets/array/array2.idl",
