@@ -31,6 +31,13 @@ module ZOMG
             { "type" => type, "contents" => contents } }
         end
 
+        def visit_Case(o)
+          res = accept_children(o)
+          value = res.shift
+          type, name = unwrap_possible_array(res) 
+          { value => { name => type } }
+        end
+
         def visit_Typedef(o)
           defn = unwrap_possible_hash o.type_spec.accept(self)
           name = accept_children(o).first  # always only 1
@@ -43,7 +50,9 @@ module ZOMG
 
         def visit_Sequence(o)
           what, qty = accept_children(o)
-          { "sequence" => { "type" => what, "length" => qty.to_i } }
+          description = { "type" => what }
+          description["length"] = qty.to_i if qty  # may be nil
+          { "sequence" => description }
         end
 
         def visit_Constant(o)
@@ -108,7 +117,7 @@ module ZOMG
           { "uminus" => o.children.accept(self) }
         end
 
-        %w(Case Context ElementSpec WString).each do |type|
+        %w(Context ElementSpec WString).each do |type|
           define_method(:"visit_#{type}") { |o| accept_children(o) }
         end
 
