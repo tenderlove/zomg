@@ -4,33 +4,32 @@ module ZOMG
       class HashMaker  # "Maker" so as not to confuse w/ class Hash
 
         def visit_Specification(o)
-          { "spec" => accept_children(o) }
+          accept_children(o)
         end
 
         def visit_Struct(o)
-          { "struct-#{o.name}" => accept_children(o).inject(&:merge) }
+          substitutor(o, "struct", { "contents" => accept_children(o) })
         end
 
         def visit_Member(o)  # can actually be a list of members of same type
           type = unwrap_possible_hash(o.type.accept(self))
-          o.children.
-            map { |c| { c.accept(self) => type } }.
-            inject(&:merge).
-            map { |name, type| ["member-#{name}", type] }.
-            to_h
+          o.children.map { |c|
+            { c.accept(self) => { "node-type" => "member", "type" => type } }
+          }
         end
 
         def visit_Enum(o)
-          { "enum-#{o.name}" => o.children }
+          substitutor(o, "enum", { "values" => o.children })
         end
 
         def visit_Union(o)
           type = o.switch_type.accept(self) 
           contents = accept_children(o)
-          { "union-#{o.name}" =>
-            { "type" => type, "contents" => contents } }
+          substitutor(o, "union",
+                      { "switch_type" => type, "contents" => contents })
         end
 
+        # TODO: CHECK THIS OUT!
         def visit_Case(o)
           res = accept_children(o)
           value = res.shift
@@ -40,14 +39,15 @@ module ZOMG
 
         def visit_Typedef(o)
           defn = unwrap_possible_hash o.type_spec.accept(self)
-          name = accept_children(o).first  # always only 1
-          { "typedef-#{name}" => defn }
+          o.name = accept_children(o).first  # always only 1
+          substitutor(o, "typedef", defn)
         end
 
         def visit_ArrayDeclarator(o)
-          { "array-#{o.name}" => accept_children(o) }
+          name_to_type_and_kids(o, "array")
         end
 
+        # THIS HAS NO UNIQUE NAME, SO SHOULD NEVER BE A HASH ENTRY!
         def visit_Sequence(o)
           what, qty = accept_children(o)
           description = { "type" => what }
@@ -58,8 +58,7 @@ module ZOMG
         def visit_Constant(o)
           type  = o.type.accept(self)
           value = unwrap_possible_array(o.value.accept(self))
-          { "const-#{o.name}" =>
-            { "type" => type, "value" => value } }
+          substitutor(o, "const", { "type" => type, "value" => value })
         end
 
         def visit_Interface(o)
@@ -70,7 +69,7 @@ module ZOMG
             contents << { "ancestor" => ancestor }
           end
           contents = unwrap_possible_array(contents)
-          { "interface-#{name}" => contents }
+          { name => { "node-type" => "interface", "contents" => contents } }
         end
 
         def visit_Operation(o)
@@ -81,9 +80,10 @@ module ZOMG
             body["raises"] = o.raises.map { |c| c.accept(self) }
           end
           body["context"] = o.context.accept(self) if o.context
-          { "operation-#{o.name}" => body }
+          { o.name => { "node-type" => "operation", "body" => body } }
         end
 
+        # TODO: CHECK THIS OUT!
         def visit_Parameter(o)
           { o.declarator.accept(self) =>
             { "attribute" => o.attribute.accept(self),
@@ -91,30 +91,34 @@ module ZOMG
         end
 
         def visit_ScopedName(o)
-          { "#{o.name}" => accept_children(o) }
+          o.children.any? ? name_to_type_and_kids(o, "scoped-name") : o.name
         end
 
         def visit_Attribute(o)
-          type = o.type.accept(self).keys.first
+          # do these in this order because of
+          # the way some of these parsers work
+          type = o.type.accept(self)
           # readonly = o.readonly
           name = accept_children(o).first
-          { "attribute-#{name}" => type }
+          { name => { "node-type" => "attribute", "type" => type } }
         end
 
         def visit_Module(o)
-          { "module-#{o.name}" => accept_children(o) }
+          name_to_type_and_kids(o, "module")
         end
 
         def visit_Exception(o)
-          { "exception-#{o.name}" => accept_children(o) }
+          name_to_type_and_kids(o, "exception")
         end
 
         def visit_ValueBoxDcl(o)
-          { "valuebox-#{o.name}" => accept_children(o) }
+          name_to_type_and_kids(o, "value-box")
         end
 
+        # THIS HAS NO UNIQUE NAME, SO SHOULD NEVER BE A HASH ENTRY!
         def visit_UnaryMinus(o)
-          { "uminus" => o.children.accept(self) }
+          { "unary-minus" =>
+            { "node-type" => "unary-minus", "contents" => accept_children(o) } }
         end
 
         %w(Context ElementSpec WString).each do |type|
@@ -201,8 +205,9 @@ module ZOMG
 
         def visit_InterfaceHeader(o)
           { o.name =>
-            { "abstract" => o.abstract,
-              "header-children" => accept_children(o) } }
+            { "node-type" => "interface-header",
+              "abstract"  => o.abstract,
+              "contents"  => accept_children(o) } }
         end
 
         def visit_DefaultLabel(_o)
@@ -227,6 +232,17 @@ module ZOMG
 
         def accept_children(o, opts = {})
           o.children.map { |c| unwrap_possible_hash(c.accept(self)) }
+        end
+
+        def name_to_type_and_kids(o, node_type)
+          { o.name =>
+            { "node-type" => node_type, "contents" => accept_children(o) } }
+        end
+
+        def substitutor(o, tag, definition)
+          { o.name =>
+            { "node-type"  => tag,
+              "definition" => definition } }
         end
 
         def unwrap_possible_array(a)
