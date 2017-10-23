@@ -24,18 +24,18 @@ module ZOMG
         end
 
         def to_sexp
-          ::Sexp.from_array(Sexp.new.accept(self))
+          # note that this is ZOMG::IDL::Visitors::Sexp,
+          # not ::Sexp as from sexp_processor!
+          Sexp.new.accept(self)
         end
 
         def to_ruby_sexp
-          # note that ::Sexp is from sexp_processor;
-          # not to be confused with ZOMG::IDL::Visitors::Sexp
-          ::Sexp.from_array(RubySexp.new.accept(self))
+          RubySexp.new.accept(self)
         end
 
         def to_ruby(prefix = nil)
           r2r = Ruby2Ruby.new
-          ruby_code = r2r.process(to_ruby_sexp)
+          ruby_code = r2r.process(::Sexp.from_array(to_ruby_sexp))
           if prefix
             modules = prefix.split(/::/).map { |m| "module #{m}\n" }
             ends = modules.map { |m| "end" }.join("\n")
