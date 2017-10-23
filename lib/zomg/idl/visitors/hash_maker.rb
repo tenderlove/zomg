@@ -4,11 +4,11 @@ module ZOMG
       class HashMaker  # "Maker" so as not to confuse w/ class Hash
 
         def visit_Specification(o)
-          accept_children(o)
+          accept_by_children(o)
         end
 
         def visit_Struct(o)
-          substitutor(o, "struct", { "contents" => accept_children(o) })
+          name_to_type_and_defn(o, "struct", { "contents" => accept_by_children(o) })
         end
 
         def visit_Member(o)  # can actually be a list of members of same type
@@ -19,19 +19,19 @@ module ZOMG
         end
 
         def visit_Enum(o)
-          substitutor(o, "enum", { "values" => o.children })
+          name_to_type_and_defn(o, "enum", { "values" => o.children })
         end
 
         def visit_Union(o)
           type = o.switch_type.accept(self) 
-          contents = accept_children(o)
-          substitutor(o, "union",
+          contents = accept_by_children(o)
+          name_to_type_and_defn(o, "union",
                       { "switch_type" => type, "contents" => contents })
         end
 
         # TODO: CHECK THIS OUT!
         def visit_Case(o)
-          res = accept_children(o)
+          res = accept_by_children(o)
           value = res.shift
           type, name = unwrap_possible_array(res) 
           { value => { name => type } }
@@ -39,17 +39,17 @@ module ZOMG
 
         def visit_Typedef(o)
           defn = unwrap_possible_hash o.type_spec.accept(self)
-          o.name = accept_children(o).first  # always only 1
-          substitutor(o, "typedef", defn)
+          o.name = accept_by_children(o).first  # always only 1
+          name_to_type_and_defn(o, "typedef", defn)
         end
 
         def visit_ArrayDeclarator(o)
-          name_to_type_and_kids(o, "array")
+          name_to_type_and_kids_acceptance(o, "array")
         end
 
         # THIS HAS NO UNIQUE NAME, SO SHOULD NEVER BE A HASH ENTRY!
         def visit_Sequence(o)
-          what, qty = accept_children(o)
+          what, qty = accept_by_children(o)
           description = { "type" => what }
           description["length"] = qty.to_i if qty  # may be nil
           { "sequence" => description }
@@ -58,13 +58,13 @@ module ZOMG
         def visit_Constant(o)
           type  = o.type.accept(self)
           value = unwrap_possible_array(o.value.accept(self))
-          substitutor(o, "const", { "type" => type, "value" => value })
+          name_to_type_and_defn(o, "const", { "type" => type, "value" => value })
         end
 
         def visit_Interface(o)
           header = o.header.accept(self)
           name = header.keys.first
-          contents = accept_children(o)
+          contents = accept_by_children(o)
           if (ancestor = header.values.first["header-children"]&.first)
             contents << { "ancestor" => ancestor }
           end
@@ -73,7 +73,7 @@ module ZOMG
         end
 
         def visit_Operation(o)
-          body = { "contents" => accept_children(o) }.
+          body = { "contents" => accept_by_children(o) }.
             merge({ "returns" => o.returns.accept(self),
                     "oneway"  => o.attribute })
           if o.raises && o.raises.any?
@@ -91,7 +91,7 @@ module ZOMG
         end
 
         def visit_ScopedName(o)
-          o.children.any? ? name_to_type_and_kids(o, "scoped-name") : o.name
+          o.children.any? ? name_to_type_and_kids_acceptance(o, "scoped-name") : o.name
         end
 
         def visit_Attribute(o)
@@ -99,30 +99,30 @@ module ZOMG
           # the way some of these parsers work
           type = o.type.accept(self)
           # readonly = o.readonly
-          name = accept_children(o).first
+          name = accept_by_children(o).first
           { name => { "node-type" => "attribute", "type" => type } }
         end
 
         def visit_Module(o)
-          name_to_type_and_kids(o, "module")
+          name_to_type_and_kids_acceptance(o, "module")
         end
 
         def visit_Exception(o)
-          name_to_type_and_kids(o, "exception")
+          name_to_type_and_kids_acceptance(o, "exception")
         end
 
         def visit_ValueBoxDcl(o)
-          name_to_type_and_kids(o, "value-box")
+          name_to_type_and_kids_acceptance(o, "value-box")
         end
 
         # THIS HAS NO UNIQUE NAME, SO SHOULD NEVER BE A HASH ENTRY!
         def visit_UnaryMinus(o)
           { "unary-minus" =>
-            { "node-type" => "unary-minus", "contents" => accept_children(o) } }
+            { "node-type" => "unary-minus", "contents" => accept_by_children(o) } }
         end
 
         %w(Context ElementSpec WString).each do |type|
-          define_method(:"visit_#{type}") { |o| accept_children(o) }
+          define_method(:"visit_#{type}") { |o| accept_by_children(o) }
         end
 
         %w(ArraySize CaseLabel UnaryPlus).each do |type|
@@ -207,7 +207,7 @@ module ZOMG
           { o.name =>
             { "node-type" => "interface-header",
               "abstract"  => o.abstract,
-              "contents"  => accept_children(o) } }
+              "contents"  => accept_by_children(o) } }
         end
 
         def visit_DefaultLabel(_o)
@@ -216,7 +216,7 @@ module ZOMG
 
         def visit_String(o)
           name = "string"
-          name << "<#{accept_children(o).join(" ")}>" if o.children.any?
+          name << "<#{accept_by_children(o).join(" ")}>" if o.children.any?
           name
         end
 
@@ -230,18 +230,18 @@ module ZOMG
 
         private
 
-        def accept_children(o, opts = {})
+        def accept_by_children(o)
           o.children.map { |c| unwrap_possible_hash(c.accept(self)) }
         end
 
-        def name_to_type_and_kids(o, node_type)
+        def name_to_type_and_kids_acceptance(o, node_type)
           { o.name =>
-            { "node-type" => node_type, "contents" => accept_children(o) } }
+            { "node-type" => node_type, "contents" => accept_by_children(o) } }
         end
 
-        def substitutor(o, tag, definition)
+        def name_to_type_and_defn(o, node_type, definition)
           { o.name =>
-            { "node-type"  => tag,
+            { "node-type"  => node_type,
               "definition" => definition } }
         end
 
