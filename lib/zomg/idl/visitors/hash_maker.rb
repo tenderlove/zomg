@@ -8,7 +8,12 @@ module ZOMG
         end
 
         def visit_Struct(o)
-          name_to_type_and_defn(o, "struct", { "contents" => accept_by_children(o) })
+          { o.name =>
+            { "node-type" => "struct",
+              "definition" => accept_by_children(o).
+                map { |kid|
+                  (kid.is_a?(Array) && kid.length == 1) ? kid.first : kid
+                } } }
         end
 
         def visit_Member(o)  # can actually be a list of members of same type
@@ -23,10 +28,9 @@ module ZOMG
         end
 
         def visit_Union(o)
-          type = o.switch_type.accept(self) 
-          contents = accept_by_children(o)
           name_to_type_and_defn(o, "union",
-                      { "switch_type" => type, "contents" => contents })
+                                { "switch_type" => o.switch_type.accept(self),
+                                  "contents" => accept_by_children(o) })
         end
 
         # TODO: CHECK THIS OUT!
@@ -58,7 +62,8 @@ module ZOMG
         def visit_Constant(o)
           type  = o.type.accept(self)
           value = unwrap_possible_array(o.value.accept(self))
-          name_to_type_and_defn(o, "const", { "type" => type, "value" => value })
+          name_to_type_and_defn(o, "const",
+                                { "type" => type, "value" => value })
         end
 
         def visit_Interface(o)
