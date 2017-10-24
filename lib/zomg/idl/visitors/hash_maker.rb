@@ -67,14 +67,12 @@ module ZOMG
         end
 
         def visit_Interface(o)
+          defn = { "node-type"  => "interface",
+                   "definition" => unwrap_possible_array(accept_by_children(o)) }
           header = o.header.accept(self)
-          name = header.keys.first
-          contents = accept_by_children(o)
-          if (ancestor = header.values.first["header-children"]&.first)
-            contents << { "ancestor" => ancestor }
-          end
-          contents = unwrap_possible_array(contents)
-          { name => { "node-type" => "interface", "contents" => contents } }
+          parents = header.values.first["parents"]
+          defn ["parents"] = parents if parents
+          { header.keys.first => defn }
         end
 
         def visit_Operation(o)
@@ -212,7 +210,7 @@ module ZOMG
           { o.name =>
             { "node-type" => "interface-header",
               "abstract"  => o.abstract,
-              "contents"  => accept_by_children(o) } }
+              "parents"   => accept_by_children(o) } }
         end
 
         def visit_DefaultLabel(_o)
