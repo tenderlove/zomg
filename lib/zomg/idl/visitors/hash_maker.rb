@@ -17,7 +17,7 @@ module ZOMG
         end
 
         def visit_Member(o)  # can actually be a list of members of same type
-          type = unwrap_possible_hash(o.type.accept(self))
+          type = o.type.accept(self)
           o.children.map { |c|
             { c.accept(self) => { "node-type" => "member", "type" => type } }
           }
@@ -28,21 +28,47 @@ module ZOMG
         end
 
         def visit_Union(o)
+          kids = accept_by_children(o)
+          defns = {}
+          labels = []
+          kids.each do |kid|
+            case kid
+            when String
+              labels << kid
+            when Hash
+              if labels.any?
+                old_key = kid.keys.first
+                kid[[*labels, old_key]] = kid.values.first
+                kid.delete old_key
+                labels = []
+              end
+              defns.merge! kid
+            end
+          end
           name_to_type_and_defn(o, "union",
                                 { "switch_type" => o.switch_type.accept(self),
-                                  "contents" => accept_by_children(o) })
+                                  "definition"  => defns })
         end
 
-        # TODO: CHECK THIS OUT!
         def visit_Case(o)
-          res = accept_by_children(o)
-          value = res.shift
-          type, name = unwrap_possible_array(res) 
-          { value => { name => type } }
+          value, result = accept_by_children(o)
+          { value => result }
+        end
+
+        def visit_CaseLabel(o)
+          # o.children is really a scoped name, wtf?!
+          res = o.children.name
+          res
+        end
+
+        def visit_ElementSpec(o)
+          { "node-type" => "element",
+            "type"      => o.children.first.accept(self),
+            "name"      => o.children.last.accept(self) }
         end
 
         def visit_Typedef(o)
-          defn = unwrap_possible_hash o.type_spec.accept(self)
+          defn = o.type_spec.accept(self)
           o.name = accept_by_children(o).first  # always only 1
           name_to_type_and_defn(o, "typedef", defn)
         end
@@ -61,14 +87,17 @@ module ZOMG
 
         def visit_Constant(o)
           type  = o.type.accept(self)
-          value = unwrap_possible_array(o.value.accept(self))
+          value = o.value.accept(self)
+          # for some reason strings get wrapped in an extra level of array,
+          # like ["foo"], rather than just "foo"
+          value = value.first if value.is_a?(Array) && type == "string"
           name_to_type_and_defn(o, "const",
                                 { "type" => type, "value" => value })
         end
 
         def visit_Interface(o)
           defn = { "node-type"  => "interface",
-                   "definition" => unwrap_possible_array(accept_by_children(o)) }
+                   "definition" => accept_by_children(o) }
           header = o.header.accept(self)
           parents = header.values.first["parents"]
           defn ["parents"] = parents if parents
@@ -124,11 +153,11 @@ module ZOMG
             { "node-type" => "unary-minus", "contents" => accept_by_children(o) } }
         end
 
-        %w(Context ElementSpec WString).each do |type|
+        %w(Context WString).each do |type|
           define_method(:"visit_#{type}") { |o| accept_by_children(o) }
         end
 
-        %w(ArraySize CaseLabel UnaryPlus).each do |type|
+        %w(ArraySize UnaryPlus).each do |type|
           define_method(:"visit_#{type}") { |o| o.children.accept(self) }
         end
 
@@ -234,7 +263,7 @@ module ZOMG
         private
 
         def accept_by_children(o)
-          o.children.map { |c| unwrap_possible_hash(c.accept(self)) }
+          o.children.map { |c| c.accept(self) }
         end
 
         def name_to_type_and_kids_acceptance(o, node_type)
@@ -246,19 +275,6 @@ module ZOMG
           { o.name =>
             { "node-type"  => node_type,
               "definition" => definition } }
-        end
-
-        def unwrap_possible_array(a)
-          while a.is_a?(Array) && a.count == 1
-            a = a.first
-          end
-          a
-        end
-
-        def unwrap_possible_hash(h)
-          return h unless h.is_a? Hash
-          return h.keys.first if h.keys.count == 1 && h.values == [[]]
-          h
         end
 
       end
