@@ -3,6 +3,8 @@
 * https://github.com/tenderlove/zomg/
 * http://tenderlovemaking.com/
 
+# WARNING: THIS FORK IS UNSTABLE!  I am working on specific improvements a client needs.  Once those are finished, the parts that are widely applicable will be packaged into pull requests and submitted upstream.  Do not count on it working at any point.
+
 ## DESCRIPTION:
 
 ZOMG is an OMG IDL parser.  ZOMG will generate a Ruby AST or a hash
