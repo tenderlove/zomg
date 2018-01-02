@@ -69,12 +69,23 @@ module ZOMG
 
         def visit_Typedef(o)
           defn = o.type_spec.accept(self)
-          o.name = accept_by_children(o).first  # always only 1
+          kid = accept_by_children(o).first
+          if kid.is_a? String
+            o.name = kid
+          elsif kid.is_a?(Hash) &&
+                kid.keys.length == 1 &&
+                kid.values.first.is_a?(Hash)
+            o.name = kid.keys.first
+            defn = kid.values.first.merge({"element-type" => defn})
+          end
           name_to_type_and_defn(o, "typedef", defn)
         end
 
         def visit_ArrayDeclarator(o)
-          name_to_type_and_kids_acceptance(o, "array")
+          res = { o.name =>
+                  { "type" => "array",
+                    "size" => accept_by_children(o).first } }
+          res
         end
 
         # THIS HAS NO UNIQUE NAME, SO SHOULD NEVER BE A HASH ENTRY!
@@ -247,9 +258,11 @@ module ZOMG
         end
 
         def visit_String(o)
-          name = "string"
-          name << "<#{accept_by_children(o).join(" ")}>" if o.children.any?
-          name
+          if o.children.any?
+            { "type" => "string", "length" => accept_by_children(o).join(" ") }
+          else
+            "string"
+          end
         end
 
         def visit_SimpleDeclarator(o)
