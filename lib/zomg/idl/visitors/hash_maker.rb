@@ -88,7 +88,7 @@ module ZOMG
           res
         end
 
-        # THIS HAS NO UNIQUE NAME, SO SHOULD NEVER BE A HASH ENTRY!
+        # THIS HAS NO UNIQUE NAME, SO SHOULD NEVER BE A MULTI-VALUE HASH ENTRY!
         def visit_Sequence(o)
           what, qty = accept_by_children(o)
           description = { "type" => what }
@@ -158,10 +158,11 @@ module ZOMG
           name_to_type_and_kids_acceptance(o, "value-box")
         end
 
-        # THIS HAS NO UNIQUE NAME, SO SHOULD NEVER BE A HASH ENTRY!
+        # THIS HAS NO UNIQUE NAME, SO SHOULD NEVER BE A MULTI-VALUE HASH ENTRY!
         def visit_UnaryMinus(o)
           { "unary-minus" =>
-            { "node-type" => "unary-minus", "contents" => accept_by_children(o) } }
+            { "node-type" => "unary-minus",
+              "contents"  => o.children.accept(self) } }
         end
 
         %w(Context WString).each do |type|
@@ -276,7 +277,10 @@ module ZOMG
         private
 
         def accept_by_children(o)
-          o.children.map { |c| c.accept(self) }
+          # use Array because sometimes it isn't already one
+          # (I've tried to catch them individually and given up),
+          # and Array of an Array is the original Array
+          Array(o.children).map { |c| c.accept(self) }
         end
 
         def name_to_type_and_kids_acceptance(o, node_type)
