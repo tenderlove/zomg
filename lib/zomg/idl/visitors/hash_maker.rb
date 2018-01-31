@@ -184,7 +184,8 @@ module ZOMG
           "ShiftLeftExpr" => :lshift,
         }.each do |type,sym|
           define_method(:"visit_#{type}") do |o|
-            { sym.to_s => { "left" => o.left.accept(self),
+            { sym.to_s => { "node-type" => type,
+                            "left" => o.left.accept(self),
                             "right" => o.right.accept(self) } }
           end
         end
