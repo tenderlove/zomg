@@ -281,7 +281,14 @@ module ZOMG
           # use Array because sometimes it isn't already one
           # (I've tried to catch them individually and given up),
           # and Array of an Array is the original Array
-          Array(o.children).map { |c| c.accept(self) }
+          Array(o.children).map { |c|
+            if c.is_a? String
+              # ZOMG currently doesn't handle valuetypes, and
+              # will just substitute the string "valuetype". :-(
+              puts "WARNING: IGNORING RAW STRING '#{c}'"
+              next
+            end
+            c.accept(self) }.compact  # the raw strings will become nils
         end
 
         def name_to_type_and_kids_acceptance(o, node_type)
