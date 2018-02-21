@@ -92,7 +92,8 @@ module ZOMG
         def visit_Sequence(o)
           what, qty = accept_by_children(o)
           description = { "type" => what }
-          description["length"] = qty.to_i if qty  # may be nil
+          # if numeric, make it a number, else keep symbolic const (or nil)
+          description["length"] = qty =~ /\A\d+(\.0)?\z/ ? qty.to_i : qty
           { "sequence" => description }
         end
 
