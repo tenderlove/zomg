@@ -262,7 +262,10 @@ module ZOMG
 
         def visit_String(o)
           if o.children.any?
-            { "type" => "string", "length" => accept_by_children(o).join(" ") }
+            # should be a number or symbolic constant
+            length = accept_by_children(o).first
+            length = length.to_i if length =~ /\A\d+(\.0)?\z/
+            { "type" => "string", "length" => length }
           else
             "string"
           end
