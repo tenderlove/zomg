@@ -47,7 +47,7 @@ module ZOMG
           end
           name_to_type_and_defn(o, "union",
                                 { "switch_type" => o.switch_type.accept(self),
-                                  "definition"  => defns })
+                                  "possibles"   => defns })
         end
 
         def visit_Case(o)
@@ -83,18 +83,17 @@ module ZOMG
 
         def visit_ArrayDeclarator(o)
           res = { o.name =>
-                  { "type" => "array",
-                    "size" => accept_by_children(o).first } }
+                  { "type"   => "array",
+                    "length" => accept_by_children(o).first } }
           res
         end
 
         # THIS HAS NO UNIQUE NAME, SO SHOULD NEVER BE A MULTI-VALUE HASH ENTRY!
         def visit_Sequence(o)
           what, qty = accept_by_children(o)
-          description = { "type" => what }
           # if numeric, make it a number, else keep symbolic const (or nil)
-          description["length"] = qty =~ /\A\d+(\.0)?\z/ ? qty.to_i : qty
-          { "sequence" => description }
+          qty = qty.to_i if qty =~ /\A\d+(\.0)?\z/
+          { "type" => "sequence", "element-type" => what, "length" => qty }
         end
 
         def visit_Constant(o)
