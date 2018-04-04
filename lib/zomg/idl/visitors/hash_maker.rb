@@ -84,7 +84,7 @@ module ZOMG
         def visit_ArrayDeclarator(o)
           res = { o.name =>
                   { "type"   => "array",
-                    "length" => accept_by_children(o).first } }
+                    "length" => accept_by_children(o) } }
           res
         end
 

@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "zomg"
-  s.version = "1.0.4"
+  s.version = "1.0.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Aaron Patterson", "Dave Aronson"]
@@ -311,6 +311,7 @@ Gem::Specification.new do |s|
                   "test/test_scanner.rb"]
 
   s.add_development_dependency("hoe", ["~> 3.16"])
+  s.add_development_dependency("pry", ["> 0"])
   s.add_development_dependency("minitest", ["~> 5.10"])
   s.add_development_dependency("test-unit", ["~> 3.2"])
   s.add_runtime_dependency("racc", ["~> 1.4"])
