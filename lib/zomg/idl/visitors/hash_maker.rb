@@ -91,8 +91,6 @@ module ZOMG
         # THIS HAS NO UNIQUE NAME, SO SHOULD NEVER BE A MULTI-VALUE HASH ENTRY!
         def visit_Sequence(o)
           what, qty = accept_by_children(o)
-          # if numeric, make it a number, else keep symbolic const (or nil)
-          qty = qty.to_i if qty =~ /\A\d+(\.0)?\z/
           { "type" => "sequence", "element-type" => what, "length" => qty }
         end
 
@@ -263,7 +261,6 @@ module ZOMG
           if o.children.any?
             # should be a number or symbolic constant
             length = accept_by_children(o).first
-            length = length.to_i if length =~ /\A\d+(\.0)?\z/
             { "type" => "string", "length" => length }
           else
             "string"
