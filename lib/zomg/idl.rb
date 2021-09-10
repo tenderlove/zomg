@@ -1,6 +1,7 @@
 require 'zomg/idl/visitable'
 require 'zomg/idl/visitors/sexp'
 require 'zomg/idl/visitors/ruby_sexp'
+require 'zomg/idl/visitors/hash_maker'
 require 'zomg/idl/visitors/duhr'
 
 module ZOMG

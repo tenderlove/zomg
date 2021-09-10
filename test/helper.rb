@@ -16,7 +16,7 @@ module ZOMG
     def method_missing(name, *args)
       super unless args[0]
       file = File.join(ASSETS, name.to_s, args[0])
-      super unless File.exists?(file)
+      super unless File.exist?(file)
       file
     end
   end

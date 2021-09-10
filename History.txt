@@ -1,3 +1,19 @@
+=== 1.0.5
+
+* 1 bugfix
+
+  * pass ALL dimensions of array, in HashMaker
+
+=== 1.0.4
+
+* 1 minor enhancement
+
+  * add HashMaker
+
+* 1 bugfix
+
+  * Updating stuff to work with Ruby 2.3, latest dependencies, and "unified" AST
+
 === 1.0.3
 
 * 1 bugfix

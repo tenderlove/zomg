@@ -18,7 +18,11 @@ module ZOMG
 
       # Parse an IDL string
       def parse(contents)
-        @scanner.scan_evaluate(contents)
+        # force encoding to UTF-8 in case of
+        # invalid byte sequences in the input
+        @scanner.scan_evaluate(contents.encode('UTF-8',
+                                               invalid: :replace,
+                                               undef: :replace))
         do_parse
       end
 

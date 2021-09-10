@@ -9,9 +9,8 @@ module ZOMG
         def visit_Module(o)
           [ :module,
             classify(o.name),
-            [:scope, [:block] +
+            [:block] +
               o.children.map { |c| c.accept(self) }.compact
-          ]
           ]
         end
 
@@ -30,34 +29,33 @@ module ZOMG
           }
           [ :module,
             classify(o.header.name),
-            [:scope,
-              header
-            ]
+            header
           ]
         end
 
         def visit_InterfaceHeader(o)
           if o.children.length > 0
-            [:fcall, :include,
-              [:array] + o.children.map { |c|
+            [ :call, nil, :include,
+              *o.children.map { |c|
                 [:const, classify(c.accept(self))]
-            } ]
+              }
+            ]
           else
             nil
           end
         end
 
         def visit_Exception(o)
-          attributes = o.children.length > 0 ?
-            [:scope, [:fcall,
-              :attr_accessor,
-              [:array] +
-                o.children.map { |c|
-                  c.accept(self)
-                }.flatten.map { |att| [:lit, att] }
-            ]] : [:scope]
-
-          [:class, classify(o.name), [:const, :Exception], attributes]
+          result = [:class, classify(o.name), [:const, :Exception]]
+          if o.children.length > 0
+            result << [:call, nil,
+                        :attr_accessor,
+                          *o.children.map { |c|
+                            c.accept(self)
+                          }.flatten.map { |att| [:lit, att] }
+                      ]
+          end
+          result
         end
 
         def visit_Attribute(o)
@@ -68,20 +66,20 @@ module ZOMG
             # Reader
             attributes <<
               [:defn, name,
-                [:scope, [:block, [:args],
-                  [:fcall, :raise, [:array,
-                    [:call, [:const, :NotImplementedError], :new]]
+                [:block, [:args],
+                  [:call, nil, :raise,
+                    [:call, [:const, :NotImplementedError], :new]
                   ]
-                ]]
+                ]
               ]
             unless o.readonly
               attributes <<
                 [:defn, :"#{name}=",
-                  [:scope, [:block, [:args, :_],
-                    [:fcall, :raise, [:array,
-                      [:call, [:const, :NotImplementedError], :new]]
+                  [:block, [:args, :_],
+                    [:call, nil, :raise,
+                      [:call, [:const, :NotImplementedError], :new]
                     ]
-                  ]]
+                  ]
                 ]
             end
           }
@@ -95,12 +93,10 @@ module ZOMG
         def visit_Operation(o)
           [ :defn,
             o.name.to_sym,
-            [:scope,
-              [:block,
-                [:args] + o.children.map { |c| paramify(c.accept(self)) },
-                [:fcall, :raise, [:array,
-                  [:call, [:const, :NotImplementedError], :new]]
-                ]
+            [:block,
+              [:args] + o.children.map { |c| paramify(c.accept(self)) },
+              [:call, nil, :raise,
+                [:call, [:const, :NotImplementedError], :new]
               ]
             ]
           ]
@@ -135,7 +131,7 @@ module ZOMG
             classify(o.name),
             [ :call, [:const, :Struct],
               :new,
-              [:array] + o.children.map { |c|
+              *o.children.map { |c|
                 c.accept(self)
               }.flatten.map { |lit| [:lit, lit] }
             ]
@@ -147,7 +143,7 @@ module ZOMG
             o.name.to_sym,
             [ :call, [:const, :Struct],
               :new,
-              [:array] + o.children.map { |c|
+              *o.children.map { |c|
                 val = c.accept(self)
                 val && [:lit, val]
               }.compact
